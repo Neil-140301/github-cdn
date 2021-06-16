@@ -1,4 +1,4 @@
-alert('Hi this is my js');
+//alert('Hi this is my js');
 
 let btn = document.createElement('button');
 btn.classList.add('mybtn');
