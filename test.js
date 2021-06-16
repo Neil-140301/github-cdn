@@ -27,4 +27,5 @@ btn.addEventListener('click', () => {
   console.log('myDiv clicked');
 });
 
+document.body.appendChild(myDiv);
 document.body.appendChild(btn);
