@@ -1,4 +1,4 @@
-let myDiv = document.getElementById('root');
+let myDiv = document.getElementById('myDiv');
 
 let btn = document.createElement('button');
 btn.classList.add('mybtn');
@@ -6,4 +6,4 @@ btn.addEventListener('click', () => {
   myDiv.classList.toggle('d-none');
 })
 
-document.body.appendChild(btn);
+document.getElementById('root').appendChild(btn);
