@@ -1,4 +1,5 @@
-let myDiv = document.getElementById('myDiv');
+let myDiv = document.createElement('div');
+myDiv.classList.add('mydiv');
 
 let btn = document.createElement('button');
 btn.classList.add('mybtn');
@@ -8,4 +9,4 @@ btn.addEventListener('click', () => {
   console.log('myDiv clicked');
 })
 
-document.getElementById('root').appendChild(btn);
+document.body.appendChild(btn);
