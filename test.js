@@ -1,3 +1,5 @@
+alert('This is neil Alvares');
+
 let myDiv = document.createElement('div');
 myDiv.classList.add('mydiv');
 
