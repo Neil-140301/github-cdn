@@ -3,6 +3,11 @@ function css(element, styleObj) {
 }
 
 console.log(meta.page);
+//fontawesome script
+let script = document.createElement('script');
+script.src = 'https://kit.fontawesome.com/ccca1edeec.js';
+script.crossOrigin = 'anonymous';
+document.body.appendChild(script);
 
 let myDiv = document.createElement('div');
 const divClass = {
