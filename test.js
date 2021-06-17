@@ -1,6 +1,4 @@
-function css(element, styleObj) {
-  for (let property in styleObj) element.style[property] = styleObj[property];
-}
+
 
 //console.log(meta.page);
 let result = 0;
@@ -18,7 +16,7 @@ script.crossOrigin = 'anonymous';
 document.body.appendChild(script);
 
 
-let { customerId } = meta.page;
+{ customerId } = meta.page;
 //let customerId = 5313776713881;
 
 
@@ -33,6 +31,11 @@ const myFunc = async () => {
   let renderPage = customerId ? myDiv3 : myDiv;
   console.log(renderPage);
 
+  //helper function
+  function css(element, styleObj) {
+  for (let property in styleObj) element.style[property] = styleObj[property];
+}
+  
   //page 1
   const divClass = {
     backgroundColor: '#fff',
