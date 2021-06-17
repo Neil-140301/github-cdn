@@ -1,5 +1,5 @@
 function css(element, styleObj) {
-  for (const property in styleObj) element.style[property] = styleObj[property];
+  for (let property in styleObj) element.style[property] = styleObj[property];
 }
 
 //console.log(meta.page);
@@ -18,7 +18,7 @@ script.crossOrigin = 'anonymous';
 document.body.appendChild(script);
 
 
-const { customerId } = meta.page;
+let { customerId } = meta.page;
 //let customerId = 5313776713881;
 
 
