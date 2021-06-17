@@ -1,23 +1,228 @@
-alert('This is neil Alvares');
+function css(element, styleObj) {
+  for (const property in styleObj) element.style[property] = styleObj[property];
+}
+
+console.log(meta.page);
 
 let myDiv = document.createElement('div');
-myDiv.style.backgroundColor = 'purple';
-myDiv.style.position = 'fixed';
-myDiv.style.right = '20px';
-myDiv.style.bottom = '100px';
-myDiv.style.width = '300px';
-myDiv.style.height = '250px';
-myDiv.style.borderRadius = '5px';
+const divClass = {
+  backgroundColor: '#fff',
+  position: 'fixed',
+  bottom: '100px',
+  right: '20px',
+  height: '550px',
+  width: '320px',
+  padding: '10px',
+  borderRadius: '5px',
+  boxShadow: '0px 0px 15px -10px rgba(0, 0, 0, 0.75)',
+};
+css(myDiv, divClass);
+
+//cardtop
+let div1 = document.createElement('div');
+let div1Class = {
+  backgroundColor: '#6568FE',
+  height: '150px',
+  margin: '-10px',
+  borderTopLeftRadius: '5px',
+  borderTopRightRadius: '5px',
+  padding: '20px 20px 0px 20px',
+  color: '#fff',
+  fontFamily: 'Roboto',
+};
+
+let span = document.createElement('span');
+span.textContent = 'Welcome to';
+div1.appendChild(span);
+
+let p = document.createElement('p');
+p.textContent = 'Super Rewards';
+let pClass = {
+  fontSize: '24px',
+  fontWeight: '600',
+};
+css(p, pClass);
+div1.appendChild(p);
+
+css(div1, div1Class);
+myDiv.appendChild(div1);
+
+//card
+let div2 = document.createElement('div');
+const div2Class = {
+  backgroundColor: '#fff',
+  boxShadow: '0px 0px 15px -10px rgba(0, 0, 0, 0.75)',
+  borderRadius: '5px',
+  height: '150px',
+  position: 'relative',
+  top: '-25px',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '10px',
+};
+
+p = document.createElement('p');
+p.textContent = 'Become a member';
+pClass = {
+  fontSize: '15px',
+  fontWeight: '600',
+  fontFamily: 'Roboto',
+};
+css(p, pClass);
+div2.appendChild(p);
+
+span = document.createElement('span');
+const spanClass = {
+  fontSize: '13px',
+  fontFamily: 'Roboto',
+  color: '#777474',
+  textAlign: 'center',
+  marginBottom: '10px',
+};
+css(span, spanClass);
+span.textContent =
+  'With more ways to unlock exciting perks, this is your all access pass to exclusive rewards.';
+div2.appendChild(span);
+
+let button = document.createElement('button');
+const btnClass = {
+  border: 'none',
+  borderRadius: '8px',
+  padding: '16px 24px',
+  backgroundColor: '#6568fe',
+  color: '#fff',
+  fontSize: '12px',
+  margin: '10px 0px',
+};
+css(button, btnClass);
+div2.appendChild(button);
+
+let a = document.createElement('a');
+a.textContent = 'Join Now';
+a.href = 'https://web-neil.myshopify.com/account/register';
+const aClass = {
+  textDecoration: 'none',
+  color: 'inherit',
+};
+css(a, aClass);
+button.appendChild(a);
+
+css(div2, div2Class);
+myDiv.appendChild(div2);
+
+//cardpoints
+let div3 = document.createElement('div');
+const div3Class = {
+  backgroundColor: '#fff',
+  boxShadow: '0px 0px 15px -10px rgba(0, 0, 0, 0.75)',
+  borderRadius: '5px',
+  height: '150px',
+  position: 'relative',
+  top: '-10px',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '10px',
+};
+
+p = document.createElement('p');
+p.textContent = 'Points';
+pClass = {
+  fontSize: '15px',
+  fontWeight: '600',
+  fontFamily: 'Roboto',
+};
+css(p, pClass);
+div3.appendChild(p);
+
+span = document.createElement('span');
+const spanClass2 = {
+  fontSize: '13px',
+  fontFamily: 'Roboto',
+  color: '#777474',
+  textAlign: 'center',
+  marginBottom: '10px',
+};
+css(span, spanClass2);
+span.textContent =
+  ' Earn more Points for different actions, and turn those Points into awesome rewards!';
+div3.appendChild(span);
+
+css(div3, div3Class);
+
+let div4 = document.createElement('div');
+div4.addEventListener('click', () => {
+  myDiv.style.display = 'none';
+  myDiv2.style.display = 'block';
+ });
+const class1 = {
+  margin: '10px 0px',
+  display: 'flex',
+  alignItems: 'center',
+  width: '75%',
+  cursor: 'pointer',
+};
+css(div4, class1);
+div3.appendChild(div4);
+
+let icon = document.createElement('i');
+icon.style.fontSize = '20px';
+icon.classList.add('fas', 'fa-hand-holding-heart');
+const class2 = {
+  fontSize: '20px',
+  color: '#6568fe',
+};
+css(icon, class2);
+div4.appendChild(icon);
+
+let div5 = document.createElement('div');
+div5.style.cssText +=
+  'display: flex;justify-content: space-between;align-items: center;margin-left: 15px;width: 100%;';
+div4.appendChild(div5);
+
+span = document.createElement('span');
+const class3 = {
+  fontFamily: 'Roboto',
+  color: '#777474',
+  fontSize: '14px',
+};
+css(span, class3);
+span.textContent = 'Ways to earn';
+div5.appendChild(span);
+
+icon = document.createElement('i');
+icon.style.fontSize = '20px';
+icon.classList.add('fas', 'fa-angle-right');
+const class4 = {
+  color: '#777474',
+  fontSize: '16px',
+};
+css(icon, class4);
+div5.appendChild(icon);
+
+myDiv.appendChild(div3);
 
 let btn = document.createElement('button');
-btn.style.backgroundColor = 'purple';
-btn.style.position = 'fixed';
-btn.style.right = '20px';
-btn.style.bottom = '10px';
-btn.style.padding = '30px';
-btn.style.borderRadius = '50%';
+css(btn, {
+  backgroundColor: '#6568FE',
+  position: 'fixed',
+  bottom: '10px',
+  right: '20px',
+  borderRadius: '50%',
+  padding: '24px',
+  border: 'none',
+  color: '#fff',
+  cursor: 'pointer',
+});
 
-btn.textContent = 'this is a button';
+icon = document.createElement('i');
+icon.style.fontSize = '20px';
+icon.classList.add('fas', 'fa-angle-up');
+btn.appendChild(icon);
+
 btn.addEventListener('click', () => {
   if (myDiv.style.display === 'none') {
     myDiv.style.display = 'block';
@@ -29,3 +234,134 @@ btn.addEventListener('click', () => {
 
 document.body.appendChild(myDiv);
 document.body.appendChild(btn);
+
+// page 2
+
+let myDiv2 = document.createElement('div');
+const divClass2 = {
+  backgroundColor: '#fff',
+  position: 'fixed',
+  bottom: '100px',
+  right: '20px',
+  height: '550px',
+  width: '320px',
+  padding: '10px',
+  borderRadius: '5px',
+  boxShadow: '0px 0px 15px -10px rgba(0, 0, 0, 0.75)',
+  display: 'none'
+};
+css(myDiv2, divClass2);
+document.body.appendChild(myDiv2);
+
+//top
+div1 = document.createElement('div');
+div1Class = {
+  backgroundColor: ' #6568FE',
+  height: '40px',
+  margin: '-10px',
+  borderTopLeftRadius: '5px',
+  borderTopRightRadius: '5px',
+  padding: ' 20px 20px 0px 20px',
+  color: '#fff',
+  fontFamily: 'Roboto',
+};
+
+icon = document.createElement('i');
+icon.addEventListener('click', () => {
+  myDiv2.style.display = 'none';
+  myDiv.style.display = 'block';
+})
+icon.style.fontSize = '16px';
+icon.style.cursor = 'pointer';
+icon.classList.add('fas', 'fa-angle-left');
+div1.appendChild(icon);
+
+span = document.createElement('span');
+span.style.cssText +=
+  "font-family: 'Roboto';font-size: 14px; margin-left: 10px;";
+span.textContent = 'Super Rewards';
+div1.appendChild(span);
+
+css(div1, div1Class);
+myDiv2.appendChild(div1);
+
+//center
+let center = document.createElement('div');
+center.style.cssText +=
+  "margin-top: 20px;padding: 10px;font-family: 'Roboto';  font-weight: 500;";
+
+span = document.createElement('span');
+span.textContent = 'Ways to earn';
+center.appendChild(span);
+
+let div = document.createElement('div');
+div.style.cssText +=
+  'margin: 10px 0px; display: flex;  align-items: center;  width: 75%;  cursor: pointer;margin-top: 20px;';
+center.appendChild(div);
+
+icon = document.createElement('i');
+icon.style.fontSize = '20px';
+icon.style.color = '#6568fe';
+icon.classList.add('fas', 'fa-store');
+div.appendChild(icon);
+
+let newDiv = document.createElement('div');
+newDiv.style.cssText += `display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+  justify-content: center;
+  width: 100%;`;
+div.appendChild(newDiv);
+
+span = document.createElement('span');
+span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;`;
+span.textContent = 'Signup';
+newDiv.appendChild(span);
+
+span = document.createElement('span');
+span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;
+  color: #777474;
+  font-weight: 400;`;
+span.textContent = '200 points';
+newDiv.appendChild(span);
+
+let hr = document.createElement('hr');
+hr.style.cssText += `background-color: #e5e5e5;
+  width: 100%;
+  height: 1px;
+  border: none;`;
+newDiv.appendChild(hr);
+
+myDiv2.appendChild(center);
+
+//btncontainer
+let btnC = document.createElement('div');
+btnC.style.cssText += 'text-align: center;';
+myDiv2.appendChild(btnC);
+
+button = document.createElement('button');
+const btnClass2 = {
+  border: 'none',
+  borderRadius: '8px',
+  padding: '18px 34px',
+  backgroundColor: '#6568fe',
+  color: '#fff',
+  fontSize: '12px',
+  margin: '10px 0px',
+};
+css(button, btnClass2);
+btnC.appendChild(button);
+
+a = document.createElement('a');
+a.textContent = 'Join Now';
+a.href = 'https://web-neil.myshopify.com/account/register';
+const aClass2 = {
+  textDecoration: 'none',
+  color: 'inherit',
+};
+css(a, aClass2);
+button.appendChild(a);
