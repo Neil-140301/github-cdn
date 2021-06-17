@@ -16,7 +16,7 @@ script.crossOrigin = 'anonymous';
 document.body.appendChild(script);
 
 
-{ customerId } = meta.page;
+let { customerId } = meta.page;
 //let customerId = 5313776713881;
 
 
