@@ -2,13 +2,16 @@ function css(element, styleObj) {
   for (let property in styleObj) element.style[property] = styleObj[property];
 }
 
+let userId = meta.page.customerId;
 //console.log(meta.page);
 let result = 0;
 const getPointsData = async () => {
-  const res = await fetch('https://9a7322c9501c.ngrok.io/points/5313776713881');
+  if (userId) {
+  const res = await fetch(`https://9a7322c9501c.ngrok.io/points/${userId}`);
   const data = await res.json();
   console.log(data);
   result = data[0];
+  }
 };
 
 //fontawesome script
@@ -18,7 +21,7 @@ script.crossOrigin = 'anonymous';
 document.body.appendChild(script);
 
 
-let userId = meta.page.customerId;
+
 //let userId ; //5313776713881
 
 
