@@ -5,7 +5,7 @@ function css(element, styleObj) {
 //console.log(meta.page);
 let result = 0;
 const getPointsData = async () => {
-  const res = await fetch('https://0a0b1219bae1.ngrok.io/points/5313776713881');
+  const res = await fetch('https://9a7322c9501c.ngrok.io/points/5313776713881');
   const data = await res.json();
   console.log(data);
   result = data[0];
