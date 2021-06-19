@@ -3,16 +3,34 @@ function css(element, styleObj) {
 }
 
 let userId = meta.page.customerId;
+//let userId = 5313776713881; //5313776713881
 //console.log(meta.page);
 let result = 0;
 const getPointsData = async () => {
   if (userId) {
-  const res = await fetch(`https://93d93de18210.ngrok.io/points/${userId}`);
-  const data = await res.json();
-  console.log(data);
-  result = data[0];
+    const res = await fetch(`https://93d93de18210.ngrok.io/points/${userId}`);
+    const data = await res.json();
+    console.log(data);
+    result = data[0];
   }
 };
+
+const updateUserBirthday = async (day, month) => {
+  if (userId) {
+    //console.log(month);
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({day, month})
+    }
+    console.log(options.body)
+    const res = await fetch(`https://93d93de18210.ngrok.io/birthday/${userId}`, options);
+    console.log(res);
+  }
+}
 
 //fontawesome script
 let script = document.createElement('script');
@@ -20,18 +38,12 @@ script.src = 'https://kit.fontawesome.com/ccca1edeec.js';
 script.crossOrigin = 'anonymous';
 document.body.appendChild(script);
 
-
-
-//let userId ; //5313776713881
-
-
-
 const myFunc = async () => {
   await getPointsData();
-  
 
   let myDiv = document.createElement('div');
   let myDiv3 = document.createElement('div');
+  let myDiv4 = document.createElement('div');
 
   let renderPage = userId ? myDiv3 : myDiv;
   console.log(renderPage);
@@ -47,7 +59,8 @@ const myFunc = async () => {
     padding: '10px',
     borderRadius: '5px',
     boxShadow: '0px 0px 15px -10px rgba(0, 0, 0, 0.75)',
-    display: 'none'
+    display: 'none',
+    zIndex: '999'
   };
   css(myDiv, divClass);
 
@@ -250,6 +263,7 @@ const myFunc = async () => {
     border: 'none',
     color: '#fff',
     cursor: 'pointer',
+    zIndex: '999',
   });
 
   icon = document.createElement('i');
@@ -283,6 +297,7 @@ const myFunc = async () => {
     borderRadius: '5px',
     boxShadow: '0px 0px 15px -10px rgba(0, 0, 0, 0.75)',
     display: 'none',
+    zIndex: '999',
   };
   css(myDiv2, divClass2);
   document.body.appendChild(myDiv2);
@@ -330,7 +345,7 @@ const myFunc = async () => {
 
   let div = document.createElement('div');
   div.style.cssText +=
-    'margin: 10px 0px; display: flex;  align-items: center;  width: 75%;  cursor: pointer;margin-top: 20px;';
+    'margin: 10px 0px; display: flex;  align-items: center;  width: 100%;  cursor: pointer;margin-top: 20px;';
   center.appendChild(div);
 
   icon = document.createElement('i');
@@ -370,6 +385,108 @@ const myFunc = async () => {
   border: none;`;
   newDiv.appendChild(hr);
 
+  div = document.createElement('div');
+  div.style.cssText +=
+    'margin: 10px 0px; display: flex;  align-items: center;  width: 100%;  cursor: pointer;margin-top: 20px;';
+  center.appendChild(div);
+
+  icon = document.createElement('i');
+  icon.style.fontSize = '20px';
+  icon.style.color = '#6568fe';
+  icon.classList.add('fas', 'fa-birthday-cake');
+  div.appendChild(icon);
+
+  let textGrp3 = document.createElement('div');
+  textGrp3.style.cssText += `display: flex;
+  margin-left: 15px;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 10px;`;
+  div.appendChild(textGrp3);
+
+  newDiv = document.createElement('div');
+  newDiv.style.cssText += `display: flex;
+  flex-direction: column;
+  margin-left: 0px;
+  justify-content: center;
+  width: 100%;`;
+  textGrp3.appendChild(newDiv);
+
+  span = document.createElement('span');
+  span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;`;
+  span.textContent = 'Celebrate a birthday';
+  newDiv.appendChild(span);
+
+  span = document.createElement('span');
+  span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;
+  color: #777474;
+  font-weight: 400;`;
+  span.textContent = '200 points';
+  newDiv.appendChild(span);
+
+  let dateBtn = document.createElement('button');
+  dateBtn.textContent = 'Edit date';
+  dateBtn.addEventListener('click', () => {
+    myDiv2.style.display = 'none';
+    myDiv4.style.display = 'block';
+  })
+  dateBtn.style.cssText += `border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  background-color: #6568fe;
+  color: #fff;
+  font-size: 12px;
+  margin-left: auto;
+  cursor: pointer;`;
+  userId? textGrp3.appendChild(dateBtn) : null;
+
+  div = document.createElement('div');
+  div.style.cssText +=
+    'margin: 10px 0px; display: flex;  align-items: center;  width: 100%;  cursor: pointer;margin-top: 20px;';
+  center.appendChild(div);
+
+  icon = document.createElement('i');
+  icon.style.fontSize = '20px';
+  icon.style.color = '#6568fe';
+  icon.classList.add('fas', 'fa-shopping-bag');
+  div.appendChild(icon);
+
+  newDiv = document.createElement('div');
+  newDiv.style.cssText += `display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+  justify-content: center;
+  width: 100%;`;
+  div.appendChild(newDiv);
+
+  span = document.createElement('span');
+  span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;`;
+  span.textContent = 'Place an order';
+  newDiv.appendChild(span);
+
+  span = document.createElement('span');
+  span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;
+  color: #777474;
+  font-weight: 400;`;
+  span.textContent = '5 points for every ₹1 spent';
+  newDiv.appendChild(span);
+
+  hr = document.createElement('hr');
+  hr.style.cssText += `background-color: #e5e5e5;
+  width: 100%;
+  height: 1px;
+  border: none;`;
+  newDiv.appendChild(hr);
+
   myDiv2.appendChild(center);
 
   //btncontainer
@@ -388,7 +505,7 @@ const myFunc = async () => {
     margin: '10px 0px',
   };
   css(button, btnClass2);
-  userId?null : btnC.appendChild(button);
+  userId ? null : btnC.appendChild(button);
 
   a = document.createElement('a');
   a.textContent = 'Join Now';
@@ -402,7 +519,6 @@ const myFunc = async () => {
 
   // page 3
 
-  
   css(myDiv3, divClass);
 
   //cardtop
@@ -535,6 +651,155 @@ const myFunc = async () => {
   myDiv3.appendChild(div3);
 
   document.body.appendChild(myDiv3);
+
+  // page 4
+
+  
+
+  css(myDiv4, divClass);
+  document.body.appendChild(myDiv4);
+
+  //top
+  div1 = document.createElement('div');
+  div1Class = {
+    backgroundColor: ' #6568FE',
+    height: '40px',
+    margin: '-10px',
+    borderTopLeftRadius: '5px',
+    borderTopRightRadius: '5px',
+    padding: ' 20px 20px 0px 20px',
+    color: '#fff',
+    fontFamily: 'Roboto',
+  };
+
+  icon = document.createElement('i');
+  icon.addEventListener('click', () => {
+    myDiv4.style.display = 'none';
+    myDiv2.style.display = 'block';
+  });
+  icon.style.fontSize = '16px';
+  icon.style.cursor = 'pointer';
+  icon.classList.add('fas', 'fa-angle-left');
+  div1.appendChild(icon);
+
+  span = document.createElement('span');
+  span.style.cssText +=
+    "font-family: 'Roboto';font-size: 14px; margin-left: 10px;";
+  span.textContent = 'Super Rewards';
+  div1.appendChild(span);
+
+  css(div1, div1Class);
+  myDiv4.appendChild(div1);
+
+  //center
+  center = document.createElement('div');
+  center.style.cssText +=
+    "margin-top: 20px;padding: 10px;font-family: 'Roboto';  font-weight: 500;";
+
+  span = document.createElement('span');
+  span.textContent = 'Birthday reward';
+  center.appendChild(span);
+
+  div = document.createElement('div');
+  div.style.cssText +=
+    'margin: 10px 0px; display: flex;  align-items: center;  width: 100%;  cursor: pointer;margin-top: 20px;';
+  center.appendChild(div);
+
+  icon = document.createElement('i');
+  icon.style.fontSize = '20px';
+  icon.style.color = '#6568fe';
+  icon.classList.add('fas', 'fa-birthday-cake');
+  div.appendChild(icon);
+
+  textGrp3 = document.createElement('div');
+  textGrp3.style.cssText += `display: flex;
+  margin-left: 15px;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 10px;`;
+  div.appendChild(textGrp3);
+
+  newDiv = document.createElement('div');
+  newDiv.style.cssText += `display: flex;
+  flex-direction: column;
+  margin-left: 0px;
+  justify-content: center;
+  width: 100%;`;
+  textGrp3.appendChild(newDiv);
+
+  span = document.createElement('span');
+  span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;`;
+  span.textContent = 'Celebrate a birthday';
+  newDiv.appendChild(span);
+
+  span = document.createElement('span');
+  span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;
+  color: #777474;
+  font-weight: 400;`;
+  span.textContent = '200 points';
+  newDiv.appendChild(span);
+
+  let centerDesc = document.createElement('span');
+  centerDesc.textContent = `We want to celebrate your birthday! Make sure you let us know at least one month in
+          advance — otherwise, you'll have to wait until next year.`;
+  centerDesc.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  color: #000;`;
+  center.appendChild(centerDesc);
+
+  myDiv4.appendChild(center);
+
+  //btncontainer
+  let dateContainer = document.createElement('div');
+  dateContainer.style.cssText += `padding: 10px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;`;
+  myDiv4.appendChild(dateContainer);
+
+  span = document.createElement('span');
+  span.style.cssText += `font-weight: 400;`;
+  span.textContent = 'Select your birthday';
+  dateContainer.appendChild(span);
+
+  let input = document.createElement('input');
+  input.style.cssText += `width: 130px;
+  margin: 10px 0px;
+  border: 1px solid #e5e5e5;
+  padding: 5px 12px;
+  border-radius:8px; 
+  cursor: pointer;
+  outline: none;
+  color: #c3c2c2;
+  font-weight: 400;`;
+  input.type = 'date';
+  input.name = 'birthday';
+  input.id = 'date';
+  dateContainer.appendChild(input);
+
+  button = document.createElement('button');
+  button.style.cssText += `border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  background-color: #6568fe;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  margin: 15px 0px;`;
+  button.textContent = 'save date';
+  dateContainer.appendChild(button);
+
+  button.addEventListener('click',() => {
+    let birthday = new Date(document.getElementById('date').value);
+    updateUserBirthday(birthday.getDate(), birthday.getMonth() + 1);
+    
+  });
 };
 
 myFunc();
