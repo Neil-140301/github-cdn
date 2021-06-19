@@ -7,7 +7,7 @@ let userId = meta.page.customerId;
 let result = 0;
 const getPointsData = async () => {
   if (userId) {
-  const res = await fetch(`https://9a7322c9501c.ngrok.io/points/${userId}`);
+  const res = await fetch(`https://93d93de18210.ngrok.io/points/${userId}`);
   const data = await res.json();
   console.log(data);
   result = data[0];
