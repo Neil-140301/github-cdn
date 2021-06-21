@@ -8,7 +8,7 @@ let userId = meta.page.customerId;
 let result = 0;
 const getPointsData = async () => {
   if (userId) {
-    const res = await fetch(`https://93d93de18210.ngrok.io/points/${userId}`);
+    const res = await fetch(`https://2fe7b6bf13c0.ngrok.io/points/${userId}`);
     const data = await res.json();
     console.log(data);
     result = data[0];
@@ -27,7 +27,7 @@ const updateUserBirthday = async (day, month) => {
       body: JSON.stringify({day, month})
     }
     console.log(options.body)
-    const res = await fetch(`https://93d93de18210.ngrok.io/birthday/${userId}`, options);
+    const res = await fetch(`https://2fe7b6bf13c0.ngrok.io/birthday/${userId}`, options);
     console.log(res);
   }
 }
