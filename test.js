@@ -3,8 +3,10 @@ function css(element, styleObj) {
 }
 
 let userId = meta.page.customerId;
-//let userId = 5313776713881; //5313776713881
-//console.log(meta.page);
+let referrer = Shopify.queryParams.ref;
+// let userId = 5313776713881; //5313776713881
+// let referrer = 'SUPER202114'
+
 let result = 0;
 const getPointsData = async () => {
   if (userId) {
@@ -27,9 +29,18 @@ const updateUserBirthday = async (day, month) => {
       body: JSON.stringify({day, month})
     }
     console.log(options.body)
-    const res = await fetch(`https://2fe7b6bf13c0.ngrok.io/birthday/${userId}`, options);
+    const res = await fetch(
+      `https://2fe7b6bf13c0.ngrok.io/birthday/${userId}`,
+      options
+    );
     console.log(res);
   }
+}
+
+const sendReferrerCode = async () => {
+  const res = await fetch(`https://2fe7b6bf13c0.ngrok.io/set-referrer?ref=${referrer}`);
+  const data = await res.json();
+  console.log(data);
 }
 
 //fontawesome script
@@ -40,6 +51,7 @@ document.body.appendChild(script);
 
 const myFunc = async () => {
   await getPointsData();
+  await sendReferrerCode();
 
   let myDiv = document.createElement('div');
   let myDiv3 = document.createElement('div');
@@ -60,7 +72,8 @@ const myFunc = async () => {
     borderRadius: '5px',
     boxShadow: '0px 0px 15px -10px rgba(0, 0, 0, 0.75)',
     display: 'none',
-    zIndex: '999'
+    zIndex: '999',
+    fontFamily: 'inherit',
   };
   css(myDiv, divClass);
 
@@ -649,6 +662,43 @@ const myFunc = async () => {
   div5.appendChild(icon);
 
   myDiv3.appendChild(div3);
+
+  let refContainer = document.createElement('div');
+  refContainer.style.cssText += `padding: 18px;
+  border-radius: 8px;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);`;
+  myDiv3.appendChild(refContainer);
+
+  span = document.createElement('span');
+  span.textContent = 'Refer your friends'
+  span.style.cssText += `font-family: 'Roboto';
+  font-size: 14px;
+  font-weight: 300;
+}`;
+  refContainer.appendChild(span);
+
+  let refDesc = document.createElement('p');
+  refDesc.textContent =
+    'Share this URL to give your friends the reward ₹300 off coupon';
+  refDesc.style.cssText += `color: #637381;
+  font-size: 13px;
+  font-weight: 400;`;
+  refContainer.appendChild(refDesc);
+
+  let refLink = document.createElement('div');
+  refLink.style.cssText += `padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+  font-size: 11px;
+  cursor: pointer;
+  color: #637381;`;
+  userId? refContainer.appendChild(refLink): null;
+
+  span = document.createElement('span');
+  span.textContent = `https://web-neil.myshopify.com/?ref=${result.referralCode}`;
+  refLink.appendChild(span);
 
   document.body.appendChild(myDiv3);
 
