@@ -47,16 +47,14 @@ const sendReferrerCode = async () => {
   console.log(data);
 };
 
-const updateDiscount = data => {
-  discountCode = data;
-};
+
 
 const getDiscountCode = async () => {
   const res = await fetch(`https://95a758682f76.ngrok.io/discount/${userId}`);
   const data = await res.json();
   discountCode = data;
   console.log(data);
-  updateDiscount(data);
+  localStorage.setItem('discount', data);
 };
 
 
@@ -997,6 +995,8 @@ const myFunc = async () => {
   dateBtn.addEventListener('click', async () => {
     //add function call
     await getDiscountCode();
+    let span = document.getElementById('discount');
+    span.textContent = discountCode;
     myDiv5.style.display = 'none';
     myDiv6.style.display = 'block';
   });
@@ -1147,10 +1147,12 @@ const myFunc = async () => {
   border: 1px solid #e5e5e5;
   font-size: 11px;
   cursor: pointer;
-  color: #637381;`;
+  color: #637381;
+  text-align: center;`;
   userId ? refContainer.appendChild(refLink) : null;
 
   span = document.createElement('span');
+  span.id = 'discount';
   span.textContent = ` ${discountCode} `;
   refLink.appendChild(span);
 };
