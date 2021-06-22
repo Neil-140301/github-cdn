@@ -10,7 +10,7 @@ let referrer = Shopify.queryParams.ref;
 let result = 0;
 const getPointsData = async () => {
   if (userId) {
-    const res = await fetch(`https://2fe7b6bf13c0.ngrok.io/points/${userId}`);
+    const res = await fetch(`https://95a758682f76.ngrok.io/points/${userId}`);
     const data = await res.json();
     console.log(data);
     result = data[0];
@@ -30,7 +30,7 @@ const updateUserBirthday = async (day, month) => {
     }
     console.log(options.body)
     const res = await fetch(
-      `https://2fe7b6bf13c0.ngrok.io/birthday/${userId}`,
+      `https://95a758682f76.ngrok.io/birthday/${userId}`,
       options
     );
     console.log(res);
@@ -38,7 +38,7 @@ const updateUserBirthday = async (day, month) => {
 }
 
 const sendReferrerCode = async () => {
-  const res = await fetch(`https://2fe7b6bf13c0.ngrok.io/set-referrer?ref=${referrer}`);
+  const res = await fetch(`https://95a758682f76.ngrok.io/set-referrer?ref=${referrer}`);
   const data = await res.json();
   console.log(data);
 }
