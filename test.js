@@ -5,9 +5,11 @@ function css(element, styleObj) {
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams.ref;
 // let userId = 5313776713881; //5313776713881
-// let referrer = 'SUPER202114'
+// let referrer = 'SUPER202114';
 
 let result = 0;
+let discountCode;
+
 const getPointsData = async () => {
   if (userId) {
     const res = await fetch(`https://95a758682f76.ngrok.io/points/${userId}`);
@@ -26,22 +28,37 @@ const updateUserBirthday = async (day, month) => {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify({day, month})
-    }
-    console.log(options.body)
+      body: JSON.stringify({ day, month }),
+    };
+    console.log(options.body);
     const res = await fetch(
       `https://95a758682f76.ngrok.io/birthday/${userId}`,
       options
     );
     console.log(res);
   }
-}
+};
 
 const sendReferrerCode = async () => {
-  const res = await fetch(`https://95a758682f76.ngrok.io/set-referrer?ref=${referrer}`);
+  const res = await fetch(
+    `https://95a758682f76.ngrok.io/set-referrer?ref=${referrer}`
+  );
   const data = await res.json();
   console.log(data);
-}
+};
+
+const updateDiscount = data => {
+  discountCode = data;
+};
+
+const getDiscountCode = async () => {
+  const res = await fetch(`https://95a758682f76.ngrok.io/discount/${userId}`);
+  const data = await res.json();
+  discountCode = data;
+  console.log(data);
+  updateDiscount(data);
+};
+
 
 //fontawesome script
 let script = document.createElement('script');
@@ -56,6 +73,8 @@ const myFunc = async () => {
   let myDiv = document.createElement('div');
   let myDiv3 = document.createElement('div');
   let myDiv4 = document.createElement('div');
+  let myDiv5 = document.createElement('div');
+  let myDiv6 = document.createElement('div');
 
   let renderPage = userId ? myDiv3 : myDiv;
   console.log(renderPage);
@@ -447,7 +466,7 @@ const myFunc = async () => {
   dateBtn.addEventListener('click', () => {
     myDiv2.style.display = 'none';
     myDiv4.style.display = 'block';
-  })
+  });
   dateBtn.style.cssText += `border: none;
   border-radius: 8px;
   padding: 10px 18px;
@@ -456,7 +475,7 @@ const myFunc = async () => {
   font-size: 12px;
   margin-left: auto;
   cursor: pointer;`;
-  userId? textGrp3.appendChild(dateBtn) : null;
+  userId ? textGrp3.appendChild(dateBtn) : null;
 
   div = document.createElement('div');
   div.style.cssText +=
@@ -661,6 +680,40 @@ const myFunc = async () => {
   css(icon, class4);
   div5.appendChild(icon);
 
+  div4 = document.createElement('div');
+  div4.addEventListener('click', () => {
+    renderPage.style.display = 'none';
+    myDiv5.style.display = 'block';
+  });
+
+  css(div4, class1);
+  div3.appendChild(div4);
+
+  icon = document.createElement('i');
+  icon.style.fontSize = '20px';
+  icon.classList.add('fas', 'fa-gift');
+
+  css(icon, class2);
+  div4.appendChild(icon);
+
+  div5 = document.createElement('div');
+  div5.style.cssText +=
+    'display: flex;justify-content: space-between;align-items: center;margin-left: 15px;width: 100%;';
+  div4.appendChild(div5);
+
+  span = document.createElement('span');
+
+  css(span, class3);
+  span.textContent = 'Ways to redeem';
+  div5.appendChild(span);
+
+  icon = document.createElement('i');
+  icon.style.fontSize = '20px';
+  icon.classList.add('fas', 'fa-angle-right');
+
+  css(icon, class4);
+  div5.appendChild(icon);
+
   myDiv3.appendChild(div3);
 
   let refContainer = document.createElement('div');
@@ -672,7 +725,7 @@ const myFunc = async () => {
   myDiv3.appendChild(refContainer);
 
   span = document.createElement('span');
-  span.textContent = 'Refer your friends'
+  span.textContent = 'Refer your friends';
   span.style.cssText += `font-family: 'Roboto';
   font-size: 14px;
   font-weight: 300;
@@ -694,7 +747,7 @@ const myFunc = async () => {
   font-size: 11px;
   cursor: pointer;
   color: #637381;`;
-  userId? refContainer.appendChild(refLink): null;
+  userId ? refContainer.appendChild(refLink) : null;
 
   span = document.createElement('span');
   span.textContent = `https://web-neil.myshopify.com/?ref=${result.referralCode}`;
@@ -703,8 +756,6 @@ const myFunc = async () => {
   document.body.appendChild(myDiv3);
 
   // page 4
-
-  
 
   css(myDiv4, divClass);
   document.body.appendChild(myDiv4);
@@ -845,11 +896,263 @@ const myFunc = async () => {
   button.textContent = 'save date';
   dateContainer.appendChild(button);
 
-  button.addEventListener('click',() => {
+  button.addEventListener('click', () => {
     let birthday = new Date(document.getElementById('date').value);
     updateUserBirthday(birthday.getDate(), birthday.getMonth() + 1);
-    
   });
+
+  // page 5
+
+  css(myDiv5, divClass2);
+  document.body.appendChild(myDiv5);
+
+  //top
+  div1 = document.createElement('div');
+  div1Class = {
+    backgroundColor: ' #6568FE',
+    height: '40px',
+    margin: '-10px',
+    borderTopLeftRadius: '5px',
+    borderTopRightRadius: '5px',
+    padding: ' 20px 20px 0px 20px',
+    color: '#fff',
+    fontFamily: 'Roboto',
+  };
+
+  icon = document.createElement('i');
+  icon.addEventListener('click', () => {
+    myDiv5.style.display = 'none';
+    renderPage.style.display = 'block';
+  });
+  icon.style.fontSize = '16px';
+  icon.style.cursor = 'pointer';
+  icon.classList.add('fas', 'fa-angle-left');
+  div1.appendChild(icon);
+
+  span = document.createElement('span');
+  span.style.cssText +=
+    "font-family: 'Roboto';font-size: 14px; margin-left: 10px;";
+  span.textContent = 'Super Rewards';
+  div1.appendChild(span);
+
+  css(div1, div1Class);
+  myDiv5.appendChild(div1);
+
+  //center
+  center = document.createElement('div');
+  center.style.cssText +=
+    "margin-top: 20px;padding: 10px;font-family: 'Roboto';  font-weight: 500;";
+
+  span = document.createElement('span');
+  span.textContent = 'Ways to redeem';
+  center.appendChild(span);
+
+  //--
+  div = document.createElement('div');
+  div.style.cssText +=
+    'margin: 10px 0px; display: flex;  align-items: center;  width: 100%;  cursor: pointer;margin-top: 20px;';
+  center.appendChild(div);
+
+  icon = document.createElement('i');
+  icon.style.fontSize = '20px';
+  icon.style.color = '#6568fe';
+  icon.classList.add('fas', 'fa-money-bill-wave');
+  div.appendChild(icon);
+
+  textGrp3 = document.createElement('div');
+  textGrp3.style.cssText += `display: flex;
+  margin-left: 15px;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 10px;`;
+  div.appendChild(textGrp3);
+
+  newDiv = document.createElement('div');
+  newDiv.style.cssText += `display: flex;
+  flex-direction: column;
+  margin-left: 0px;
+  justify-content: center;
+  width: 100%;`;
+  textGrp3.appendChild(newDiv);
+
+  span = document.createElement('span');
+  span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;`;
+  span.textContent = '₹20 Off coupon';
+  newDiv.appendChild(span);
+
+  span = document.createElement('span');
+  span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;
+  color: #777474;
+  font-weight: 400;`;
+  span.textContent = '100 points';
+  newDiv.appendChild(span);
+
+  dateBtn = document.createElement('button');
+  dateBtn.textContent = 'Redeem';
+  dateBtn.addEventListener('click', async () => {
+    //add function call
+    await getDiscountCode();
+    myDiv5.style.display = 'none';
+    myDiv6.style.display = 'block';
+  });
+  dateBtn.style.cssText += `border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  background-color: #6568fe;
+  color: #fff;
+  font-size: 12px;
+  margin-left: auto;
+  cursor: pointer;`;
+  userId ? textGrp3.appendChild(dateBtn) : null;
+
+  //--
+
+  myDiv5.appendChild(center);
+
+  //btncontainer
+  btnC = document.createElement('div');
+  btnC.style.cssText += 'text-align: center;';
+  myDiv5.appendChild(btnC);
+
+  button = document.createElement('button');
+
+  css(button, btnClass2);
+  userId ? null : btnC.appendChild(button);
+
+  a = document.createElement('a');
+  a.textContent = 'Join Now';
+  a.href = 'https://web-neil.myshopify.com/account/register';
+  css(a, aClass2);
+  button.appendChild(a);
+
+  // page 6
+
+  css(myDiv6, divClass2);
+  document.body.appendChild(myDiv6);
+
+  //top
+  div1 = document.createElement('div');
+  div1Class = {
+    backgroundColor: ' #6568FE',
+    height: '40px',
+    margin: '-10px',
+    borderTopLeftRadius: '5px',
+    borderTopRightRadius: '5px',
+    padding: ' 20px 20px 0px 20px',
+    color: '#fff',
+    fontFamily: 'Roboto',
+  };
+
+  icon = document.createElement('i');
+  icon.addEventListener('click', () => {
+    myDiv6.style.display = 'none';
+    myDiv5.style.display = 'block';
+  });
+  icon.style.fontSize = '16px';
+  icon.style.cursor = 'pointer';
+  icon.classList.add('fas', 'fa-angle-left');
+  div1.appendChild(icon);
+
+  span = document.createElement('span');
+  span.style.cssText +=
+    "font-family: 'Roboto';font-size: 14px; margin-left: 10px;";
+  span.textContent = 'Super Rewards';
+  div1.appendChild(span);
+
+  css(div1, div1Class);
+  myDiv6.appendChild(div1);
+
+  //center
+  center = document.createElement('div');
+  center.style.cssText +=
+    "margin-top: 20px;padding: 10px;font-family: 'Roboto';  font-weight: 500;";
+
+  span = document.createElement('span');
+  span.textContent = 'Discount code';
+  center.appendChild(span);
+
+  //--
+
+  myDiv6.appendChild(center);
+  //--ref container
+
+  refContainer = document.createElement('div');
+  refContainer.style.cssText += `padding: 18px;
+  border-radius: 8px;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);`;
+  myDiv6.appendChild(refContainer);
+
+  //--
+  div = document.createElement('div');
+  div.style.cssText +=
+    'display: flex;  align-items: center;  width: 100%;  cursor: pointer;';
+  refContainer.appendChild(div);
+
+  icon = document.createElement('i');
+  icon.style.fontSize = '20px';
+  icon.style.color = '#6568fe';
+  icon.classList.add('fas', 'fa-money-bill-wave');
+  div.appendChild(icon);
+
+  textGrp3 = document.createElement('div');
+  textGrp3.style.cssText += `display: flex;
+  margin-left: 15px;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 10px;`;
+  div.appendChild(textGrp3);
+
+  newDiv = document.createElement('div');
+  newDiv.style.cssText += `display: flex;
+  flex-direction: column;
+  margin-left: 0px;
+  justify-content: center;
+  width: 100%;`;
+  textGrp3.appendChild(newDiv);
+
+  span = document.createElement('span');
+  span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;`;
+  span.textContent = '₹20 Off coupon';
+  newDiv.appendChild(span);
+
+  span = document.createElement('span');
+  span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;
+  color: #777474;
+  font-weight: 400;`;
+  span.textContent = 'Spent 100 points';
+  newDiv.appendChild(span);
+  //--
+
+  refDesc = document.createElement('p');
+  refDesc.textContent = 'Use this discount code on your next order!';
+  refDesc.style.cssText += `color: #637381;
+  font-size: 13px;
+  font-weight: 400;`;
+  refContainer.appendChild(refDesc);
+
+  refLink = document.createElement('div');
+  refLink.style.cssText += `padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+  font-size: 11px;
+  cursor: pointer;
+  color: #637381;`;
+  userId ? refContainer.appendChild(refLink) : null;
+
+  span = document.createElement('span');
+  span.textContent = ` ${discountCode} `;
+  refLink.appendChild(span);
 };
 
 myFunc();
