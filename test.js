@@ -12,7 +12,7 @@ let discountCode;
 
 const getPointsData = async () => {
   if (userId) {
-    const res = await fetch(`https://95a758682f76.ngrok.io/points/${userId}`);
+    const res = await fetch(`https://08c8720aa7d8.ngrok.io/points/${userId}`);
     const data = await res.json();
     console.log(data);
     result = data[0];
@@ -32,7 +32,7 @@ const updateUserBirthday = async (day, month) => {
     };
     console.log(options.body);
     const res = await fetch(
-      `https://95a758682f76.ngrok.io/birthday/${userId}`,
+      `https://08c8720aa7d8.ngrok.io/birthday/${userId}`,
       options
     );
     console.log(res);
@@ -41,7 +41,7 @@ const updateUserBirthday = async (day, month) => {
 
 const sendReferrerCode = async () => {
   const res = await fetch(
-    `https://95a758682f76.ngrok.io/set-referrer?ref=${referrer}`
+    `https://08c8720aa7d8.ngrok.io/set-referrer?ref=${referrer}`
   );
   const data = await res.json();
   console.log(data);
@@ -50,7 +50,7 @@ const sendReferrerCode = async () => {
 
 
 const getDiscountCode = async () => {
-  const res = await fetch(`https://95a758682f76.ngrok.io/discount/${userId}`);
+  const res = await fetch(`https://08c8720aa7d8.ngrok.io/discount/${userId}`);
   const data = await res.json();
   discountCode = data;
   console.log(data);
