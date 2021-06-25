@@ -2,6 +2,7 @@ function css(element, styleObj) {
   for (let property in styleObj) element.style[property] = styleObj[property];
 }
 
+let appUrl = 'https://d9b2e4ec46ef.ngrok.io'
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams.ref;
 // let userId = 5313776713881; //5313776713881
@@ -12,7 +13,7 @@ let discountCode;
 
 const getPointsData = async () => {
   if (userId) {
-    const res = await fetch(`https://08c8720aa7d8.ngrok.io/points/${userId}`);
+    const res = await fetch(`${appUrl}/points/${userId}`);
     const data = await res.json();
     console.log(data);
     result = data[0];
@@ -32,7 +33,7 @@ const updateUserBirthday = async (day, month) => {
     };
     console.log(options.body);
     const res = await fetch(
-      `https://08c8720aa7d8.ngrok.io/birthday/${userId}`,
+      `${appUrl}/birthday/${userId}`,
       options
     );
     console.log(res);
@@ -41,7 +42,7 @@ const updateUserBirthday = async (day, month) => {
 
 const sendReferrerCode = async () => {
   const res = await fetch(
-    `https://08c8720aa7d8.ngrok.io/set-referrer?ref=${referrer}`
+    `${appUrl}/set-referrer?ref=${referrer}`
   );
   const data = await res.json();
   console.log(data);
@@ -50,7 +51,7 @@ const sendReferrerCode = async () => {
 
 
 const getDiscountCode = async () => {
-  const res = await fetch(`https://08c8720aa7d8.ngrok.io/discount/${userId}`);
+  const res = await fetch(`${appUrl}/discount/${userId}`);
   const data = await res.json();
   discountCode = data;
   console.log(data);
