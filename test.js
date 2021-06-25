@@ -2,7 +2,7 @@ function css(element, styleObj) {
   for (let property in styleObj) element.style[property] = styleObj[property];
 }
 
-let appUrl = 'https://d9b2e4ec46ef.ngrok.io'
+let appUrl = 'https://d9b2e4ec46ef.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams.ref;
 // let userId = 5313776713881; //5313776713881
@@ -32,26 +32,35 @@ const updateUserBirthday = async (day, month) => {
       body: JSON.stringify({ day, month }),
     };
     console.log(options.body);
-    const res = await fetch(
-      `${appUrl}/birthday/${userId}`,
-      options
-    );
+    const res = await fetch(`${appUrl}/birthday/${userId}`, options);
     console.log(res);
   }
 };
 
 const sendReferrerCode = async () => {
-  const res = await fetch(
-    `${appUrl}/set-referrer?ref=${referrer}`
-  );
+  const res = await fetch(`${appUrl}/set-referrer?ref=${referrer}`);
   const data = await res.json();
   console.log(data);
 };
 
-
-
 const getDiscountCode = async () => {
   const res = await fetch(`${appUrl}/discount/${userId}`);
+  const data = await res.json();
+  discountCode = data;
+  console.log(data);
+  localStorage.setItem('discount', data);
+};
+
+const getFreeShippingCode = async () => {
+  const res = await fetch(`${appUrl}/shipping/${userId}`);
+  const data = await res.json();
+  discountCode = data;
+  console.log(data);
+  localStorage.setItem('discount', data);
+};
+
+const getPercentageCode = async () => {
+  const res = await fetch(`${appUrl}/percentage-discount/${userId}`);
   const data = await res.json();
   discountCode = data;
   console.log(data);
@@ -946,7 +955,7 @@ const myFunc = async () => {
   span.textContent = 'Ways to redeem';
   center.appendChild(span);
 
-  //--
+  //-- fixed amount coupon
   div = document.createElement('div');
   div.style.cssText +=
     'margin: 10px 0px; display: flex;  align-items: center;  width: 100%;  cursor: pointer;margin-top: 20px;';
@@ -996,6 +1005,138 @@ const myFunc = async () => {
   dateBtn.addEventListener('click', async () => {
     //add function call
     await getDiscountCode();
+    let span = document.getElementById('discount');
+    span.textContent = discountCode;
+    myDiv5.style.display = 'none';
+    myDiv6.style.display = 'block';
+  });
+  dateBtn.style.cssText += `border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  background-color: #6568fe;
+  color: #fff;
+  font-size: 12px;
+  margin-left: auto;
+  cursor: pointer;`;
+  userId ? textGrp3.appendChild(dateBtn) : null;
+
+  //--
+  //-- shipping coupon
+  div = document.createElement('div');
+  div.style.cssText +=
+    'margin: 10px 0px; display: flex;  align-items: center;  width: 100%;  cursor: pointer;margin-top: 20px;';
+  center.appendChild(div);
+
+  icon = document.createElement('i');
+  icon.style.fontSize = '20px';
+  icon.style.color = '#6568fe';
+  icon.classList.add('fas', 'fa-shipping-fast');
+  div.appendChild(icon);
+
+  textGrp3 = document.createElement('div');
+  textGrp3.style.cssText += `display: flex;
+  margin-left: 15px;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 10px;`;
+  div.appendChild(textGrp3);
+
+  newDiv = document.createElement('div');
+  newDiv.style.cssText += `display: flex;
+  flex-direction: column;
+  margin-left: 0px;
+  justify-content: center;
+  width: 100%;`;
+  textGrp3.appendChild(newDiv);
+
+  span = document.createElement('span');
+  span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;`;
+  span.textContent = 'Free shipping coupon';
+  newDiv.appendChild(span);
+
+  span = document.createElement('span');
+  span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;
+  color: #777474;
+  font-weight: 400;`;
+  span.textContent = '1000 points';
+  newDiv.appendChild(span);
+
+  dateBtn = document.createElement('button');
+  dateBtn.textContent = 'Redeem';
+  dateBtn.addEventListener('click', async () => {
+    //add function call
+    await getFreeShippingCode();
+    let span = document.getElementById('discount');
+    span.textContent = discountCode;
+    myDiv5.style.display = 'none';
+    myDiv6.style.display = 'block';
+  });
+  dateBtn.style.cssText += `border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  background-color: #6568fe;
+  color: #fff;
+  font-size: 12px;
+  margin-left: auto;
+  cursor: pointer;`;
+  userId ? textGrp3.appendChild(dateBtn) : null;
+
+  //--
+  //-- percentage coupon
+  div = document.createElement('div');
+  div.style.cssText +=
+    'margin: 10px 0px; display: flex;  align-items: center;  width: 100%;  cursor: pointer;margin-top: 20px;';
+  center.appendChild(div);
+
+  icon = document.createElement('i');
+  icon.style.fontSize = '20px';
+  icon.style.color = '#6568fe';
+  icon.classList.add('fas', 'fa-percent');
+  div.appendChild(icon);
+
+  textGrp3 = document.createElement('div');
+  textGrp3.style.cssText += `display: flex;
+  margin-left: 15px;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 10px;`;
+  div.appendChild(textGrp3);
+
+  newDiv = document.createElement('div');
+  newDiv.style.cssText += `display: flex;
+  flex-direction: column;
+  margin-left: 0px;
+  justify-content: center;
+  width: 100%;`;
+  textGrp3.appendChild(newDiv);
+
+  span = document.createElement('span');
+  span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;`;
+  span.textContent = '10% Off coupon';
+  newDiv.appendChild(span);
+
+  span = document.createElement('span');
+  span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;
+  color: #777474;
+  font-weight: 400;`;
+  span.textContent = '500 points';
+  newDiv.appendChild(span);
+
+  dateBtn = document.createElement('button');
+  dateBtn.textContent = 'Redeem';
+  dateBtn.addEventListener('click', async () => {
+    //add function call
+    await getPercentageCode();
     let span = document.getElementById('discount');
     span.textContent = discountCode;
     myDiv5.style.display = 'none';
