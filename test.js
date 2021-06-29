@@ -5,18 +5,22 @@ function css(element, styleObj) {
 let appUrl = 'https://b517e62f987f.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams.ref;
+let shopDomain = Shopify.shop;
 // let userId = 5313776713881; //5313776713881
 // let referrer = 'SUPER202114';
+// let shopDomain = 'web-neil.myshopify.com';
 
 let result = 0;
+let merchant = '';
 let discountCode;
 
 const getPointsData = async () => {
   if (userId) {
-    const res = await fetch(`${appUrl}/points/${userId}`);
+    const res = await fetch(`${appUrl}/points/${userId}?shopDomain=${shopDomain}`);
     const data = await res.json();
     console.log(data);
-    result = data[0];
+    result = data.customer;
+    merchant = data.merchant;
   }
 };
 
@@ -67,7 +71,6 @@ const getPercentageCode = async () => {
   localStorage.setItem('discount', data);
 };
 
-
 //fontawesome script
 let script = document.createElement('script');
 script.src = 'https://kit.fontawesome.com/ccca1edeec.js';
@@ -107,7 +110,7 @@ const myFunc = async () => {
   //cardtop
   let div1 = document.createElement('div');
   let div1Class1 = {
-    backgroundColor: '#6568FE',
+    backgroundColor: merchant.theme.color ,
     height: '150px',
     margin: '-10px',
     borderTopLeftRadius: '5px',
@@ -178,7 +181,7 @@ const myFunc = async () => {
     border: 'none',
     borderRadius: '8px',
     padding: '16px 24px',
-    backgroundColor: '#6568fe',
+    backgroundColor: merchant.theme.color,
     color: '#fff',
     fontSize: '12px',
     margin: '10px 0px',
@@ -260,7 +263,7 @@ const myFunc = async () => {
   icon.classList.add('fas', 'fa-hand-holding-heart');
   const class2 = {
     fontSize: '20px',
-    color: '#6568fe',
+    color: merchant.theme.color,
   };
   css(icon, class2);
   div4.appendChild(icon);
@@ -294,7 +297,7 @@ const myFunc = async () => {
 
   let btn = document.createElement('button');
   css(btn, {
-    backgroundColor: '#6568FE',
+    backgroundColor: merchant.theme.color,
     position: 'fixed',
     bottom: '10px',
     right: '20px',
@@ -345,7 +348,7 @@ const myFunc = async () => {
   //top
   div1 = document.createElement('div');
   div1Class = {
-    backgroundColor: ' #6568FE',
+    backgroundColor: merchant.theme.color,
     height: '40px',
     margin: '-10px',
     borderTopLeftRadius: '5px',
@@ -390,7 +393,7 @@ const myFunc = async () => {
 
   icon = document.createElement('i');
   icon.style.fontSize = '20px';
-  icon.style.color = '#6568fe';
+  icon.style.color = merchant.theme.color;
   icon.classList.add('fas', 'fa-store');
   div.appendChild(icon);
 
@@ -432,7 +435,7 @@ const myFunc = async () => {
 
   icon = document.createElement('i');
   icon.style.fontSize = '20px';
-  icon.style.color = '#6568fe';
+  icon.style.color = merchant.theme.color;
   icon.classList.add('fas', 'fa-birthday-cake');
   div.appendChild(icon);
 
@@ -478,7 +481,7 @@ const myFunc = async () => {
   dateBtn.style.cssText += `border: none;
   border-radius: 8px;
   padding: 10px 18px;
-  background-color: #6568fe;
+  background-color: ${merchant.theme.color};
   color: #fff;
   font-size: 12px;
   margin-left: auto;
@@ -492,7 +495,7 @@ const myFunc = async () => {
 
   icon = document.createElement('i');
   icon.style.fontSize = '20px';
-  icon.style.color = '#6568fe';
+  icon.style.color = merchant.theme.color;
   icon.classList.add('fas', 'fa-shopping-bag');
   div.appendChild(icon);
 
@@ -539,7 +542,7 @@ const myFunc = async () => {
     border: 'none',
     borderRadius: '8px',
     padding: '18px 34px',
-    backgroundColor: '#6568fe',
+    backgroundColor: merchant.theme.color,
     color: '#fff',
     fontSize: '12px',
     margin: '10px 0px',
@@ -771,7 +774,7 @@ const myFunc = async () => {
   //top
   div1 = document.createElement('div');
   div1Class = {
-    backgroundColor: ' #6568FE',
+    backgroundColor: merchant.theme.color,
     height: '40px',
     margin: '-10px',
     borderTopLeftRadius: '5px',
@@ -816,7 +819,7 @@ const myFunc = async () => {
 
   icon = document.createElement('i');
   icon.style.fontSize = '20px';
-  icon.style.color = '#6568fe';
+  icon.style.color = merchant.theme.color;
   icon.classList.add('fas', 'fa-birthday-cake');
   div.appendChild(icon);
 
@@ -896,7 +899,7 @@ const myFunc = async () => {
   button.style.cssText += `border: none;
   border-radius: 8px;
   padding: 10px 18px;
-  background-color: #6568fe;
+  background-color: ${merchant.theme.color};
   color: #fff;
   font-size: 12px;
   cursor: pointer;
@@ -917,7 +920,7 @@ const myFunc = async () => {
   //top
   div1 = document.createElement('div');
   div1Class = {
-    backgroundColor: ' #6568FE',
+    backgroundColor: merchant.theme.color,
     height: '40px',
     margin: '-10px',
     borderTopLeftRadius: '5px',
@@ -963,7 +966,7 @@ const myFunc = async () => {
 
   icon = document.createElement('i');
   icon.style.fontSize = '20px';
-  icon.style.color = '#6568fe';
+  icon.style.color = merchant.theme.color;
   icon.classList.add('fas', 'fa-money-bill-wave');
   div.appendChild(icon);
 
@@ -1013,7 +1016,7 @@ const myFunc = async () => {
   dateBtn.style.cssText += `border: none;
   border-radius: 8px;
   padding: 10px 18px;
-  background-color: #6568fe;
+  background-color: ${merchant.theme.color};
   color: #fff;
   font-size: 12px;
   margin-left: auto;
@@ -1029,7 +1032,7 @@ const myFunc = async () => {
 
   icon = document.createElement('i');
   icon.style.fontSize = '20px';
-  icon.style.color = '#6568fe';
+  icon.style.color = merchant.theme.color;
   icon.classList.add('fas', 'fa-shipping-fast');
   div.appendChild(icon);
 
@@ -1079,7 +1082,7 @@ const myFunc = async () => {
   dateBtn.style.cssText += `border: none;
   border-radius: 8px;
   padding: 10px 18px;
-  background-color: #6568fe;
+  background-color: ${merchant.theme.color};
   color: #fff;
   font-size: 12px;
   margin-left: auto;
@@ -1095,7 +1098,7 @@ const myFunc = async () => {
 
   icon = document.createElement('i');
   icon.style.fontSize = '20px';
-  icon.style.color = '#6568fe';
+  icon.style.color = merchant.theme.color;
   icon.classList.add('fas', 'fa-percent');
   div.appendChild(icon);
 
@@ -1145,7 +1148,7 @@ const myFunc = async () => {
   dateBtn.style.cssText += `border: none;
   border-radius: 8px;
   padding: 10px 18px;
-  background-color: #6568fe;
+  background-color: ${merchant.theme.color};
   color: #fff;
   font-size: 12px;
   margin-left: auto;
@@ -1180,7 +1183,7 @@ const myFunc = async () => {
   //top
   div1 = document.createElement('div');
   div1Class = {
-    backgroundColor: ' #6568FE',
+    backgroundColor: merchant.theme.color,
     height: '40px',
     margin: '-10px',
     borderTopLeftRadius: '5px',
@@ -1239,7 +1242,7 @@ const myFunc = async () => {
 
   icon = document.createElement('i');
   icon.style.fontSize = '20px';
-  icon.style.color = '#6568fe';
+  icon.style.color = merchant.theme.color;
   icon.classList.add('fas', 'fa-money-bill-wave');
   div.appendChild(icon);
 
