@@ -12,15 +12,29 @@ let shopDomain = Shopify.shop;
 
 let result = 0;
 let merchant = '';
+let codes = '';
 let discountCode;
 
 const getPointsData = async () => {
   if (userId) {
-    const res = await fetch(`${appUrl}/points/${userId}?shopDomain=${shopDomain}`);
+    const res = await fetch(
+      `${appUrl}/points/${userId}?shopDomain=${shopDomain}`
+    );
     const data = await res.json();
     console.log(data);
     result = data.customer;
     merchant = data.merchant;
+  }
+};
+
+const getDiscountCodes = async () => {
+  if (userId) {
+    const res = await fetch(
+      `${appUrl}/rewards/${userId}?shopDomain=${shopDomain}`
+    );
+    const data = await res.json();
+    console.log(data);
+    codes = data;
   }
 };
 
@@ -79,6 +93,7 @@ document.body.appendChild(script);
 
 const myFunc = async () => {
   await getPointsData();
+  await getDiscountCodes();
   await sendReferrerCode();
 
   let myDiv = document.createElement('div');
@@ -86,6 +101,7 @@ const myFunc = async () => {
   let myDiv4 = document.createElement('div');
   let myDiv5 = document.createElement('div');
   let myDiv6 = document.createElement('div');
+  let myDiv7 = document.createElement('div');
 
   let renderPage = userId ? myDiv3 : myDiv;
   console.log(renderPage);
@@ -94,7 +110,7 @@ const myFunc = async () => {
   const divClass = {
     backgroundColor: '#fff',
     position: 'fixed',
-    bottom: parseInt(merchant.theme.positionBottom)  + 85 + 'px',
+    bottom: parseInt(merchant.theme.positionBottom) + 85 + 'px',
     [merchant.theme.placement]: `${merchant.theme.positionSide}px`,
     height: '550px',
     width: '320px',
@@ -110,7 +126,7 @@ const myFunc = async () => {
   //cardtop
   let div1 = document.createElement('div');
   let div1Class1 = {
-    backgroundColor: merchant.theme.color ,
+    backgroundColor: merchant.theme.color,
     height: '150px',
     margin: '-10px',
     borderTopLeftRadius: '5px',
@@ -293,7 +309,7 @@ const myFunc = async () => {
   css(icon, class4);
   div5.appendChild(icon);
 
-  myDiv.appendChild(div3);
+  merchant.isPointsActive && myDiv.appendChild(div3);
 
   let btn = document.createElement('button');
   css(btn, {
@@ -302,7 +318,7 @@ const myFunc = async () => {
     bottom: `${merchant.theme.positionBottom}px`,
     [merchant.theme.placement]: `${merchant.theme.positionSide}px`,
     borderRadius: '50%',
-    padding: '24px',
+    padding: '22px',
     border: 'none',
     color: '#fff',
     cursor: 'pointer',
@@ -311,7 +327,7 @@ const myFunc = async () => {
 
   icon = document.createElement('i');
   icon.style.fontSize = '20px';
-  icon.classList.add('fas', 'fa-angle-up');
+  icon.classList.add('fas', 'fa-gift');
   btn.appendChild(icon);
 
   btn.addEventListener('click', () => {
@@ -324,7 +340,8 @@ const myFunc = async () => {
   });
 
   document.body.appendChild(myDiv);
-  document.body.appendChild(btn);
+  (merchant.isPointsActive || merchant.isReferralsActive) &&
+    document.body.appendChild(btn);
 
   // page 2
 
@@ -600,6 +617,10 @@ const myFunc = async () => {
   };
 
   let text = document.createElement('div');
+  text.addEventListener('click', () => {
+    myDiv2.style.display = 'none';
+    myDiv7.style.display = 'block';
+  });
   text.style.cssText += `display: flex;
   justify-content: space-between;
   align-items: center;
@@ -725,7 +746,7 @@ const myFunc = async () => {
   css(icon, class4);
   div5.appendChild(icon);
 
-  myDiv3.appendChild(div3);
+  merchant.isPointsActive && myDiv3.appendChild(div3);
 
   let refContainer = document.createElement('div');
   refContainer.style.cssText += `padding: 18px;
@@ -733,7 +754,7 @@ const myFunc = async () => {
   background-color: #fff;
   -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);`;
-  myDiv3.appendChild(refContainer);
+  merchant.isReferralsActive && myDiv3.appendChild(refContainer);
 
   span = document.createElement('span');
   span.textContent = 'Refer your friends';
@@ -1300,6 +1321,146 @@ const myFunc = async () => {
   span.id = 'discount';
   span.textContent = ` ${discountCode} `;
   refLink.appendChild(span);
+
+  // page 7
+
+  css(myDiv7, divClass);
+  document.body.appendChild(myDiv7);
+
+  //top
+  div1 = document.createElement('div');
+  div1Class = {
+    backgroundColor: merchant.theme.color,
+    height: '40px',
+    margin: '-10px',
+    borderTopLeftRadius: '5px',
+    borderTopRightRadius: '5px',
+    padding: ' 20px 20px 0px 20px',
+    color: '#fff',
+    fontFamily: 'Roboto',
+  };
+
+  icon = document.createElement('i');
+  icon.addEventListener('click', () => {
+    myDiv7.style.display = 'none';
+    myDiv2.style.display = 'block';
+  });
+  icon.style.fontSize = '16px';
+  icon.style.cursor = 'pointer';
+  icon.classList.add('fas', 'fa-angle-left');
+  div1.appendChild(icon);
+
+  span = document.createElement('span');
+  span.style.cssText +=
+    "font-family: 'Roboto';font-size: 14px; margin-left: 10px;";
+  span.textContent = 'Super Rewards';
+  div1.appendChild(span);
+
+  css(div1, div1Class);
+  myDiv7.appendChild(div1);
+
+  //center
+  center = document.createElement('div');
+  center.style.cssText +=
+    "margin-top: 20px;padding: 10px;font-family: 'Roboto';  font-weight: 500;";
+
+  span = document.createElement('span');
+  span.textContent = 'Your Coupons';
+  codes.length !== 0 && center.appendChild(span);
+
+  //---
+  // div = document.createElement('div');
+  // div.style.cssText +=
+  //   'margin: 10px 0px; display: flex;  align-items: center;  width: 100%;  cursor: pointer;margin-top: 20px;';
+  // center.appendChild(div);
+
+  // icon = document.createElement('i');
+  // icon.style.fontSize = '20px';
+  // icon.style.color = merchant.theme.color;
+  // icon.classList.add('fas', 'fa-user-tag');
+  // div.appendChild(icon);
+
+  // textGrp3 = document.createElement('div');
+  // textGrp3.style.cssText += `display: flex;
+  // margin-left: 15px;
+  // align-items: center;
+  // width: 100%;
+  // padding-bottom: 10px;
+  // border-bottom: 1px solid #e5e5e5;`;
+  // div.appendChild(textGrp3);
+
+  // // newDiv = document.createElement('div');
+  // // newDiv.style.cssText += `display: flex;
+  // // flex-direction: column;
+  // // margin-left: 0px;
+  // // justify-content: center;
+  // // width: 100%;`;
+  // // textGrp3.appendChild(newDiv);
+
+  // span = document.createElement('span');
+  // span.style.cssText += `font-size: 14px;
+  // font-weight: 300;
+  // `;
+  // span.textContent = codes[0]; //coupon code
+  // textGrp3.appendChild(span);
+  //newDiv.appendChild(span);
+
+  for (const code of codes) {
+    div = document.createElement('div');
+    div.style.cssText +=
+      'margin: 10px 0px; display: flex;  align-items: center;  width: 100%;  cursor: pointer;margin-top: 20px;';
+    center.appendChild(div);
+
+    icon = document.createElement('i');
+    icon.style.fontSize = '20px';
+    icon.style.color = merchant.theme.color;
+    icon.classList.add('fas', 'fa-user-tag');
+    div.appendChild(icon);
+
+    textGrp3 = document.createElement('div');
+    textGrp3.style.cssText += `display: flex;
+      margin-left: 15px;
+      align-items: center;
+      width: 100%;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e5e5e5;`;
+    div.appendChild(textGrp3);
+
+    span = document.createElement('span');
+    span.style.cssText += `font-size: 14px;
+  font-weight: 300;
+  `;
+    span.textContent = code; //coupon code
+    textGrp3.appendChild(span);
+  }
+  //--
+
+  // illustration
+  let imgContainer = document.createElement('div');
+  imgContainer.style.cssText += `
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;`;
+  codes.length === 0 && center.appendChild(imgContainer);
+
+  const img = document.createElement('img');
+  img.src =
+    'https://res.cloudinary.com/dl3nzdely/image/upload/v1625033697/1_sxsjlc.jpg';
+  img.alt = 'no rewards';
+  imgContainer.appendChild(img);
+
+  const noRewardsText = document.createElement('span');
+  noRewardsText.textContent = 'No rewards yet';
+  noRewardsText.style.cssText += `
+  margin: 15px 0px;
+  font-size: 14px
+  font-family: inherit;
+  `;
+  imgContainer.appendChild(noRewardsText);
+
+  myDiv7.appendChild(center);
 };
 
 myFunc();
