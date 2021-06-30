@@ -94,8 +94,8 @@ const myFunc = async () => {
   const divClass = {
     backgroundColor: '#fff',
     position: 'fixed',
-    bottom: '100px',
-    right: '20px',
+    bottom: parseInt(merchant.theme.positionBottom)  + 85 + 'px',
+    [merchant.theme.placement]: `${merchant.theme.positionSide}px`,
     height: '550px',
     width: '320px',
     padding: '10px',
@@ -299,8 +299,8 @@ const myFunc = async () => {
   css(btn, {
     backgroundColor: merchant.theme.color,
     position: 'fixed',
-    bottom: '10px',
-    right: '20px',
+    bottom: `${merchant.theme.positionBottom}px`,
+    [merchant.theme.placement]: `${merchant.theme.positionSide}px`,
     borderRadius: '50%',
     padding: '24px',
     border: 'none',
@@ -332,8 +332,8 @@ const myFunc = async () => {
   const divClass2 = {
     backgroundColor: '#fff',
     position: 'fixed',
-    bottom: '100px',
-    right: '20px',
+    bottom: parseInt(merchant.theme.positionBottom) + 85 + 'px',
+    [merchant.theme.placement]: `${merchant.theme.positionSide}px`,
     height: '550px',
     width: '320px',
     padding: '10px',
