@@ -1049,7 +1049,7 @@ const myFunc = async () => {
   span.style.cssText += `font-size: 14px;
   font-weight: 300;
   margin-bottom: 5px;`;
-  span.textContent = '₹20 Off coupon';
+  span.textContent = 'Fixed amount Off coupon';
   newDiv.appendChild(span);
 
   span = document.createElement('span');
@@ -1058,7 +1058,7 @@ const myFunc = async () => {
   margin-bottom: 5px;
   color: #777474;
   font-weight: 400;`;
-  span.textContent = '100 points';
+  span.textContent = merchant.redeemPoints + ' points';
   newDiv.appendChild(span);
 
   dateBtn = document.createElement('button');
@@ -1079,6 +1079,9 @@ const myFunc = async () => {
   font-size: 12px;
   margin-left: auto;
   cursor: pointer;`;
+  dateBtn.style.opacity =
+    result.points < merchant.redeemPoints ? '40%' : '100%';
+  dateBtn.disabled = result.points < merchant.redeemPoints;
   userId ? textGrp3.appendChild(dateBtn) : null;
 
   //--
@@ -1124,7 +1127,7 @@ const myFunc = async () => {
   margin-bottom: 5px;
   color: #777474;
   font-weight: 400;`;
-  span.textContent = '1000 points';
+  span.textContent = merchant.shippingPoints + ' points';
   newDiv.appendChild(span);
 
   dateBtn = document.createElement('button');
@@ -1145,6 +1148,9 @@ const myFunc = async () => {
   font-size: 12px;
   margin-left: auto;
   cursor: pointer;`;
+  dateBtn.style.opacity =
+    result.points < merchant.shippingPoints ? '40%' : '100%';
+  dateBtn.disabled = result.points < merchant.shippingPoints;
   userId ? textGrp3.appendChild(dateBtn) : null;
 
   //--
@@ -1181,7 +1187,7 @@ const myFunc = async () => {
   span.style.cssText += `font-size: 14px;
   font-weight: 300;
   margin-bottom: 5px;`;
-  span.textContent = '10% Off coupon';
+  span.textContent = 'Percentage Off coupon';
   newDiv.appendChild(span);
 
   span = document.createElement('span');
@@ -1190,7 +1196,7 @@ const myFunc = async () => {
   margin-bottom: 5px;
   color: #777474;
   font-weight: 400;`;
-  span.textContent = '500 points';
+  span.textContent = merchant.percentagePoints + ' points';
   newDiv.appendChild(span);
 
   dateBtn = document.createElement('button');
@@ -1211,6 +1217,9 @@ const myFunc = async () => {
   font-size: 12px;
   margin-left: auto;
   cursor: pointer;`;
+  dateBtn.style.opacity =
+    result.points < merchant.percentagePoints ? '40%' : '100%';
+  dateBtn.disabled = result.points < merchant.percentagePoints;
   userId ? textGrp3.appendChild(dateBtn) : null;
 
   //--
