@@ -6,7 +6,7 @@ let appUrl = 'https://4a64eb83cc5c.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams.ref;
 let shopDomain = Shopify.shop;
-// let userId = 5313776713881; //5313776713881
+// let userId = 5313776713881;
 // let referrer = 'SUPER202114';
 // let shopDomain = 'web-neil.myshopify.com';
 
@@ -14,6 +14,7 @@ let result = 0;
 let merchant = '';
 let codes = '';
 let discountCode;
+let showMessage = false;
 
 const getPointsData = async () => {
   if (userId) {
@@ -24,6 +25,13 @@ const getPointsData = async () => {
     console.log(data);
     result = data.customer;
     merchant = data.merchant;
+  } else {
+    const res = await fetch(
+      `${appUrl}/merchant-info/?shopDomain=${shopDomain}`
+    );
+    const data = await res.json();
+    console.log(data);
+    merchant = data;
   }
 };
 
@@ -47,22 +55,27 @@ const updateUserBirthday = async (day, month) => {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify({ day, month }),
+      body: JSON.stringify({ day, month, shopDomain }),
     };
     console.log(options.body);
     const res = await fetch(`${appUrl}/birthday/${userId}`, options);
+    showMessage = true;
     console.log(res);
   }
 };
 
 const sendReferrerCode = async () => {
-  const res = await fetch(`${appUrl}/set-referrer?ref=${referrer}`);
+  const res = await fetch(
+    `${appUrl}/set-referrer?ref=${referrer}?shopDomain=${shopDomain}`
+  );
   const data = await res.json();
   console.log(data);
 };
 
 const getDiscountCode = async () => {
-  const res = await fetch(`${appUrl}/discount/${userId}`);
+  const res = await fetch(
+    `${appUrl}/discount/${userId}?shopDomain=${shopDomain}`
+  );
   const data = await res.json();
   discountCode = data;
   console.log(data);
@@ -70,7 +83,9 @@ const getDiscountCode = async () => {
 };
 
 const getFreeShippingCode = async () => {
-  const res = await fetch(`${appUrl}/shipping/${userId}`);
+  const res = await fetch(
+    `${appUrl}/shipping/${userId}?shopDomain=${shopDomain}`
+  );
   const data = await res.json();
   discountCode = data;
   console.log(data);
@@ -78,7 +93,9 @@ const getFreeShippingCode = async () => {
 };
 
 const getPercentageCode = async () => {
-  const res = await fetch(`${appUrl}/percentage-discount/${userId}`);
+  const res = await fetch(
+    `${appUrl}/percentage-discount/${userId}?shopDomain=${shopDomain}`
+  );
   const data = await res.json();
   discountCode = data;
   console.log(data);
@@ -90,6 +107,12 @@ let script = document.createElement('script');
 script.src = 'https://kit.fontawesome.com/ccca1edeec.js';
 script.crossOrigin = 'anonymous';
 document.body.appendChild(script);
+
+// //tailwind cdn
+// let tailwind = document.createElement('link');
+// tailwind.href = 'https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css';
+// tailwind.rel = 'stylesheet';
+// document.head.appendChild(tailwind);
 
 const myFunc = async () => {
   await getPointsData();
@@ -617,7 +640,7 @@ const myFunc = async () => {
   };
 
   let text = document.createElement('div');
-  text.addEventListener('click', () => {
+  text.addEventListener('click', async () => {
     myDiv2.style.display = 'none';
     myDiv7.style.display = 'block';
   });
@@ -809,6 +832,8 @@ const myFunc = async () => {
   icon.addEventListener('click', () => {
     myDiv4.style.display = 'none';
     myDiv2.style.display = 'block';
+    let p = document.getElementById('successMsg');
+    p.style.display = 'none';
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -931,7 +956,19 @@ const myFunc = async () => {
   button.addEventListener('click', () => {
     let birthday = new Date(document.getElementById('date').value);
     updateUserBirthday(birthday.getDate(), birthday.getMonth() + 1);
+    let p = document.getElementById('successMsg');
+    p.style.display = 'block';
   });
+
+  let successMsg = document.createElement('p');
+  successMsg.textContent = 'Date saved successfully';
+  successMsg.id = 'successMsg';
+  successMsg.style.cssText += `
+  color: green;
+  font-family: inherit;
+  display: none;
+  `;
+  dateContainer.appendChild(successMsg);
 
   // page 5
 
@@ -1192,7 +1229,7 @@ const myFunc = async () => {
 
   a = document.createElement('a');
   a.textContent = 'Join Now';
-  a.href = 'https://web-neil.myshopify.com/account/register';
+  a.href = `https://${shopDomain}/account/register`;
   css(a, aClass2);
   button.appendChild(a);
 
