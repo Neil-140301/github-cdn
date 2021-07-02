@@ -66,7 +66,7 @@ const updateUserBirthday = async (day, month) => {
 
 const sendReferrerCode = async () => {
   const res = await fetch(
-    `${appUrl}/set-referrer?ref=${referrer}?shopDomain=${shopDomain}`
+    `${appUrl}/set-referrer?ref=${referrer}&shopDomain=${shopDomain}`
   );
   const data = await res.json();
   console.log(data);
