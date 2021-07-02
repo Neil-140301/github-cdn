@@ -6,7 +6,7 @@ let appUrl = 'https://023c78997da1.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams.ref;
 let shopDomain = Shopify.shop;
-// let userId = 5313776713881;
+// let userId; //= 5313776713881;
 // let referrer = 'SUPER202114';
 // let shopDomain = 'web-neil.myshopify.com';
 
@@ -155,7 +155,7 @@ const myFunc = async () => {
     borderTopLeftRadius: '5px',
     borderTopRightRadius: '5px',
     padding: '20px 20px 0px 20px',
-    color: '#fff',
+    color: merchant.theme.font,
     fontFamily: 'Roboto',
   };
 
@@ -221,7 +221,7 @@ const myFunc = async () => {
     borderRadius: '8px',
     padding: '16px 24px',
     backgroundColor: merchant.theme.color,
-    color: '#fff',
+    color: merchant.theme.font,
     fontSize: '12px',
     margin: '10px 0px',
   };
@@ -254,7 +254,7 @@ const myFunc = async () => {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '10px',
+    padding: '15px 10px',
   };
 
   p = document.createElement('p');
@@ -332,7 +332,76 @@ const myFunc = async () => {
   css(icon, class4);
   div5.appendChild(icon);
 
+  div4 = document.createElement('div');
+  div4.addEventListener('click', () => {
+    renderPage.style.display = 'none';
+    myDiv5.style.display = 'block';
+  });
+
+  css(div4, class1);
+  div3.appendChild(div4);
+
+  icon = document.createElement('i');
+  icon.style.fontSize = '20px';
+  icon.classList.add('fas', 'fa-gift');
+
+  css(icon, class2);
+  div4.appendChild(icon);
+
+  div5 = document.createElement('div');
+  div5.style.cssText +=
+    'display: flex;justify-content: space-between;align-items: center;margin-left: 15px;width: 100%;';
+  div4.appendChild(div5);
+
+  span = document.createElement('span');
+
+  css(span, class3);
+  span.textContent = 'Ways to redeem';
+  div5.appendChild(span);
+
+  icon = document.createElement('i');
+  icon.style.fontSize = '20px';
+  icon.classList.add('fas', 'fa-angle-right');
+
+  css(icon, class4);
+  div5.appendChild(icon);
+
   merchant.isPointsActive && myDiv.appendChild(div3);
+
+  //referral box
+  let refBox = document.createElement('div');
+  refBox.style.cssText += `box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center; 
+  `;
+  let para = document.createElement('p');
+  para.textContent = 'Referrals';
+  para.style.cssText += `
+  font-size: 15px;
+  font-weight: 600;
+  font-family: roboto;
+  margin: 0px;
+  `;
+  refBox.appendChild(para);
+
+  let refDescp = document.createElement('span');
+  refDescp.textContent =
+    'Give your friends a reward and claim your own when they make a purchase.';
+  refDescp.style.cssText += `
+  font-size: 13px;
+  font-family: roboto;
+  color: #777474;
+  margin: 0 10px;
+  margin-top: 8px;
+  `
+  refBox.appendChild(refDescp);
+
+  merchant.isReferralsActive && myDiv.appendChild(refBox);
 
   let btn = document.createElement('button');
   css(btn, {
@@ -343,7 +412,7 @@ const myFunc = async () => {
     borderRadius: '50%',
     padding: '22px',
     border: 'none',
-    color: '#fff',
+    color: merchant.theme.font,
     cursor: 'pointer',
     zIndex: '999',
   });
@@ -394,7 +463,7 @@ const myFunc = async () => {
     borderTopLeftRadius: '5px',
     borderTopRightRadius: '5px',
     padding: ' 20px 20px 0px 20px',
-    color: '#fff',
+    color: merchant.theme.font,
     fontFamily: 'Roboto',
   };
 
@@ -405,6 +474,7 @@ const myFunc = async () => {
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
+  icon, (style = merchant.theme.font);
   icon.classList.add('fas', 'fa-angle-left');
   div1.appendChild(icon);
 
@@ -522,7 +592,7 @@ const myFunc = async () => {
   border-radius: 8px;
   padding: 10px 18px;
   background-color: ${merchant.theme.color};
-  color: #fff;
+  color:${merchant.theme.font};
   font-size: 12px;
   margin-left: auto;
   cursor: pointer;`;
@@ -583,7 +653,7 @@ const myFunc = async () => {
     borderRadius: '8px',
     padding: '18px 34px',
     backgroundColor: merchant.theme.color,
-    color: '#fff',
+    color: merchant.theme.font,
     fontSize: '12px',
     margin: '10px 0px',
   };
@@ -824,7 +894,7 @@ const myFunc = async () => {
     borderTopLeftRadius: '5px',
     borderTopRightRadius: '5px',
     padding: ' 20px 20px 0px 20px',
-    color: '#fff',
+    color: merchant.theme.font,
     fontFamily: 'Roboto',
   };
 
@@ -837,6 +907,7 @@ const myFunc = async () => {
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
+  icon.style.color = merchant.theme.font;
   icon.classList.add('fas', 'fa-angle-left');
   div1.appendChild(icon);
 
@@ -946,7 +1017,7 @@ const myFunc = async () => {
   border-radius: 8px;
   padding: 10px 18px;
   background-color: ${merchant.theme.color};
-  color: #fff;
+  color: ${merchant.theme.font};
   font-size: 12px;
   cursor: pointer;
   margin: 15px 0px;`;
@@ -984,7 +1055,7 @@ const myFunc = async () => {
     borderTopLeftRadius: '5px',
     borderTopRightRadius: '5px',
     padding: ' 20px 20px 0px 20px',
-    color: '#fff',
+    color: merchant.theme.font,
     fontFamily: 'Roboto',
   };
 
@@ -995,6 +1066,7 @@ const myFunc = async () => {
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
+  icon.style.color = merchant.theme.font;
   icon.classList.add('fas', 'fa-angle-left');
   div1.appendChild(icon);
 
@@ -1075,7 +1147,7 @@ const myFunc = async () => {
   border-radius: 8px;
   padding: 10px 18px;
   background-color: ${merchant.theme.color};
-  color: #fff;
+  color: ${merchant.theme.font};
   font-size: 12px;
   margin-left: auto;
   cursor: pointer;`;
@@ -1144,7 +1216,7 @@ const myFunc = async () => {
   border-radius: 8px;
   padding: 10px 18px;
   background-color: ${merchant.theme.color};
-  color: #fff;
+  color: ${merchant.theme.font};
   font-size: 12px;
   margin-left: auto;
   cursor: pointer;`;
@@ -1213,7 +1285,7 @@ const myFunc = async () => {
   border-radius: 8px;
   padding: 10px 18px;
   background-color: ${merchant.theme.color};
-  color: #fff;
+  color: ${merchant.theme.font};
   font-size: 12px;
   margin-left: auto;
   cursor: pointer;`;
@@ -1256,7 +1328,7 @@ const myFunc = async () => {
     borderTopLeftRadius: '5px',
     borderTopRightRadius: '5px',
     padding: ' 20px 20px 0px 20px',
-    color: '#fff',
+    color: merchant.theme.font,
     fontFamily: 'Roboto',
   };
 
@@ -1267,6 +1339,7 @@ const myFunc = async () => {
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
+  icon.style.color = merchant.theme.font;
   icon.classList.add('fas', 'fa-angle-left');
   div1.appendChild(icon);
 
@@ -1382,7 +1455,7 @@ const myFunc = async () => {
     borderTopLeftRadius: '5px',
     borderTopRightRadius: '5px',
     padding: ' 20px 20px 0px 20px',
-    color: '#fff',
+    color: merchant.theme.font,
     fontFamily: 'Roboto',
   };
 
@@ -1393,6 +1466,7 @@ const myFunc = async () => {
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
+  icon.style.color = merchant.theme.font;
   icon.classList.add('fas', 'fa-angle-left');
   div1.appendChild(icon);
 
