@@ -2,7 +2,7 @@ function css(element, styleObj) {
   for (let property in styleObj) element.style[property] = styleObj[property];
 }
 
-let appUrl = 'https://4a64eb83cc5c.ngrok.io';
+let appUrl = 'https://023c78997da1.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams.ref;
 let shopDomain = Shopify.shop;
