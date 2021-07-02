@@ -4,7 +4,7 @@ function css(element, styleObj) {
 
 let appUrl = 'https://023c78997da1.ngrok.io';
 let userId = meta.page.customerId;
-let referrer = Shopify.queryParams.ref;
+let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let shopDomain = Shopify.shop;
 // let userId; //= 5313776713881;
 // let referrer = 'SUPER202114';
