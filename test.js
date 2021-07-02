@@ -6,9 +6,9 @@ let appUrl = 'https://023c78997da1.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let shopDomain = Shopify.shop;
-// let userId; //= 5313776713881;
+// let userId= 5313776713881;
 // let referrer = 'SUPER202114';
-// let shopDomain = 'web-neil.myshopify.com';
+// let shopDomain = 'web-neil.myshopify.com'; 
 
 let result = 0;
 let merchant = '';
@@ -530,7 +530,7 @@ const myFunc = async () => {
   margin-bottom: 5px;
   color: #777474;
   font-weight: 400;`;
-  span.textContent = '200 points';
+  span.textContent = merchant.signupPoints + ' points';
   newDiv.appendChild(span);
 
   let hr = document.createElement('hr');
@@ -581,7 +581,7 @@ const myFunc = async () => {
   margin-bottom: 5px;
   color: #777474;
   font-weight: 400;`;
-  span.textContent = '200 points';
+  span.textContent = merchant.birthdayPoints + ' points';
   newDiv.appendChild(span);
 
   let dateBtn = document.createElement('button');
@@ -632,7 +632,7 @@ const myFunc = async () => {
   margin-bottom: 5px;
   color: #777474;
   font-weight: 400;`;
-  span.textContent = '5 points for every ₹1 spent';
+  span.textContent = merchant.orderPoints + ' points for every ₹1 spent';
   newDiv.appendChild(span);
 
   hr = document.createElement('hr');
@@ -973,7 +973,7 @@ const myFunc = async () => {
   margin-bottom: 5px;
   color: #777474;
   font-weight: 400;`;
-  span.textContent = '200 points';
+  span.textContent = merchant.birthdayPoints + ' points';
   newDiv.appendChild(span);
 
   let centerDesc = document.createElement('span');
