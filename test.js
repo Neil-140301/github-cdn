@@ -230,7 +230,9 @@ const myFunc = async () => {
 
   let a = document.createElement('a');
   a.textContent = 'Join Now';
-  a.href = 'https://web-neil.myshopify.com/account/register';
+  a.href =
+    `https://${shopDomain}/account/register` +
+    (referrer ? `?ref=${referrer}` : '');
   const aClass = {
     textDecoration: 'none',
     color: 'inherit',
@@ -398,7 +400,7 @@ const myFunc = async () => {
   color: #777474;
   margin: 0 10px;
   margin-top: 8px;
-  `
+  `;
   refBox.appendChild(refDescp);
 
   merchant.isReferralsActive && myDiv.appendChild(refBox);
@@ -662,7 +664,9 @@ const myFunc = async () => {
 
   a = document.createElement('a');
   a.textContent = 'Join Now';
-  a.href = 'https://web-neil.myshopify.com/account/register';
+  a.href =
+    `https://${shopDomain}/account/register` +
+    (referrer ? `?ref=${referrer}` : '');
   const aClass2 = {
     textDecoration: 'none',
     color: 'inherit',
@@ -1310,7 +1314,9 @@ const myFunc = async () => {
 
   a = document.createElement('a');
   a.textContent = 'Join Now';
-  a.href = `https://${shopDomain}/account/register`;
+  a.href =
+    `https://${shopDomain}/account/register` +
+    (referrer ? `?ref=${referrer}` : '');
   css(a, aClass2);
   button.appendChild(a);
 
