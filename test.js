@@ -1429,7 +1429,7 @@ const myFunc = async () => {
   newDiv.appendChild(span);
 
   span = document.createElement('span');
-  span.id = 'discount-points-spent'
+  span.id = 'discount-points-spent';
   span.style.cssText += `font-size: 14px;
   font-weight: 300;
   margin-bottom: 5px;
@@ -1529,13 +1529,13 @@ const myFunc = async () => {
   // border-bottom: 1px solid #e5e5e5;`;
   // div.appendChild(textGrp3);
 
-  // // newDiv = document.createElement('div');
-  // // newDiv.style.cssText += `display: flex;
-  // // flex-direction: column;
-  // // margin-left: 0px;
-  // // justify-content: center;
-  // // width: 100%;`;
-  // // textGrp3.appendChild(newDiv);
+  // newDiv = document.createElement('div');
+  // newDiv.style.cssText += `display: flex;
+  // flex-direction: column;
+  // margin-left: 0px;
+  // justify-content: center;
+  // width: 100%;`;
+  // textGrp3.appendChild(newDiv);
 
   // span = document.createElement('span');
   // span.style.cssText += `font-size: 14px;
@@ -1545,7 +1545,7 @@ const myFunc = async () => {
   // textGrp3.appendChild(span);
   //newDiv.appendChild(span);
 
-  for (const code of codes) {
+  for (const codeObj of codes) {
     div = document.createElement('div');
     div.style.cssText +=
       'margin: 10px 0px; display: flex;  align-items: center;  width: 100%;  cursor: pointer;margin-top: 20px;';
@@ -1566,12 +1566,30 @@ const myFunc = async () => {
       border-bottom: 1px solid #e5e5e5;`;
     div.appendChild(textGrp3);
 
+    newDiv = document.createElement('div');
+    newDiv.style.cssText += `display: flex;
+    flex-direction: column;
+    margin-left: 0px;
+    justify-content: center;
+    width: 100%;`;
+    textGrp3.appendChild(newDiv);
+
+    let discountDesc = document.createElement('span');
+    discountDesc.textContent = codeObj.desc;
+    discountDesc.style.cssText += `
+    font-size: 14px;
+    margin-bottom: 8px;
+    font-weight: 400;
+    `;
+    newDiv.appendChild(discountDesc);
+
     span = document.createElement('span');
     span.style.cssText += `font-size: 14px;
-  font-weight: 300;
-  `;
-    span.textContent = code; //coupon code
-    textGrp3.appendChild(span);
+    font-weight: 300;
+    color: #777474;
+    `;
+    span.textContent = codeObj.code; //coupon code
+    newDiv.appendChild(span);
   }
   //--
 
