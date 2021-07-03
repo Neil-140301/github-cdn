@@ -879,7 +879,7 @@ const myFunc = async () => {
   userId ? refContainer.appendChild(refLink) : null;
 
   span = document.createElement('span');
-  span.textContent = `https://web-neil.myshopify.com/?ref=${result.referralCode}`;
+  span.textContent = `https://${shopDomain}/?ref=${result.referralCode}`;
   refLink.appendChild(span);
 
   document.body.appendChild(myDiv3);
