@@ -6,9 +6,9 @@ let appUrl = 'https://3183a8dcedca.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let shopDomain = Shopify.shop;
-// let userId= 5313776713881;
+// let userId = 5313776713881;
 // let referrer = 'SUPER202114';
-// let shopDomain = 'web-neil.myshopify.com'; 
+// let shopDomain = 'web-neil.myshopify.com';
 
 let result = 0;
 let merchant = '';
@@ -142,7 +142,7 @@ const myFunc = async () => {
     boxShadow: '0px 0px 15px -10px rgba(0, 0, 0, 0.75)',
     display: 'none',
     zIndex: '999',
-    fontFamily: 'inherit',
+    fontFamily: 'roboto',
   };
   css(myDiv, divClass);
 
@@ -1125,7 +1125,7 @@ const myFunc = async () => {
   span.style.cssText += `font-size: 14px;
   font-weight: 300;
   margin-bottom: 5px;`;
-  span.textContent = 'Fixed amount Off coupon';
+  span.textContent = 'INR ' + merchant.couponAmt + ' Off coupon';
   newDiv.appendChild(span);
 
   span = document.createElement('span');
@@ -1144,6 +1144,10 @@ const myFunc = async () => {
     await getDiscountCode();
     let span = document.getElementById('discount');
     span.textContent = discountCode;
+    let couponDesc = document.getElementById('discount-coupon-value');
+    couponDesc.textContent = `INR ${merchant.couponAmt} off coupon`;
+    let couponPoints = document.getElementById('discount-points-spent');
+    couponPoints.textContent = `Spent ${merchant.redeemPoints} points`;
     myDiv5.style.display = 'none';
     myDiv6.style.display = 'block';
   });
@@ -1213,6 +1217,10 @@ const myFunc = async () => {
     await getFreeShippingCode();
     let span = document.getElementById('discount');
     span.textContent = discountCode;
+    let couponDesc = document.getElementById('discount-coupon-value');
+    couponDesc.textContent = `Free shipping coupon`;
+    let couponPoints = document.getElementById('discount-points-spent');
+    couponPoints.textContent = `Spent ${merchant.shippingPoints} points`;
     myDiv5.style.display = 'none';
     myDiv6.style.display = 'block';
   });
@@ -1263,7 +1271,7 @@ const myFunc = async () => {
   span.style.cssText += `font-size: 14px;
   font-weight: 300;
   margin-bottom: 5px;`;
-  span.textContent = 'Percentage Off coupon';
+  span.textContent = merchant.percentageAmt + ' % Off coupon';
   newDiv.appendChild(span);
 
   span = document.createElement('span');
@@ -1282,6 +1290,10 @@ const myFunc = async () => {
     await getPercentageCode();
     let span = document.getElementById('discount');
     span.textContent = discountCode;
+    let couponDesc = document.getElementById('discount-coupon-value');
+    couponDesc.textContent = `${merchant.percentageAmt}% off coupon`;
+    let couponPoints = document.getElementById('discount-points-spent');
+    couponPoints.textContent = `Spent ${merchant.percentagePoints} points`;
     myDiv5.style.display = 'none';
     myDiv6.style.display = 'block';
   });
@@ -1413,9 +1425,11 @@ const myFunc = async () => {
   font-weight: 300;
   margin-bottom: 5px;`;
   span.textContent = '₹20 Off coupon';
+  span.id = 'discount-coupon-value';
   newDiv.appendChild(span);
 
   span = document.createElement('span');
+  span.id = 'discount-points-spent'
   span.style.cssText += `font-size: 14px;
   font-weight: 300;
   margin-bottom: 5px;
