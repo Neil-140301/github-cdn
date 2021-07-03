@@ -8,7 +8,7 @@ let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParam
 let shopDomain = Shopify.shop;
 // let userId = 5313776713881;
 // let referrer = 'SUPER202114';
-// let shopDomain = 'web-neil.myshopify.com';
+// let shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
 
 let result = 0;
 let merchant = '';
@@ -632,7 +632,11 @@ const myFunc = async () => {
   margin-bottom: 5px;
   color: #777474;
   font-weight: 400;`;
-  span.textContent = merchant.orderPoints + ' points for every ₹1 spent';
+  const value2 = merchant.currency.symbol.replace(
+    /{{amount}}/g,
+    '1'
+  );
+  span.textContent = merchant.orderPoints + ` points for every ${value2} spent`;
   newDiv.appendChild(span);
 
   hr = document.createElement('hr');
@@ -862,8 +866,11 @@ const myFunc = async () => {
   refContainer.appendChild(span);
 
   let refDesc = document.createElement('p');
-  refDesc.textContent =
-    'Share this URL to give your friends the reward ₹300 off coupon';
+  const couponValue = merchant.currency.symbol.replace(
+    /{{amount}}/g,
+    merchant.friendAmt
+  );
+  refDesc.textContent = `Share this URL to give your friends the reward ${couponValue} off coupon`;
   refDesc.style.cssText += `color: #637381;
   font-size: 13px;
   font-weight: 400;`;
@@ -1125,7 +1132,11 @@ const myFunc = async () => {
   span.style.cssText += `font-size: 14px;
   font-weight: 300;
   margin-bottom: 5px;`;
-  span.textContent = 'INR ' + merchant.couponAmt + ' Off coupon';
+  const value3 = merchant.currency.symbol.replace(
+    /{{amount}}/g,
+    merchant.couponAmt
+  );
+  span.textContent = value3 + ' Off coupon';
   newDiv.appendChild(span);
 
   span = document.createElement('span');
@@ -1145,7 +1156,7 @@ const myFunc = async () => {
     let span = document.getElementById('discount');
     span.textContent = discountCode;
     let couponDesc = document.getElementById('discount-coupon-value');
-    couponDesc.textContent = `INR ${merchant.couponAmt} off coupon`;
+    couponDesc.textContent = `${value3} off coupon`;
     let couponPoints = document.getElementById('discount-points-spent');
     couponPoints.textContent = `Spent ${merchant.redeemPoints} points`;
     myDiv5.style.display = 'none';
