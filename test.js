@@ -6,7 +6,7 @@ let appUrl = 'https://e80d03ebe700.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let shopDomain = Shopify.shop;
-// let userId; //= 5313776713881;
+// let userId= 5313776713881;
 // let referrer = 'SUPER202114';
 // let shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
 
@@ -748,7 +748,7 @@ const myFunc = async () => {
 
   let text = document.createElement('div');
   text.addEventListener('click', async () => {
-    myDiv2.style.display = 'none';
+    renderPage.style.display = 'none';//
     myDiv7.style.display = 'block';
   });
   text.style.cssText += `display: flex;
@@ -1522,7 +1522,7 @@ const myFunc = async () => {
   icon = document.createElement('i');
   icon.addEventListener('click', () => {
     myDiv7.style.display = 'none';
-    myDiv2.style.display = 'block';
+    renderPage.style.display = 'block';//
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
