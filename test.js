@@ -6,7 +6,7 @@ let appUrl = 'https://e80d03ebe700.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let shopDomain = Shopify.shop;
-// let userId //= 5313776713881;
+// let userId = 5313776713881;
 // let referrer = 'SUPER202114';
 // let shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
 
@@ -136,8 +136,8 @@ const myFunc = async () => {
     boxSizing: 'border-box',
     bottom: parseInt(merchant.theme.positionBottom) + 85 + 'px',
     [merchant.theme.placement]: `${merchant.theme.positionSide}px`,
-    height: '34.5rem',//'550px',
-    width: '20rem',//'320px',
+    height: '550px',
+    width: '320px',
     padding: '10px',
     borderRadius: '5px',
     boxShadow: '0px 0px 15px -10px rgba(0, 0, 0, 0.75)',
@@ -151,7 +151,7 @@ const myFunc = async () => {
   let div1 = document.createElement('div');
   let div1Class1 = {
     backgroundColor: merchant.theme.color,
-    height: '120px',
+    height: '150px',
     margin: '-10px',
     borderTopLeftRadius: '5px',
     borderTopRightRadius: '5px',
@@ -447,8 +447,8 @@ const myFunc = async () => {
     boxSizing: 'border-box',
     bottom: parseInt(merchant.theme.positionBottom) + 85 + 'px',
     [merchant.theme.placement]: `${merchant.theme.positionSide}px`,
-    height: '34.5rem',//'550px',
-    width: '20rem' ,//'320px',
+    height: '550px',
+    width: '320px',
     padding: '10px',
     borderRadius: '5px',
     boxShadow: '0px 0px 15px -10px rgba(0, 0, 0, 0.75)',
