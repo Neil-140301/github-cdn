@@ -6,7 +6,7 @@ let appUrl = 'https://e80d03ebe700.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let shopDomain = Shopify.shop;
-// let userId = 5313776713881;
+// let userId; //= 5313776713881;
 // let referrer = 'SUPER202114';
 // let shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
 
@@ -136,7 +136,7 @@ const myFunc = async () => {
     boxSizing: 'border-box',
     bottom: parseInt(merchant.theme.positionBottom) + 85 + 'px',
     [merchant.theme.placement]: `${merchant.theme.positionSide}px`,
-    height: '550px',
+    minHeight: '550px',
     width: '320px',
     padding: '10px',
     borderRadius: '5px',
@@ -169,7 +169,7 @@ const myFunc = async () => {
   let pClass = {
     fontSize: '24px',
     fontWeight: '600',
-    margin: ' 15px 0px',
+    margin: '0.8rem 0px', //' 15px 0px',
   };
   css(p, pClass);
   div1.appendChild(p);
@@ -183,7 +183,7 @@ const myFunc = async () => {
     backgroundColor: '#fff',
     boxShadow: '0px 0px 15px -10px rgba(0, 0, 0, 0.75)',
     borderRadius: '5px',
-    height: '150px',
+    // height: '150px',
     position: 'relative',
     top: '-25px',
     display: 'flex',
@@ -195,21 +195,27 @@ const myFunc = async () => {
 
   p = document.createElement('p');
   p.textContent = 'Become a member';
-  pClass = {
-    fontSize: '15px',
-    fontWeight: '600',
-    fontFamily: 'Roboto',
-  };
-  css(p, pClass);
+  // pClass = {
+  //   fontSize: '15px',
+  //   fontWeight: '600',
+  //   fontFamily: 'Roboto',
+  // };
+  // css(p, pClass);
+  p.style.cssText += `
+  font-size: 15px;
+    font-weight: 600;
+    font-family: Roboto;
+    margin: 0.8rem;
+    margin-top: 0px;
+  `;
   div2.appendChild(p);
 
   span = document.createElement('span');
   const spanClass = {
-    fontSize: '13px',
+    fontSize: '1.1rem',
     fontFamily: 'Roboto',
     color: '#777474',
     textAlign: 'center',
-    marginBottom: '10px',
   };
   css(span, spanClass);
   span.textContent =
@@ -224,7 +230,7 @@ const myFunc = async () => {
     backgroundColor: merchant.theme.color,
     color: merchant.theme.font,
     fontSize: '12px',
-    margin: '10px 0px',
+    margin: '0.8rem 0px',
   };
   css(button, btnClass);
   div2.appendChild(button);
@@ -250,24 +256,30 @@ const myFunc = async () => {
     backgroundColor: '#fff',
     boxShadow: '0px 0px 15px -10px rgba(0, 0, 0, 0.75)',
     borderRadius: '5px',
-    height: '150px',
+    // height: '150px',
     position: 'relative',
     top: '-10px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '15px 10px',
+    padding: '10px',
   };
 
   p = document.createElement('p');
   p.textContent = 'Points';
-  pClass = {
-    fontSize: '15px',
-    fontWeight: '600',
-    fontFamily: 'Roboto',
-  };
-  css(p, pClass);
+  // pClass = {
+  //   fontSize: '15px',
+  //   fontWeight: '600',
+  //   fontFamily: 'Roboto',
+    
+  // };
+  // css(p, pClass);
+  p.style.cssText += `font-size: 15px;
+    font-weight: 600;
+    font-family: Roboto;
+    margin: 0.8rem;
+    margin-top: 0;`;
   div3.appendChild(p);
 
   span = document.createElement('span');
@@ -278,7 +290,12 @@ const myFunc = async () => {
     textAlign: 'center',
     marginBottom: '10px',
   };
-  css(span, spanClass2);
+  // css(span, spanClass2);
+  span.style.cssText += `font-size: 1.1rem;
+    font-family: Roboto;
+    color: rgb(119, 116, 116);
+    text-align: center;
+    margin-bottom: 0.8rem;`;
   span.textContent =
     ' Earn more Points for different actions, and turn those Points into awesome rewards!';
   div3.appendChild(span);
@@ -297,7 +314,12 @@ const myFunc = async () => {
     width: '75%',
     cursor: 'pointer',
   };
-  css(div4, class1);
+  // css(div4, class1);
+  div4.style.cssText += `margin: 0.5rem 0px;
+    display: flex;
+    align-items: center;
+    width: 75%;
+    cursor: pointer;`;
   div3.appendChild(div4);
 
   let icon = document.createElement('i');
@@ -341,7 +363,12 @@ const myFunc = async () => {
     myDiv5.style.display = 'block';
   });
 
-  css(div4, class1);
+  // css(div4, class1);
+  div4.style.cssText += `margin: 0.5rem 0px;
+    display: flex;
+    align-items: center;
+    width: 75%;
+    cursor: pointer;`;
   div3.appendChild(div4);
 
   icon = document.createElement('i');
@@ -374,7 +401,7 @@ const myFunc = async () => {
   //referral box
   let refBox = document.createElement('div');
   refBox.style.cssText += `box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-  padding: 10px;
+  padding: 0.8rem;
   border-radius: 8px;
   text-align: center;
   display: flex;
@@ -396,11 +423,11 @@ const myFunc = async () => {
   refDescp.textContent =
     'Give your friends a reward and claim your own when they make a purchase.';
   refDescp.style.cssText += `
-  font-size: 13px;
+  font-size: 1.1rem;
   font-family: roboto;
   color: #777474;
-  margin: 0 10px;
-  margin-top: 8px;
+  margin: 0.5rem 0px;
+  margin-bottom:0px;
   `;
   refBox.appendChild(refDescp);
 
@@ -636,10 +663,7 @@ const myFunc = async () => {
   margin-bottom: 5px;
   color: #777474;
   font-weight: 400;`;
-  const value2 = merchant.currency.symbol.replace(
-    /{{amount}}/g,
-    '1'
-  );
+  const value2 = merchant.currency.symbol.replace(/{{amount}}/g, '1');
   span.textContent = merchant.orderPoints + ` points for every ${value2} spent`;
   newDiv.appendChild(span);
 
@@ -696,7 +720,8 @@ const myFunc = async () => {
   p = document.createElement('p');
   p.style.cssText += `font-size: 24px;
   font-weight: 600;
-  margin: 15px 0px;`;
+  margin: 1rem 0px;
+  `;
   p.textContent = 'Super Rewards';
 
   div1.appendChild(p);
