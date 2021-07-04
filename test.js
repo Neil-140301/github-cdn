@@ -514,6 +514,7 @@ const myFunc = async () => {
   flex-direction: column;
   margin-left: 15px;
   justify-content: center;
+  border-bottom: 1px solid #e5e5e5;
   width: 100%;`;
   div.appendChild(newDiv);
 
@@ -533,12 +534,12 @@ const myFunc = async () => {
   span.textContent = merchant.signupPoints + ' points';
   newDiv.appendChild(span);
 
-  let hr = document.createElement('hr');
-  hr.style.cssText += `background-color: #e5e5e5;
-  width: 100%;
-  height: 1px;
-  border: none;`;
-  newDiv.appendChild(hr);
+  // let hr = document.createElement('hr');
+  // hr.style.cssText += `background-color: #e5e5e5;
+  // width: 100%;
+  // height: 1px;
+  // border: none;`;
+  // newDiv.appendChild(hr);
 
   div = document.createElement('div');
   div.style.cssText +=
@@ -616,6 +617,7 @@ const myFunc = async () => {
   flex-direction: column;
   margin-left: 15px;
   justify-content: center;
+  border-bottom: 1px solid #e5e5e5;
   width: 100%;`;
   div.appendChild(newDiv);
 
@@ -639,12 +641,12 @@ const myFunc = async () => {
   span.textContent = merchant.orderPoints + ` points for every ${value2} spent`;
   newDiv.appendChild(span);
 
-  hr = document.createElement('hr');
-  hr.style.cssText += `background-color: #e5e5e5;
-  width: 100%;
-  height: 1px;
-  border: none;`;
-  newDiv.appendChild(hr);
+  // hr = document.createElement('hr');
+  // hr.style.cssText += `background-color: #e5e5e5;
+  // width: 100%;
+  // height: 1px;
+  // border: none;`;
+  // newDiv.appendChild(hr);
 
   myDiv2.appendChild(center);
 
