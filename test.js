@@ -489,7 +489,7 @@ const myFunc = async () => {
   div1 = document.createElement('div');
   div1Class = {
     backgroundColor: merchant.theme.color,
-    height: '40px',
+    height: '55px',
     margin: '-10px',
     borderTopLeftRadius: '5px',
     borderTopRightRadius: '5px',
@@ -521,7 +521,7 @@ const myFunc = async () => {
   //center
   let center = document.createElement('div');
   center.style.cssText +=
-    "margin-top: 20px;padding: 10px;font-family: 'Roboto';  font-weight: 500;";
+    "margin-top: 28px;padding: 10px;font-family: 'Roboto';  font-weight: 500;";
 
   span = document.createElement('span');
   span.textContent = 'Ways to earn';
@@ -901,8 +901,9 @@ const myFunc = async () => {
   );
   refDesc.textContent = `Share this URL to give your friends the reward ${couponValue} off coupon`;
   refDesc.style.cssText += `color: #637381;
-  font-size: 12px;
-  font-weight: 400;`;
+  font-size: 11px;
+  font-weight: 400;
+  margin: 8px 0px`;
   refContainer.appendChild(refDesc);
 
   let refLink = document.createElement('div');
@@ -951,7 +952,7 @@ const myFunc = async () => {
   div1 = document.createElement('div');
   div1Class = {
     backgroundColor: merchant.theme.color,
-    height: '40px',
+    height: '55px',
     margin: '-10px',
     borderTopLeftRadius: '5px',
     borderTopRightRadius: '5px',
@@ -1112,7 +1113,7 @@ const myFunc = async () => {
   div1 = document.createElement('div');
   div1Class = {
     backgroundColor: merchant.theme.color,
-    height: '40px',
+    height: '55px',
     margin: '-10px',
     borderTopLeftRadius: '5px',
     borderTopRightRadius: '5px',
@@ -1403,7 +1404,7 @@ const myFunc = async () => {
   div1 = document.createElement('div');
   div1Class = {
     backgroundColor: merchant.theme.color,
-    height: '40px',
+    height: '55px',
     margin: '-10px',
     borderTopLeftRadius: '5px',
     borderTopRightRadius: '5px',
@@ -1517,7 +1518,8 @@ const myFunc = async () => {
   color: #637381;
   text-align: center;
   display: flex;
-  align-items: center;`;
+  align-items: center;
+  justifu-content: center;`;
   userId ? refContainer.appendChild(refLink) : null;
 
   span = document.createElement('span');
@@ -1526,7 +1528,7 @@ const myFunc = async () => {
   refLink.appendChild(span);
 
   copy = document.createElement('icon');
-  copy.style.cssText += `font-size: 13px;`;
+  copy.style.cssText += `font-size: 13px;margin-left: 10px;`;
   copy.classList.add('far', 'fa-clipboard');
   copy.addEventListener('click', (event) => {
     document.execCommand('copy');
@@ -1552,7 +1554,7 @@ const myFunc = async () => {
   div1 = document.createElement('div');
   div1Class = {
     backgroundColor: merchant.theme.color,
-    height: '40px',
+    height: '55px',
     margin: '-10px',
     borderTopLeftRadius: '5px',
     borderTopRightRadius: '5px',
