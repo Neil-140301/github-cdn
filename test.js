@@ -6,7 +6,7 @@ let appUrl = 'https://4e9fd920656a.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let shopDomain = Shopify.shop;
-// let userId //= 5339239350443;
+// let userId = 5339239350443;
 // let referrer; //= 'SUPER202114';
 // let shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
 
@@ -191,6 +191,7 @@ const myFunc = async () => {
     fontSize: '24px',
     fontWeight: '600',
     margin: '8px 0px', //' 15px 0px',
+    color: merchant.theme.font
   };
   css(p, pClass);
   div1.appendChild(p);
@@ -765,6 +766,7 @@ const myFunc = async () => {
   p.style.cssText += `font-size: 24px;
   font-weight: 600;
   margin: 10px 0px;
+  color: ${merchant.theme.font}
   `;
   p.textContent = 'Super Rewards';
 
@@ -1113,7 +1115,8 @@ const myFunc = async () => {
   cursor: pointer;
   outline: none;
   color: #c3c2c2;
-  font-weight: 400;`;
+  font-weight: 400;
+  background-color: #f5f6fa`;
   input.type = 'date';
   input.name = 'birthday';
   input.id = 'date';
