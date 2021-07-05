@@ -7,7 +7,7 @@ let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let shopDomain = Shopify.shop;
 // let userId = 5339239350443;
-// let referrer //= 'SUPER202114';
+// let referrer; //= 'SUPER202114';
 // let shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
 
 let result = 0;
@@ -231,6 +231,7 @@ const myFunc = async () => {
     color: merchant.theme.font,
     fontSize: '12px',
     margin: '8px 0px',
+    fontFamily: 'Roboto',
   };
   css(button, btnClass);
   div2.appendChild(button);
@@ -690,6 +691,7 @@ const myFunc = async () => {
     color: merchant.theme.font,
     fontSize: '12px',
     margin: '10px 0px',
+    fontFamily: 'Roboto'
   };
   css(button, btnClass2);
   userId ? null : btnC.appendChild(button);
@@ -1099,7 +1101,7 @@ const myFunc = async () => {
   successMsg.id = 'successMsg';
   successMsg.style.cssText += `
   color: green;
-  font-family: inherit;
+  font-family: Roboto;
   display: none;
   `;
   dateContainer.appendChild(successMsg);
@@ -1221,7 +1223,8 @@ const myFunc = async () => {
   color: ${merchant.theme.font};
   font-size: 12px;
   margin-left: auto;
-  cursor: pointer;`;
+  cursor: pointer;
+  font-family: Roboto;`;
   dateBtn.style.opacity =
     result.points < merchant.redeemPoints ? '40%' : '100%';
   dateBtn.disabled = result.points < merchant.redeemPoints;
@@ -1294,7 +1297,8 @@ const myFunc = async () => {
   color: ${merchant.theme.font};
   font-size: 12px;
   margin-left: auto;
-  cursor: pointer;`;
+  cursor: pointer;
+  font-family: Roboto;`;
   dateBtn.style.opacity =
     result.points < merchant.shippingPoints ? '40%' : '100%';
   dateBtn.disabled = result.points < merchant.shippingPoints;
@@ -1367,7 +1371,8 @@ const myFunc = async () => {
   color: ${merchant.theme.font};
   font-size: 12px;
   margin-left: auto;
-  cursor: pointer;`;
+  cursor: pointer;
+  font-family: Roboto;`;
   dateBtn.style.opacity =
     result.points < merchant.percentagePoints ? '40%' : '100%';
   dateBtn.disabled = result.points < merchant.percentagePoints;
@@ -1716,7 +1721,7 @@ const myFunc = async () => {
   noRewardsText.style.cssText += `
   margin: 15px 0px;
   font-size: 14px
-  font-family: inherit;
+  font-family: Roboto;
   `;
   imgContainer.appendChild(noRewardsText);
 
