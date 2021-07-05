@@ -467,7 +467,7 @@ const myFunc = async () => {
     border: 'none',
     color: merchant.theme.font,
     cursor: 'pointer',
-    //zIndex: '999',
+    zIndex: '998',
   });
 
   icon = document.createElement('i');
