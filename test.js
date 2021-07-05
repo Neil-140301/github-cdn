@@ -6,8 +6,8 @@ let appUrl = 'https://4e9fd920656a.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let shopDomain = Shopify.shop;
-// let userId = 5313776713881;
-// let referrer = 'SUPER202114';
+// let userId = 5339239350443;
+// let referrer //= 'SUPER202114';
 // let shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
 
 let result = 0;
@@ -169,7 +169,7 @@ const myFunc = async () => {
   let pClass = {
     fontSize: '24px',
     fontWeight: '600',
-    margin: '0.8rem 0px', //' 15px 0px',
+    margin: '8px 0px', //' 15px 0px',
   };
   css(p, pClass);
   div1.appendChild(p);
@@ -205,14 +205,14 @@ const myFunc = async () => {
   font-size: 15px;
     font-weight: 600;
     font-family: Roboto;
-    margin: 0.8rem;
+    margin: 8px;
     margin-top: 0px;
   `;
   div2.appendChild(p);
 
   span = document.createElement('span');
   const spanClass = {
-    fontSize: '1.1rem',
+    fontSize: '11px',
     fontFamily: 'Roboto',
     color: '#777474',
     textAlign: 'center',
@@ -230,7 +230,7 @@ const myFunc = async () => {
     backgroundColor: merchant.theme.color,
     color: merchant.theme.font,
     fontSize: '12px',
-    margin: '0.8rem 0px',
+    margin: '8px 0px',
   };
   css(button, btnClass);
   div2.appendChild(button);
@@ -278,7 +278,7 @@ const myFunc = async () => {
   p.style.cssText += `font-size: 15px;
     font-weight: 600;
     font-family: Roboto;
-    margin: 0.8rem;
+    margin: 8px;
     margin-top: 0;`;
   div3.appendChild(p);
 
@@ -291,11 +291,11 @@ const myFunc = async () => {
     marginBottom: '10px',
   };
   // css(span, spanClass2);
-  span.style.cssText += `font-size: 1.1rem;
+  span.style.cssText += `font-size: 11px;
     font-family: Roboto;
     color: rgb(119, 116, 116);
     text-align: center;
-    margin-bottom: 0.8rem;`;
+    margin-bottom: 8px;`;
   span.textContent =
     ' Earn more Points for different actions, and turn those Points into awesome rewards!';
   div3.appendChild(span);
@@ -315,7 +315,7 @@ const myFunc = async () => {
     cursor: 'pointer',
   };
   // css(div4, class1);
-  div4.style.cssText += `margin: 0.5rem 0px;
+  div4.style.cssText += `margin: 5px 0px;
     display: flex;
     align-items: center;
     width: 75%;
@@ -364,7 +364,7 @@ const myFunc = async () => {
   });
 
   // css(div4, class1);
-  div4.style.cssText += `margin: 0.5rem 0px;
+  div4.style.cssText += `margin: 5px 0px;
     display: flex;
     align-items: center;
     width: 75%;
@@ -401,7 +401,7 @@ const myFunc = async () => {
   //referral box
   let refBox = document.createElement('div');
   refBox.style.cssText += `box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-  padding: 0.8rem;
+  padding: 8px;
   border-radius: 8px;
   text-align: center;
   display: flex;
@@ -423,10 +423,10 @@ const myFunc = async () => {
   refDescp.textContent =
     'Give your friends a reward and claim your own when they make a purchase.';
   refDescp.style.cssText += `
-  font-size: 1.1rem;
+  font-size: 11px;
   font-family: roboto;
   color: #777474;
-  margin: 0.5rem 0px;
+  margin: 5px 0px;
   margin-bottom:0px;
   `;
   refBox.appendChild(refDescp);
@@ -720,7 +720,7 @@ const myFunc = async () => {
   p = document.createElement('p');
   p.style.cssText += `font-size: 24px;
   font-weight: 600;
-  margin: 1rem 0px;
+  margin: 10px 0px;
   `;
   p.textContent = 'Super Rewards';
 
@@ -901,7 +901,7 @@ const myFunc = async () => {
   );
   refDesc.textContent = `Share this URL to give your friends the reward ${couponValue} off coupon`;
   refDesc.style.cssText += `color: #637381;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;`;
   refContainer.appendChild(refDesc);
 
@@ -921,12 +921,12 @@ const myFunc = async () => {
   refLink.appendChild(span);
 
   let copy = document.createElement('icon');
-  copy.style.cssText += `font-size: 1.3rem;`;
+  copy.style.cssText += `font-size: 13px;`;
   copy.classList.add('far', 'fa-clipboard');
   copy.addEventListener('click', (event) => {
     document.execCommand('copy');
     event.target.style.cssText += `color: black;
-    font-size: 1.5rem;`;
+    font-size: 15px;`;
   });
   copy.addEventListener('copy', function (event) {
     event.preventDefault();
@@ -1526,12 +1526,12 @@ const myFunc = async () => {
   refLink.appendChild(span);
 
   copy = document.createElement('icon');
-  copy.style.cssText += `font-size: 1.3rem;`;
+  copy.style.cssText += `font-size: 13px;`;
   copy.classList.add('far', 'fa-clipboard');
   copy.addEventListener('click', (event) => {
     document.execCommand('copy');
     event.target.style.cssText += `color: black;
-    font-size: 1.5rem;`;
+    font-size: 15px;`;
   });
   copy.addEventListener('copy', function (event) {
     event.preventDefault();
@@ -1643,6 +1643,7 @@ const myFunc = async () => {
     textGrp3.style.cssText += `display: flex;
       margin-left: 15px;
       align-items: center;
+      justify-content: center;
       width: 100%;
       padding-bottom: 10px;
       border-bottom: 1px solid #e5e5e5;`;
@@ -1674,12 +1675,12 @@ const myFunc = async () => {
     newDiv.appendChild(span);
 
     copy = document.createElement('icon');
-    copy.style.cssText += `font-size: 1.3rem;`;
+    copy.style.cssText += `font-size: 13px; margin-left: 10px;`;
     copy.classList.add('far', 'fa-clipboard');
     copy.addEventListener('click', (event) => {
       document.execCommand('copy');
       event.target.style.cssText += `color: black;
-    font-size: 1.5rem;`;
+    font-size: 15px;`;
     });
     copy.addEventListener('copy', function (event) {
       event.preventDefault();
