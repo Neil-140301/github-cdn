@@ -6,7 +6,7 @@ let appUrl = 'https://4e9fd920656a.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let shopDomain = Shopify.shop;
-// let userId = 5339239350443;
+// let userId //= 5339239350443;
 // let referrer; //= 'SUPER202114';
 // let shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
 
@@ -130,11 +130,12 @@ const myFunc = async () => {
   console.log(renderPage);
 
   //page 1
+  let bottomPosition = window.innerWidth > 768 ? 85 : 0;
   const divClass = {
     backgroundColor: '#fff',
     position: 'fixed',
     boxSizing: 'border-box',
-    bottom: parseInt(merchant.theme.positionBottom) + 85 + 'px',
+    bottom: parseInt(merchant.theme.positionBottom) + bottomPosition + 'px',
     [merchant.theme.placement]: `${merchant.theme.positionSide}px`,
     minHeight: '550px',
     width: '320px',
@@ -160,9 +161,29 @@ const myFunc = async () => {
     fontFamily: 'Roboto',
   };
 
+  let closeBox = document.createElement('div');
+  closeBox.style.cssText += `
+  display: flex;
+  margin: 0;
+  justify-content: space-between;
+  align-items: center;
+  `;
+  div1.appendChild(closeBox);
+
   let span = document.createElement('span');
   span.textContent = 'Welcome to';
-  div1.appendChild(span);
+  closeBox.appendChild(span);
+
+  let cross = document.createElement('icon');
+  cross.classList.add('fas', 'fa-times');
+  cross.style.cssText += `
+  color: ${merchant.theme.font};
+  font-size:12px;
+  cursor: pointer;`;
+  cross.onclick = () => {
+    renderPage.style.display = 'none';
+  };
+  closeBox.appendChild(cross);
 
   let p = document.createElement('p');
   p.textContent = 'Super Rewards';
@@ -445,7 +466,7 @@ const myFunc = async () => {
     border: 'none',
     color: merchant.theme.font,
     cursor: 'pointer',
-    zIndex: '999',
+    //zIndex: '999',
   });
 
   icon = document.createElement('i');
@@ -473,7 +494,7 @@ const myFunc = async () => {
     backgroundColor: '#fff',
     position: 'fixed',
     boxSizing: 'border-box',
-    bottom: parseInt(merchant.theme.positionBottom) + 85 + 'px',
+    bottom: parseInt(merchant.theme.positionBottom) + bottomPosition + 'px',
     [merchant.theme.placement]: `${merchant.theme.positionSide}px`,
     height: '550px',
     width: '320px',
@@ -628,7 +649,8 @@ const myFunc = async () => {
   color:${merchant.theme.font};
   font-size: 12px;
   margin-left: auto;
-  cursor: pointer;`;
+  cursor: pointer;
+  font-family: Roboto;`;
   userId ? textGrp3.appendChild(dateBtn) : null;
 
   div = document.createElement('div');
@@ -691,7 +713,7 @@ const myFunc = async () => {
     color: merchant.theme.font,
     fontSize: '12px',
     margin: '10px 0px',
-    fontFamily: 'Roboto'
+    fontFamily: 'Roboto',
   };
   css(button, btnClass2);
   userId ? null : btnC.appendChild(button);
@@ -715,9 +737,29 @@ const myFunc = async () => {
   //cardtop
   div1 = document.createElement('div');
 
+  closeBox = document.createElement('div');
+  closeBox.style.cssText += `
+  display: flex;
+  margin: 0;
+  justify-content: space-between;
+  align-items: center;
+  `;
+  div1.appendChild(closeBox);
+
   span = document.createElement('span');
   span.textContent = 'Welcome to';
-  div1.appendChild(span);
+  closeBox.appendChild(span);
+
+  cross = document.createElement('icon');
+  cross.classList.add('fas', 'fa-times');
+  cross.style.cssText += `
+  color: ${merchant.theme.font};
+  font-size:12px;
+  cursor: pointer;`;
+  cross.onclick = () => {
+    renderPage.style.display = 'none';
+  };
+  closeBox.appendChild(cross);
 
   p = document.createElement('p');
   p.style.cssText += `font-size: 24px;
@@ -1085,7 +1127,8 @@ const myFunc = async () => {
   color: ${merchant.theme.font};
   font-size: 12px;
   cursor: pointer;
-  margin: 15px 0px;`;
+  margin: 15px 0px;
+  font-family: Roboto;`;
   button.textContent = 'save date';
   dateContainer.appendChild(button);
 
