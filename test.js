@@ -1567,7 +1567,7 @@ const myFunc = async () => {
   text-align: center;
   display: flex;
   align-items: center;
-  justifu-content: center;`;
+  justify-content: center;`;
   userId ? refContainer.appendChild(refLink) : null;
 
   span = document.createElement('span');
