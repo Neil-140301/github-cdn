@@ -6,7 +6,7 @@ let appUrl = 'https://4e9fd920656a.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let shopDomain = Shopify.shop;
-// let userId= 5313776713881;
+// let userId = 5313776713881;
 // let referrer = 'SUPER202114';
 // let shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
 
@@ -272,7 +272,7 @@ const myFunc = async () => {
   //   fontSize: '15px',
   //   fontWeight: '600',
   //   fontFamily: 'Roboto',
-    
+
   // };
   // css(p, pClass);
   p.style.cssText += `font-size: 15px;
@@ -748,7 +748,7 @@ const myFunc = async () => {
 
   let text = document.createElement('div');
   text.addEventListener('click', async () => {
-    renderPage.style.display = 'none';//
+    renderPage.style.display = 'none'; //
     myDiv7.style.display = 'block';
   });
   text.style.cssText += `display: flex;
@@ -911,12 +911,34 @@ const myFunc = async () => {
   border: 1px solid #e5e5e5;
   font-size: 11px;
   cursor: pointer;
-  color: #637381;`;
+  color: #637381;
+  display:flex;
+  align-items: center;`;
   userId ? refContainer.appendChild(refLink) : null;
 
   span = document.createElement('span');
   span.textContent = `https://${shopDomain}/?ref=${result.referralCode}`;
   refLink.appendChild(span);
+
+  let copy = document.createElement('icon');
+  copy.style.cssText += `font-size: 1.3rem;`;
+  copy.classList.add('far', 'fa-clipboard');
+  copy.addEventListener('click', (event) => {
+    document.execCommand('copy');
+    event.target.style.cssText += `color: black;
+    font-size: 1.5rem;`;
+  });
+  copy.addEventListener('copy', function (event) {
+    event.preventDefault();
+    if (event.clipboardData) {
+      event.clipboardData.setData(
+        'text/plain',
+        `https://${shopDomain}/?ref=${result.referralCode}`
+      );
+      console.log(event.clipboardData.getData('text'));
+    }
+  });
+  refLink.appendChild(copy);
 
   document.body.appendChild(myDiv3);
 
@@ -1493,13 +1515,33 @@ const myFunc = async () => {
   font-size: 11px;
   cursor: pointer;
   color: #637381;
-  text-align: center;`;
+  text-align: center;
+  display: flex;
+  align-items: center;`;
   userId ? refContainer.appendChild(refLink) : null;
 
   span = document.createElement('span');
   span.id = 'discount';
   span.textContent = ` ${discountCode} `;
   refLink.appendChild(span);
+
+  copy = document.createElement('icon');
+  copy.style.cssText += `font-size: 1.3rem;`;
+  copy.classList.add('far', 'fa-clipboard');
+  copy.addEventListener('click', (event) => {
+    document.execCommand('copy');
+    event.target.style.cssText += `color: black;
+    font-size: 1.5rem;`;
+  });
+  copy.addEventListener('copy', function (event) {
+    event.preventDefault();
+    let span = document.getElementById('discount');
+    if (event.clipboardData) {
+      event.clipboardData.setData('text/plain', span.textContent);
+      console.log(event.clipboardData.getData('text'));
+    }
+  });
+  refLink.appendChild(copy);
 
   // page 7
 
@@ -1522,7 +1564,7 @@ const myFunc = async () => {
   icon = document.createElement('i');
   icon.addEventListener('click', () => {
     myDiv7.style.display = 'none';
-    renderPage.style.display = 'block';//
+    renderPage.style.display = 'block'; //
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -1630,6 +1672,23 @@ const myFunc = async () => {
     `;
     span.textContent = codeObj.code; //coupon code
     newDiv.appendChild(span);
+
+    copy = document.createElement('icon');
+    copy.style.cssText += `font-size: 1.3rem;`;
+    copy.classList.add('far', 'fa-clipboard');
+    copy.addEventListener('click', (event) => {
+      document.execCommand('copy');
+      event.target.style.cssText += `color: black;
+    font-size: 1.5rem;`;
+    });
+    copy.addEventListener('copy', function (event) {
+      event.preventDefault();
+      if (event.clipboardData) {
+        event.clipboardData.setData('text/plain', codeObj.code);
+        console.log(event.clipboardData.getData('text'));
+      }
+    });
+    textGrp3.appendChild(copy);
   }
   //--
 
