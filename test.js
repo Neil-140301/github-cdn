@@ -2,7 +2,7 @@ function css(element, styleObj) {
   for (let property in styleObj) element.style[property] = styleObj[property];
 }
 
-let appUrl = 'https://4e9fd920656a.ngrok.io';
+let appUrl = 'https://rewards-backend.superassistant.io' //'https://71806cf0efc6.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let shopDomain = Shopify.shop;
@@ -191,7 +191,7 @@ const myFunc = async () => {
     fontSize: '24px',
     fontWeight: '600',
     margin: '8px 0px', //' 15px 0px',
-    color: merchant.theme.font
+    color: merchant.theme.font,
   };
   css(p, pClass);
   div1.appendChild(p);
@@ -226,7 +226,6 @@ const myFunc = async () => {
   p.style.cssText += `
   font-size: 15px;
     font-weight: 600;
-    font-family: Roboto;
     margin: 8px;
     margin-top: 0px;
   `;
@@ -235,7 +234,7 @@ const myFunc = async () => {
   span = document.createElement('span');
   const spanClass = {
     fontSize: '11px',
-    fontFamily: 'Roboto',
+    //fontFamily: 'Roboto',
     color: '#777474',
     textAlign: 'center',
   };
@@ -243,6 +242,17 @@ const myFunc = async () => {
   span.textContent =
     'With more ways to unlock exciting perks, this is your all access pass to exclusive rewards.';
   div2.appendChild(span);
+
+  let a = document.createElement('a');
+  a.href =
+    `https://${shopDomain}/account/register` +
+    (referrer ? `?ref=${referrer}` : '');
+  const aClass = {
+    textDecoration: 'none',
+    color: 'inherit',
+  };
+  css(a, aClass);
+  div2.appendChild(a);
 
   let button = document.createElement('button');
   const btnClass = {
@@ -253,22 +263,13 @@ const myFunc = async () => {
     color: merchant.theme.font,
     fontSize: '12px',
     margin: '8px 0px',
-    fontFamily: 'Roboto',
+    //fontFamily: 'Roboto',
   };
+  button.textContent = 'Join Now'
   css(button, btnClass);
-  div2.appendChild(button);
+  a.appendChild(button);
 
-  let a = document.createElement('a');
-  a.textContent = 'Join Now';
-  a.href =
-    `https://${shopDomain}/account/register` +
-    (referrer ? `?ref=${referrer}` : '');
-  const aClass = {
-    textDecoration: 'none',
-    color: 'inherit',
-  };
-  css(a, aClass);
-  button.appendChild(a);
+  
 
   css(div2, div2Class);
   myDiv.appendChild(div2);
@@ -300,7 +301,6 @@ const myFunc = async () => {
   // css(p, pClass);
   p.style.cssText += `font-size: 15px;
     font-weight: 600;
-    font-family: Roboto;
     margin: 8px;
     margin-top: 0;`;
   div3.appendChild(p);
@@ -308,7 +308,7 @@ const myFunc = async () => {
   span = document.createElement('span');
   const spanClass2 = {
     fontSize: '13px',
-    fontFamily: 'Roboto',
+    //fontFamily: 'Roboto',
     color: '#777474',
     textAlign: 'center',
     marginBottom: '10px',
@@ -705,22 +705,7 @@ const myFunc = async () => {
   btnC.style.cssText += 'text-align: center;';
   myDiv2.appendChild(btnC);
 
-  button = document.createElement('button');
-  const btnClass2 = {
-    border: 'none',
-    borderRadius: '8px',
-    padding: '18px 34px',
-    backgroundColor: merchant.theme.color,
-    color: merchant.theme.font,
-    fontSize: '12px',
-    margin: '10px 0px',
-    fontFamily: 'Roboto',
-  };
-  css(button, btnClass2);
-  userId ? null : btnC.appendChild(button);
-
   a = document.createElement('a');
-  a.textContent = 'Join Now';
   a.href =
     `https://${shopDomain}/account/register` +
     (referrer ? `?ref=${referrer}` : '');
@@ -729,7 +714,24 @@ const myFunc = async () => {
     color: 'inherit',
   };
   css(a, aClass2);
-  button.appendChild(a);
+  userId ? null : btnC.appendChild(a);
+  
+
+  button = document.createElement('button');
+  button.textContent = 'Join Now';
+  const btnClass2 = {
+    border: 'none',
+    borderRadius: '8px',
+    padding: '18px 34px',
+    backgroundColor: merchant.theme.color,
+    color: merchant.theme.font,
+    fontSize: '12px',
+    margin: '10px 0px',
+    //fontFamily: 'Roboto',
+  };
+  css(button, btnClass2);
+  a.appendChild(button);
+
 
   // page 3
 
@@ -1433,18 +1435,19 @@ const myFunc = async () => {
   btnC.style.cssText += 'text-align: center;';
   myDiv5.appendChild(btnC);
 
-  button = document.createElement('button');
-
-  css(button, btnClass2);
-  userId ? null : btnC.appendChild(button);
-
   a = document.createElement('a');
-  a.textContent = 'Join Now';
   a.href =
     `https://${shopDomain}/account/register` +
     (referrer ? `?ref=${referrer}` : '');
   css(a, aClass2);
-  button.appendChild(a);
+  userId ? null : btnC.appendChild(a);
+
+  button = document.createElement('button');
+  button.textContent = 'Join Now';
+  a.appendChild(button);
+  css(button, btnClass2);
+  
+
 
   // page 6
 
