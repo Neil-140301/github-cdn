@@ -6,7 +6,7 @@ let appUrl = 'https://rewards-backend.superassistant.io' //'https://b22082376dcd
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let SA_rewards_shopDomain = Shopify.shop;
-// let userId = 5339239350443;
+// let userId = 5339222605995;
 // let referrer; //= 'SUPER202114';
 // let SA_rewards_shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
 
@@ -679,7 +679,10 @@ const myFunc = async () => {
   `;
 
   let allowedToUpdate =
-    (new Date() - result.birthday_updated_at) / 86400000 > 30;
+    result.birthday_updated_at? (new Date() - result.birthday_updated_at) /
+      86400000 >
+    30 : true;
+  console.log(result.birthday_updated_at)
   dateBtn.style.opacity = allowedToUpdate ? '100%' : '40%';
   dateBtn.disabled = !allowedToUpdate;
   userId ? textGrp3.appendChild(dateBtn) : null;
