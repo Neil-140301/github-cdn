@@ -2,7 +2,7 @@ function css(element, styleObj) {
   for (let property in styleObj) element.style[property] = styleObj[property];
 }
 
-let appUrl = 'https://rewards-backend.superassistant.io'; //'https://b22082376dcd.ngrok.io';
+let appUrl = 'https://rewards-backend.superassistant.io' //'https://b22082376dcd.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let SA_rewards_shopDomain = Shopify.shop;
@@ -130,7 +130,7 @@ const myFunc = async () => {
   console.log(renderPage);
 
   //page 1
-  let bottomPosition = window.innerWidth > 768 ? 85 : 0;
+  let bottomPosition = window.innerWidth > 768 ? 70 : 0;
   const divClass = {
     backgroundColor: '#fff',
     position: 'fixed',
@@ -144,7 +144,7 @@ const myFunc = async () => {
     boxShadow: '0px 0px 15px -10px rgba(0, 0, 0, 0.75)',
     display: 'none',
     zIndex: '999',
-    fontFamily: 'roboto',
+    //fontFamily: 'roboto',
   };
   css(myDiv, divClass);
 
@@ -158,7 +158,7 @@ const myFunc = async () => {
     borderTopRightRadius: '5px',
     padding: '20px 20px 0px 20px',
     color: merchant.theme.font,
-    fontFamily: 'Roboto',
+    //fontFamily: 'Roboto',
   };
 
   let closeBox = document.createElement('div');
@@ -313,7 +313,6 @@ const myFunc = async () => {
   };
   // css(span, spanClass2);
   span.style.cssText += `font-size: 11px;
-    font-family: Roboto;
     color: rgb(119, 116, 116);
     text-align: center;
     margin-bottom: 8px;`;
@@ -360,7 +359,7 @@ const myFunc = async () => {
 
   span = document.createElement('span');
   const class3 = {
-    fontFamily: 'Roboto',
+    //fontFamily: 'Roboto',
     color: '#777474',
     fontSize: '14px',
   };
@@ -435,7 +434,7 @@ const myFunc = async () => {
   para.style.cssText += `
   font-size: 15px;
   font-weight: 600;
-  font-family: roboto;
+  
   margin: 0px;
   `;
   refBox.appendChild(para);
@@ -445,7 +444,7 @@ const myFunc = async () => {
     'Give your friends a reward and claim your own when they make a purchase.';
   refDescp.style.cssText += `
   font-size: 11px;
-  font-family: roboto;
+  
   color: #777474;
   margin: 5px 0px;
   margin-bottom:0px;
@@ -461,7 +460,7 @@ const myFunc = async () => {
     bottom: `${merchant.theme.positionBottom}px`,
     [merchant.theme.placement]: `${merchant.theme.positionSide}px`,
     borderRadius: '50%',
-    padding: '22px',
+    padding: '18px',
     border: 'none',
     color: merchant.theme.font,
     cursor: 'pointer',
@@ -518,7 +517,7 @@ const myFunc = async () => {
     borderTopRightRadius: '5px',
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
-    fontFamily: 'Roboto',
+    //fontFamily: 'Roboto',
   };
 
   icon = document.createElement('i');
@@ -533,8 +532,9 @@ const myFunc = async () => {
   div1.appendChild(icon);
 
   span = document.createElement('span');
+  //font-roboto
   span.style.cssText +=
-    "font-family: 'Roboto';font-size: 14px; margin-left: 10px;";
+    "font-size: 14px; margin-left: 10px;";
   span.textContent = 'Super Rewards';
   div1.appendChild(span);
 
@@ -544,7 +544,7 @@ const myFunc = async () => {
   //center
   let center = document.createElement('div');
   center.style.cssText +=
-    "margin-top: 28px;padding: 10px;font-family: 'Roboto';  font-weight: 500;";
+    "margin-top: 28px;padding: 10px;font-weight: 500;";
 
   span = document.createElement('span');
   span.textContent = 'Ways to earn';
@@ -651,7 +651,7 @@ const myFunc = async () => {
   font-size: 12px;
   margin-left: auto;
   cursor: pointer;
-  font-family: Roboto;`;
+  `;
 
   let allowedToUpdate =
     (new Date() - result.birthday_updated_at) / 86400000 > 30;
@@ -939,7 +939,7 @@ const myFunc = async () => {
 
   span = document.createElement('span');
   span.textContent = 'Refer your friends';
-  span.style.cssText += `font-family: 'Roboto';
+  span.style.cssText += `
   font-size: 14px;
   font-weight: 300;
 }`;
@@ -1009,7 +1009,7 @@ const myFunc = async () => {
     borderTopRightRadius: '5px',
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
-    fontFamily: 'Roboto',
+    //fontFamily: 'Roboto',
   };
 
   icon = document.createElement('i');
@@ -1027,7 +1027,7 @@ const myFunc = async () => {
 
   span = document.createElement('span');
   span.style.cssText +=
-    "font-family: 'Roboto';font-size: 14px; margin-left: 10px;";
+    "font-size: 14px; margin-left: 10px;";
   span.textContent = 'Super Rewards';
   div1.appendChild(span);
 
@@ -1037,7 +1037,7 @@ const myFunc = async () => {
   //center
   center = document.createElement('div');
   center.style.cssText +=
-    "margin-top: 20px;padding: 10px;font-family: 'Roboto';  font-weight: 500;";
+    "margin-top: 20px;padding: 10px; font-weight: 500;";
 
   span = document.createElement('span');
   span.textContent = 'Birthday reward';
@@ -1136,7 +1136,7 @@ const myFunc = async () => {
   font-size: 12px;
   cursor: pointer;
   margin: 15px 0px;
-  font-family: Roboto;`;
+  `;
   button.textContent = 'save date';
   dateContainer.appendChild(button);
 
@@ -1152,7 +1152,7 @@ const myFunc = async () => {
   successMsg.id = 'successMsg';
   successMsg.style.cssText += `
   color: green;
-  font-family: Roboto;
+  
   display: none;
   `;
   dateContainer.appendChild(successMsg);
@@ -1172,7 +1172,7 @@ const myFunc = async () => {
     borderTopRightRadius: '5px',
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
-    fontFamily: 'Roboto',
+    //fontFamily: 'Roboto',
   };
 
   icon = document.createElement('i');
@@ -1188,7 +1188,7 @@ const myFunc = async () => {
 
   span = document.createElement('span');
   span.style.cssText +=
-    "font-family: 'Roboto';font-size: 14px; margin-left: 10px;";
+    "font-size: 14px; margin-left: 10px;";
   span.textContent = 'Super Rewards';
   div1.appendChild(span);
 
@@ -1198,7 +1198,7 @@ const myFunc = async () => {
   //center
   center = document.createElement('div');
   center.style.cssText +=
-    "margin-top: 20px;padding: 10px;font-family: 'Roboto';  font-weight: 500;";
+    "margin-top: 20px;padding: 10px;font-weight: 500;";
 
   span = document.createElement('span');
   span.textContent = 'Ways to redeem';
@@ -1275,7 +1275,7 @@ const myFunc = async () => {
   font-size: 12px;
   margin-left: auto;
   cursor: pointer;
-  font-family: Roboto;`;
+  `;
   dateBtn.style.opacity =
     result.points < merchant.redeemPoints ? '40%' : '100%';
   dateBtn.disabled = result.points < merchant.redeemPoints;
@@ -1349,7 +1349,7 @@ const myFunc = async () => {
   font-size: 12px;
   margin-left: auto;
   cursor: pointer;
-  font-family: Roboto;`;
+  `;
   dateBtn.style.opacity =
     result.points < merchant.shippingPoints ? '40%' : '100%';
   dateBtn.disabled = result.points < merchant.shippingPoints;
@@ -1423,7 +1423,7 @@ const myFunc = async () => {
   font-size: 12px;
   margin-left: auto;
   cursor: pointer;
-  font-family: Roboto;`;
+  `;
   dateBtn.style.opacity =
     result.points < merchant.percentagePoints ? '40%' : '100%';
   dateBtn.disabled = result.points < merchant.percentagePoints;
@@ -1465,7 +1465,7 @@ const myFunc = async () => {
     borderTopRightRadius: '5px',
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
-    fontFamily: 'Roboto',
+    //fontFamily: 'Roboto',
   };
 
   icon = document.createElement('i');
@@ -1481,7 +1481,7 @@ const myFunc = async () => {
 
   span = document.createElement('span');
   span.style.cssText +=
-    "font-family: 'Roboto';font-size: 14px; margin-left: 10px;";
+    "font-size: 14px; margin-left: 10px;";
   span.textContent = 'Super Rewards';
   div1.appendChild(span);
 
@@ -1491,7 +1491,7 @@ const myFunc = async () => {
   //center
   center = document.createElement('div');
   center.style.cssText +=
-    "margin-top: 20px;padding: 10px;font-family: 'Roboto';  font-weight: 500;";
+    "margin-top: 20px;padding: 10px;font-weight: 500;";
 
   span = document.createElement('span');
   span.textContent = 'Discount code';
@@ -1615,7 +1615,7 @@ const myFunc = async () => {
     borderTopRightRadius: '5px',
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
-    fontFamily: 'Roboto',
+    //fontFamily: 'Roboto',
   };
 
   icon = document.createElement('i');
@@ -1631,7 +1631,7 @@ const myFunc = async () => {
 
   span = document.createElement('span');
   span.style.cssText +=
-    "font-family: 'Roboto';font-size: 14px; margin-left: 10px;";
+    "font-size: 14px; margin-left: 10px;";
   span.textContent = 'Super Rewards';
   div1.appendChild(span);
 
@@ -1641,7 +1641,7 @@ const myFunc = async () => {
   //center
   center = document.createElement('div');
   center.style.cssText +=
-    "margin-top: 20px;padding: 10px;font-family: 'Roboto';  font-weight: 500;";
+    "margin-top: 20px;padding: 10px;font-weight: 500;";
 
   span = document.createElement('span');
   span.textContent = 'Your Coupons';
@@ -1771,7 +1771,7 @@ const myFunc = async () => {
   noRewardsText.style.cssText += `
   margin: 15px 0px;
   font-size: 14px
-  font-family: Roboto;
+  
   `;
   imgContainer.appendChild(noRewardsText);
 
