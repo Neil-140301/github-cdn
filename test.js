@@ -2,13 +2,13 @@ function css(element, styleObj) {
   for (let property in styleObj) element.style[property] = styleObj[property];
 }
 
-let appUrl = 'https://rewards-backend.superassistant.io' //'https://71806cf0efc6.ngrok.io';
+let appUrl = 'https://rewards-backend.superassistant.io' //'https://b22082376dcd.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
-let shopDomain = Shopify.shop;
+let rewards_shopDomain = Shopify.shop;
 // let userId = 5339239350443;
 // let referrer; //= 'SUPER202114';
-// let shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
+// let rewards_shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
 
 let result = 0;
 let merchant = '';
@@ -19,7 +19,7 @@ let showMessage = false;
 const getPointsData = async () => {
   if (userId) {
     const res = await fetch(
-      `${appUrl}/points/${userId}?shopDomain=${shopDomain}`
+      `${appUrl}/points/${userId}?shopDomain=${rewards_shopDomain}`
     );
     const data = await res.json();
     console.log(data);
@@ -27,7 +27,7 @@ const getPointsData = async () => {
     merchant = data.merchant;
   } else {
     const res = await fetch(
-      `${appUrl}/merchant-info/?shopDomain=${shopDomain}`
+      `${appUrl}/merchant-info/?shopDomain=${rewards_shopDomain}`
     );
     const data = await res.json();
     console.log(data);
@@ -38,7 +38,7 @@ const getPointsData = async () => {
 const getDiscountCodes = async () => {
   if (userId) {
     const res = await fetch(
-      `${appUrl}/rewards/${userId}?shopDomain=${shopDomain}`
+      `${appUrl}/rewards/${userId}?shopDomain=${rewards_shopDomain}`
     );
     const data = await res.json();
     console.log(data);
@@ -55,7 +55,7 @@ const updateUserBirthday = async (day, month) => {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify({ day, month, shopDomain }),
+      body: JSON.stringify({ day, month, shopDomain: rewards_shopDomain }),
     };
     console.log(options.body);
     const res = await fetch(`${appUrl}/birthday/${userId}`, options);
@@ -66,7 +66,7 @@ const updateUserBirthday = async (day, month) => {
 
 const sendReferrerCode = async () => {
   const res = await fetch(
-    `${appUrl}/set-referrer?ref=${referrer}&shopDomain=${shopDomain}`
+    `${appUrl}/set-referrer?ref=${referrer}&shopDomain=${rewards_shopDomain}`
   );
   const data = await res.json();
   console.log(data);
@@ -74,7 +74,7 @@ const sendReferrerCode = async () => {
 
 const getDiscountCode = async () => {
   const res = await fetch(
-    `${appUrl}/discount/${userId}?shopDomain=${shopDomain}`
+    `${appUrl}/discount/${userId}?shopDomain=${rewards_shopDomain}`
   );
   const data = await res.json();
   discountCode = data;
@@ -84,7 +84,7 @@ const getDiscountCode = async () => {
 
 const getFreeShippingCode = async () => {
   const res = await fetch(
-    `${appUrl}/shipping/${userId}?shopDomain=${shopDomain}`
+    `${appUrl}/shipping/${userId}?shopDomain=${rewards_shopDomain}`
   );
   const data = await res.json();
   discountCode = data;
@@ -94,7 +94,7 @@ const getFreeShippingCode = async () => {
 
 const getPercentageCode = async () => {
   const res = await fetch(
-    `${appUrl}/percentage-discount/${userId}?shopDomain=${shopDomain}`
+    `${appUrl}/percentage-discount/${userId}?shopDomain=${rewards_shopDomain}`
   );
   const data = await res.json();
   discountCode = data;
@@ -245,7 +245,7 @@ const myFunc = async () => {
 
   let a = document.createElement('a');
   a.href =
-    `https://${shopDomain}/account/register` +
+    `https://${rewards_shopDomain}/account/register` +
     (referrer ? `?ref=${referrer}` : '');
   const aClass = {
     textDecoration: 'none',
@@ -265,11 +265,9 @@ const myFunc = async () => {
     margin: '8px 0px',
     //fontFamily: 'Roboto',
   };
-  button.textContent = 'Join Now'
+  button.textContent = 'Join Now';
   css(button, btnClass);
   a.appendChild(button);
-
-  
 
   css(div2, div2Class);
   myDiv.appendChild(div2);
@@ -652,6 +650,11 @@ const myFunc = async () => {
   margin-left: auto;
   cursor: pointer;
   font-family: Roboto;`;
+
+  let allowedToUpdate =
+    (new Date() - result.birthday_updated_at) / 86400000 > 30;
+  dateBtn.style.opacity = allowedToUpdate ? '100%' : '40%';
+  dateBtn.disabled = !allowedToUpdate;
   userId ? textGrp3.appendChild(dateBtn) : null;
 
   div = document.createElement('div');
@@ -707,7 +710,7 @@ const myFunc = async () => {
 
   a = document.createElement('a');
   a.href =
-    `https://${shopDomain}/account/register` +
+    `https://${rewards_shopDomain}/account/register` +
     (referrer ? `?ref=${referrer}` : '');
   const aClass2 = {
     textDecoration: 'none',
@@ -715,7 +718,6 @@ const myFunc = async () => {
   };
   css(a, aClass2);
   userId ? null : btnC.appendChild(a);
-  
 
   button = document.createElement('button');
   button.textContent = 'Join Now';
@@ -731,7 +733,6 @@ const myFunc = async () => {
   };
   css(button, btnClass2);
   a.appendChild(button);
-
 
   // page 3
 
@@ -966,7 +967,7 @@ const myFunc = async () => {
   userId ? refContainer.appendChild(refLink) : null;
 
   span = document.createElement('span');
-  span.textContent = `https://${shopDomain}/?ref=${result.referralCode}`;
+  span.textContent = `https://${rewards_shopDomain}/?ref=${result.referralCode}`;
   refLink.appendChild(span);
 
   let copy = document.createElement('icon');
@@ -982,7 +983,7 @@ const myFunc = async () => {
     if (event.clipboardData) {
       event.clipboardData.setData(
         'text/plain',
-        `https://${shopDomain}/?ref=${result.referralCode}`
+        `https://${rewards_shopDomain}/?ref=${result.referralCode}`
       );
       console.log(event.clipboardData.getData('text'));
     }
@@ -1437,7 +1438,7 @@ const myFunc = async () => {
 
   a = document.createElement('a');
   a.href =
-    `https://${shopDomain}/account/register` +
+    `https://${rewards_shopDomain}/account/register` +
     (referrer ? `?ref=${referrer}` : '');
   css(a, aClass2);
   userId ? null : btnC.appendChild(a);
@@ -1446,8 +1447,6 @@ const myFunc = async () => {
   button.textContent = 'Join Now';
   a.appendChild(button);
   css(button, btnClass2);
-  
-
 
   // page 6
 
