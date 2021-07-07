@@ -102,6 +102,19 @@ const getPercentageCode = async () => {
   localStorage.setItem('discount', data);
 };
 
+const toggleCurrentPage = (pageId) => {
+  console.log(pageId);
+  if (pageId !== '') {
+    let currentPage = document.getElementById(pageId);
+    currentPage.style.display = 'none';
+
+    const mainPage = userId
+      ? document.getElementById('div-3')
+      : document.getElementById('div');
+    mainPage.style.display = 'none';
+  }
+};
+
 //fontawesome script
 let script = document.createElement('script');
 script.src = 'https://kit.fontawesome.com/ccca1edeec.js';
@@ -120,13 +133,23 @@ const myFunc = async () => {
   await sendReferrerCode();
 
   let myDiv = document.createElement('div');
+  let myDiv2 = document.createElement('div');
   let myDiv3 = document.createElement('div');
   let myDiv4 = document.createElement('div');
   let myDiv5 = document.createElement('div');
   let myDiv6 = document.createElement('div');
   let myDiv7 = document.createElement('div');
 
+  myDiv.id = 'div';
+  myDiv2.id = 'div-2';
+  myDiv3.id = 'div-3';
+  myDiv4.id = 'div-4';
+  myDiv5.id = 'div-5';
+  myDiv6.id = 'div-6';
+  myDiv7.id = 'div-7';
+
   let renderPage = userId ? myDiv3 : myDiv;
+  let currentPage = '';
   console.log(renderPage);
 
   //page 1
@@ -182,6 +205,7 @@ const myFunc = async () => {
   cursor: pointer;`;
   cross.onclick = () => {
     renderPage.style.display = 'none';
+    currentPage = '';
   };
   closeBox.appendChild(cross);
 
@@ -326,6 +350,8 @@ const myFunc = async () => {
   div4.addEventListener('click', () => {
     renderPage.style.display = 'none';
     myDiv2.style.display = 'block';
+    currentPage = 'div-2';
+    console.log(currentPage);
   });
   const class1 = {
     margin: '10px 0px',
@@ -381,6 +407,7 @@ const myFunc = async () => {
   div4.addEventListener('click', () => {
     renderPage.style.display = 'none';
     myDiv5.style.display = 'block';
+    currentPage = 'div-5'
   });
 
   // css(div4, class1);
@@ -478,10 +505,10 @@ const myFunc = async () => {
     } else {
       renderPage.style.display = 'none';
     }
+    toggleCurrentPage(currentPage);
+    currentPage = '';
     console.log('myDiv clicked');
   });
-
-
 
   document.body.appendChild(myDiv);
   (merchant.isPointsActive || merchant.isReferralsActive) &&
@@ -489,7 +516,6 @@ const myFunc = async () => {
 
   // page 2
 
-  let myDiv2 = document.createElement('div');
   const divClass2 = {
     backgroundColor: '#fff',
     position: 'fixed',
@@ -533,8 +559,7 @@ const myFunc = async () => {
 
   span = document.createElement('span');
   //font-roboto
-  span.style.cssText +=
-    "font-size: 14px; margin-left: 10px;";
+  span.style.cssText += 'font-size: 14px; margin-left: 10px;';
   span.textContent = 'Super Rewards';
   div1.appendChild(span);
 
@@ -543,8 +568,7 @@ const myFunc = async () => {
 
   //center
   let center = document.createElement('div');
-  center.style.cssText +=
-    "margin-top: 28px;padding: 10px;font-weight: 500;";
+  center.style.cssText += 'margin-top: 28px;padding: 10px;font-weight: 500;';
 
   span = document.createElement('span');
   span.textContent = 'Ways to earn';
@@ -642,6 +666,7 @@ const myFunc = async () => {
   dateBtn.addEventListener('click', () => {
     myDiv2.style.display = 'none';
     myDiv4.style.display = 'block';
+    currentPage = 'div-4';
   });
   dateBtn.style.cssText += `border: none;
   border-radius: 8px;
@@ -801,6 +826,7 @@ const myFunc = async () => {
   text.addEventListener('click', async () => {
     renderPage.style.display = 'none'; //
     myDiv7.style.display = 'block';
+    currentPage = 'div-7';
   });
   text.style.cssText += `display: flex;
   justify-content: space-between;
@@ -863,6 +889,7 @@ const myFunc = async () => {
   div4.addEventListener('click', () => {
     renderPage.style.display = 'none';
     myDiv2.style.display = 'block';
+    currentPage = 'div-2';
   });
 
   css(div4, class1);
@@ -897,6 +924,7 @@ const myFunc = async () => {
   div4.addEventListener('click', () => {
     renderPage.style.display = 'none';
     myDiv5.style.display = 'block';
+    currentPage = 'div-5';
   });
 
   css(div4, class1);
@@ -1016,6 +1044,7 @@ const myFunc = async () => {
   icon.addEventListener('click', () => {
     myDiv4.style.display = 'none';
     myDiv2.style.display = 'block';
+    currentPage = 'div-2';
     let p = document.getElementById('successMsg');
     p.style.display = 'none';
   });
@@ -1026,8 +1055,7 @@ const myFunc = async () => {
   div1.appendChild(icon);
 
   span = document.createElement('span');
-  span.style.cssText +=
-    "font-size: 14px; margin-left: 10px;";
+  span.style.cssText += 'font-size: 14px; margin-left: 10px;';
   span.textContent = 'Super Rewards';
   div1.appendChild(span);
 
@@ -1036,8 +1064,7 @@ const myFunc = async () => {
 
   //center
   center = document.createElement('div');
-  center.style.cssText +=
-    "margin-top: 20px;padding: 10px; font-weight: 500;";
+  center.style.cssText += 'margin-top: 20px;padding: 10px; font-weight: 500;';
 
   span = document.createElement('span');
   span.textContent = 'Birthday reward';
@@ -1187,8 +1214,7 @@ const myFunc = async () => {
   div1.appendChild(icon);
 
   span = document.createElement('span');
-  span.style.cssText +=
-    "font-size: 14px; margin-left: 10px;";
+  span.style.cssText += 'font-size: 14px; margin-left: 10px;';
   span.textContent = 'Super Rewards';
   div1.appendChild(span);
 
@@ -1197,8 +1223,7 @@ const myFunc = async () => {
 
   //center
   center = document.createElement('div');
-  center.style.cssText +=
-    "margin-top: 20px;padding: 10px;font-weight: 500;";
+  center.style.cssText += 'margin-top: 20px;padding: 10px;font-weight: 500;';
 
   span = document.createElement('span');
   span.textContent = 'Ways to redeem';
@@ -1266,6 +1291,7 @@ const myFunc = async () => {
     couponPoints.textContent = `Spent ${merchant.redeemPoints} points`;
     myDiv5.style.display = 'none';
     myDiv6.style.display = 'block';
+    currentPage = 'div-6';
   });
   dateBtn.style.cssText += `border: none;
   border-radius: 8px;
@@ -1340,6 +1366,7 @@ const myFunc = async () => {
     couponPoints.textContent = `Spent ${merchant.shippingPoints} points`;
     myDiv5.style.display = 'none';
     myDiv6.style.display = 'block';
+    currentPage = 'div-6';
   });
   dateBtn.style.cssText += `border: none;
   border-radius: 8px;
@@ -1414,6 +1441,7 @@ const myFunc = async () => {
     couponPoints.textContent = `Spent ${merchant.percentagePoints} points`;
     myDiv5.style.display = 'none';
     myDiv6.style.display = 'block';
+    currentPage = 'div-6';
   });
   dateBtn.style.cssText += `border: none;
   border-radius: 8px;
@@ -1472,6 +1500,7 @@ const myFunc = async () => {
   icon.addEventListener('click', () => {
     myDiv6.style.display = 'none';
     myDiv5.style.display = 'block';
+    currentPage = 'div-5';
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -1480,8 +1509,7 @@ const myFunc = async () => {
   div1.appendChild(icon);
 
   span = document.createElement('span');
-  span.style.cssText +=
-    "font-size: 14px; margin-left: 10px;";
+  span.style.cssText += 'font-size: 14px; margin-left: 10px;';
   span.textContent = 'Super Rewards';
   div1.appendChild(span);
 
@@ -1490,8 +1518,7 @@ const myFunc = async () => {
 
   //center
   center = document.createElement('div');
-  center.style.cssText +=
-    "margin-top: 20px;padding: 10px;font-weight: 500;";
+  center.style.cssText += 'margin-top: 20px;padding: 10px;font-weight: 500;';
 
   span = document.createElement('span');
   span.textContent = 'Discount code';
@@ -1630,8 +1657,7 @@ const myFunc = async () => {
   div1.appendChild(icon);
 
   span = document.createElement('span');
-  span.style.cssText +=
-    "font-size: 14px; margin-left: 10px;";
+  span.style.cssText += 'font-size: 14px; margin-left: 10px;';
   span.textContent = 'Super Rewards';
   div1.appendChild(span);
 
@@ -1640,8 +1666,7 @@ const myFunc = async () => {
 
   //center
   center = document.createElement('div');
-  center.style.cssText +=
-    "margin-top: 20px;padding: 10px;font-weight: 500;";
+  center.style.cssText += 'margin-top: 20px;padding: 10px;font-weight: 500;';
 
   span = document.createElement('span');
   span.textContent = 'Your Coupons';
