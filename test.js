@@ -2,13 +2,13 @@ function css(element, styleObj) {
   for (let property in styleObj) element.style[property] = styleObj[property];
 }
 
-let appUrl = 'https://rewards-backend.superassistant.io' //'https://b22082376dcd.ngrok.io';
+let appUrl = 'https://rewards-backend.superassistant.io'; //'https://b22082376dcd.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
-let rewards_shopDomain = Shopify.shop;
+let SA_rewards_shopDomain = Shopify.shop;
 // let userId = 5339239350443;
 // let referrer; //= 'SUPER202114';
-// let rewards_shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
+// let SA_rewards_shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
 
 let result = 0;
 let merchant = '';
@@ -19,7 +19,7 @@ let showMessage = false;
 const getPointsData = async () => {
   if (userId) {
     const res = await fetch(
-      `${appUrl}/points/${userId}?shopDomain=${rewards_shopDomain}`
+      `${appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`
     );
     const data = await res.json();
     console.log(data);
@@ -27,7 +27,7 @@ const getPointsData = async () => {
     merchant = data.merchant;
   } else {
     const res = await fetch(
-      `${appUrl}/merchant-info/?shopDomain=${rewards_shopDomain}`
+      `${appUrl}/merchant-info/?shopDomain=${SA_rewards_shopDomain}`
     );
     const data = await res.json();
     console.log(data);
@@ -38,7 +38,7 @@ const getPointsData = async () => {
 const getDiscountCodes = async () => {
   if (userId) {
     const res = await fetch(
-      `${appUrl}/rewards/${userId}?shopDomain=${rewards_shopDomain}`
+      `${appUrl}/rewards/${userId}?shopDomain=${SA_rewards_shopDomain}`
     );
     const data = await res.json();
     console.log(data);
@@ -55,7 +55,7 @@ const updateUserBirthday = async (day, month) => {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify({ day, month, shopDomain: rewards_shopDomain }),
+      body: JSON.stringify({ day, month, shopDomain: SA_rewards_shopDomain }),
     };
     console.log(options.body);
     const res = await fetch(`${appUrl}/birthday/${userId}`, options);
@@ -66,7 +66,7 @@ const updateUserBirthday = async (day, month) => {
 
 const sendReferrerCode = async () => {
   const res = await fetch(
-    `${appUrl}/set-referrer?ref=${referrer}&shopDomain=${rewards_shopDomain}`
+    `${appUrl}/set-referrer?ref=${referrer}&shopDomain=${SA_rewards_shopDomain}`
   );
   const data = await res.json();
   console.log(data);
@@ -74,7 +74,7 @@ const sendReferrerCode = async () => {
 
 const getDiscountCode = async () => {
   const res = await fetch(
-    `${appUrl}/discount/${userId}?shopDomain=${rewards_shopDomain}`
+    `${appUrl}/discount/${userId}?shopDomain=${SA_rewards_shopDomain}`
   );
   const data = await res.json();
   discountCode = data;
@@ -84,7 +84,7 @@ const getDiscountCode = async () => {
 
 const getFreeShippingCode = async () => {
   const res = await fetch(
-    `${appUrl}/shipping/${userId}?shopDomain=${rewards_shopDomain}`
+    `${appUrl}/shipping/${userId}?shopDomain=${SA_rewards_shopDomain}`
   );
   const data = await res.json();
   discountCode = data;
@@ -94,7 +94,7 @@ const getFreeShippingCode = async () => {
 
 const getPercentageCode = async () => {
   const res = await fetch(
-    `${appUrl}/percentage-discount/${userId}?shopDomain=${rewards_shopDomain}`
+    `${appUrl}/percentage-discount/${userId}?shopDomain=${SA_rewards_shopDomain}`
   );
   const data = await res.json();
   discountCode = data;
@@ -245,7 +245,7 @@ const myFunc = async () => {
 
   let a = document.createElement('a');
   a.href =
-    `https://${rewards_shopDomain}/account/register` +
+    `https://${SA_rewards_shopDomain}/account/register` +
     (referrer ? `?ref=${referrer}` : '');
   const aClass = {
     textDecoration: 'none',
@@ -482,6 +482,8 @@ const myFunc = async () => {
     console.log('myDiv clicked');
   });
 
+
+
   document.body.appendChild(myDiv);
   (merchant.isPointsActive || merchant.isReferralsActive) &&
     document.body.appendChild(btn);
@@ -710,7 +712,7 @@ const myFunc = async () => {
 
   a = document.createElement('a');
   a.href =
-    `https://${rewards_shopDomain}/account/register` +
+    `https://${SA_rewards_shopDomain}/account/register` +
     (referrer ? `?ref=${referrer}` : '');
   const aClass2 = {
     textDecoration: 'none',
@@ -967,7 +969,7 @@ const myFunc = async () => {
   userId ? refContainer.appendChild(refLink) : null;
 
   span = document.createElement('span');
-  span.textContent = `https://${rewards_shopDomain}/?ref=${result.referralCode}`;
+  span.textContent = `https://${SA_rewards_shopDomain}/?ref=${result.referralCode}`;
   refLink.appendChild(span);
 
   let copy = document.createElement('icon');
@@ -983,7 +985,7 @@ const myFunc = async () => {
     if (event.clipboardData) {
       event.clipboardData.setData(
         'text/plain',
-        `https://${rewards_shopDomain}/?ref=${result.referralCode}`
+        `https://${SA_rewards_shopDomain}/?ref=${result.referralCode}`
       );
       console.log(event.clipboardData.getData('text'));
     }
@@ -1438,7 +1440,7 @@ const myFunc = async () => {
 
   a = document.createElement('a');
   a.href =
-    `https://${rewards_shopDomain}/account/register` +
+    `https://${SA_rewards_shopDomain}/account/register` +
     (referrer ? `?ref=${referrer}` : '');
   css(a, aClass2);
   userId ? null : btnC.appendChild(a);
