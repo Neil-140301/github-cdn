@@ -543,6 +543,7 @@ const myFunc = async () => {
     borderTopRightRadius: '5px',
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
+    display: 'flex',
     //fontFamily: 'Roboto',
   };
 
@@ -562,6 +563,19 @@ const myFunc = async () => {
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
   span.textContent = 'Super Rewards';
   div1.appendChild(span);
+
+  cross = document.createElement('i');
+  cross.classList.add('fas', 'fa-times');
+  cross.style.cssText += `
+  color: ${merchant.theme.font};
+  font-size:12px;
+  cursor: pointer;
+  margin-left: auto`;
+  cross.onclick = () => {
+    myDiv2.style.display = 'none';
+    currentPage = '';
+  };
+  div1.appendChild(cross);
 
   css(div1, div1Class);
   myDiv2.appendChild(div1);
@@ -1040,6 +1054,7 @@ const myFunc = async () => {
     borderTopRightRadius: '5px',
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
+    display: 'flex',
     //fontFamily: 'Roboto',
   };
 
@@ -1061,6 +1076,19 @@ const myFunc = async () => {
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
   span.textContent = 'Super Rewards';
   div1.appendChild(span);
+
+  cross = document.createElement('i');
+  cross.classList.add('fas', 'fa-times');
+  cross.style.cssText += `
+  color: ${merchant.theme.font};
+  font-size:12px;
+  cursor: pointer;
+  margin-left: auto`;
+  cross.onclick = () => {
+    myDiv4.style.display = 'none';
+    currentPage = '';
+  };
+  div1.appendChild(cross);
 
   css(div1, div1Class);
   myDiv4.appendChild(div1);
@@ -1202,6 +1230,7 @@ const myFunc = async () => {
     borderTopRightRadius: '5px',
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
+    display: 'flex',
     //fontFamily: 'Roboto',
   };
 
@@ -1220,6 +1249,19 @@ const myFunc = async () => {
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
   span.textContent = 'Super Rewards';
   div1.appendChild(span);
+
+  cross = document.createElement('i');
+  cross.classList.add('fas', 'fa-times');
+  cross.style.cssText += `
+  color: ${merchant.theme.font};
+  font-size:12px;
+  cursor: pointer;
+  margin-left: auto`;
+  cross.onclick = () => {
+    myDiv5.style.display = 'none';
+    currentPage = '';
+  };
+  div1.appendChild(cross);
 
   css(div1, div1Class);
   myDiv5.appendChild(div1);
@@ -1496,6 +1538,7 @@ const myFunc = async () => {
     borderTopRightRadius: '5px',
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
+    display: 'flex',
     //fontFamily: 'Roboto',
   };
 
@@ -1515,6 +1558,19 @@ const myFunc = async () => {
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
   span.textContent = 'Super Rewards';
   div1.appendChild(span);
+
+  cross = document.createElement('i');
+  cross.classList.add('fas', 'fa-times');
+  cross.style.cssText += `
+  color: ${merchant.theme.font};
+  font-size:12px;
+  cursor: pointer;
+  margin-left: auto`;
+  cross.onclick = () => {
+    myDiv6.style.display = 'none';
+    currentPage = '';
+  };
+  div1.appendChild(cross);
 
   css(div1, div1Class);
   myDiv6.appendChild(div1);
@@ -1645,6 +1701,7 @@ const myFunc = async () => {
     borderTopRightRadius: '5px',
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
+    display: 'flex',
     //fontFamily: 'Roboto',
   };
 
@@ -1663,6 +1720,19 @@ const myFunc = async () => {
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
   span.textContent = 'Super Rewards';
   div1.appendChild(span);
+
+  cross = document.createElement('i');
+  cross.classList.add('fas', 'fa-times');
+  cross.style.cssText += `
+  color: ${merchant.theme.font};
+  font-size:12px;
+  cursor: pointer;
+  margin-left: auto`;
+  cross.onclick = () => {
+    myDiv7.style.display = 'none';
+    currentPage = '';
+  };
+  div1.appendChild(cross);
 
   css(div1, div1Class);
   myDiv7.appendChild(div1);
