@@ -7,8 +7,10 @@ let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let SA_rewards_shopDomain = Shopify.shop;
 // let userId = 5339222605995;
-// let referrer; //= 'SUPER202114';
+// let referrer= 'SUPER20Neil';
 // let SA_rewards_shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
+
+referrer && localStorage.setItem('ref', referrer);
 
 let result = 0;
 let merchant = '';
@@ -65,11 +67,15 @@ const updateUserBirthday = async (day, month) => {
 };
 
 const sendReferrerCode = async () => {
-  const res = await fetch(
-    `${appUrl}/set-referrer?ref=${referrer}&shopDomain=${SA_rewards_shopDomain}`
-  );
-  const data = await res.json();
-  console.log(data);
+  const referrerCode = localStorage.getItem('ref');
+  if (referrerCode) {
+    const res = await fetch(
+      `${appUrl}/set-referrer?ref=${referrer}&shopDomain=${SA_rewards_shopDomain}`
+    );
+    const data = await res.json();
+    console.log(data);
+    localStorage.setItem('ref', '');
+  }
 };
 
 const getDiscountCode = async () => {
@@ -175,7 +181,7 @@ const myFunc = async () => {
   let div1 = document.createElement('div');
   let div1Class1 = {
     backgroundColor: merchant.theme.color,
-    height: '150px',
+    height: '140px',
     margin: '-10px',
     borderTopLeftRadius: '5px',
     borderTopRightRadius: '5px',
@@ -888,17 +894,19 @@ const myFunc = async () => {
   width: 90%;
   color: #777474;
   font-size: 16px;
-  margin: 15px 0px;`;
+  margin: 12px 0px;
+  margin-top: 8px;`;
   div3.appendChild(pd);
 
   span = document.createElement('span');
   span.textContent = `${result.points} points`;
+  span.style.cssText += `font-weight: 600;`
   console.log(result);
   pd.appendChild(span);
 
   icon = document.createElement('i');
   icon.classList.add('fas', 'fa-sync-alt');
-  pd.appendChild(icon);
+  //pd.appendChild(icon);
 
   css(div3, div3Class2);
 
@@ -1145,11 +1153,13 @@ const myFunc = async () => {
   newDiv.appendChild(span);
 
   let centerDesc = document.createElement('span');
-  centerDesc.textContent = `We want to celebrate your birthday! Make sure you let us know at least one month in
+  centerDesc.textContent = `We want to celebrate your birthday!
+  Make sure you let us know at least 30 days in
           advance — otherwise, you'll have to wait until next year.`;
   centerDesc.style.cssText += `font-size: 14px;
   font-weight: 300;
-  color: #000;`;
+  color: #000;
+  text-align: center`;
   center.appendChild(centerDesc);
 
   myDiv4.appendChild(center);
