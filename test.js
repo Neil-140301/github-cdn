@@ -2,13 +2,13 @@ function css(element, styleObj) {
   for (let property in styleObj) element.style[property] = styleObj[property];
 }
 
-let appUrl = 'https://038052b2d4fd.ngrok.io';
+let appUrl = 'https://rewards-backend.superassistant.io' //'https://b22082376dcd.ngrok.io';
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
 let SA_rewards_shopDomain = Shopify.shop;
 // let userId = 5339222605995;
-// let referrer= 'SUPER20Neil';
-// let SA_rewards_shopDomain = 'super-rewards-test.myshopify.com '; //'web-neil.myshopify.com';
+// let referrer; //= 'SUPER20Neil';
+// let SA_rewards_shopDomain = 'super-rewards-test.myshopify.com'; //'web-neil.myshopify.com';
 
 referrer && localStorage.setItem('ref', referrer);
 
@@ -74,7 +74,6 @@ const sendReferrerCode = async () => {
     );
     const data = await res.json();
     console.log(data);
-    localStorage.setItem('ref', '');
   }
 };
 
@@ -124,6 +123,16 @@ const toggleCurrentPage = (pageId) => {
 //fontawesome script
 let script = document.createElement('script');
 script.src = 'https://kit.fontawesome.com/ccca1edeec.js';
+script.crossOrigin = 'anonymous';
+document.body.appendChild(script);
+
+//jquery script
+script = document.createElement('script');
+script.src = 'jquery-3.5.1.min.js';
+document.body.appendChild(script);
+
+script = document.createElement('script');
+script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js';
 script.crossOrigin = 'anonymous';
 document.body.appendChild(script);
 
@@ -413,7 +422,7 @@ const myFunc = async () => {
   div4.addEventListener('click', () => {
     renderPage.style.display = 'none';
     myDiv5.style.display = 'block';
-    currentPage = 'div-5'
+    currentPage = 'div-5';
   });
 
   // css(div4, class1);
@@ -682,6 +691,7 @@ const myFunc = async () => {
   newDiv.appendChild(span);
 
   let dateBtn = document.createElement('button');
+  dateBtn.id = 'edit-date-btn';
   dateBtn.textContent = 'Edit date';
   dateBtn.addEventListener('click', () => {
     myDiv2.style.display = 'none';
@@ -698,11 +708,9 @@ const myFunc = async () => {
   cursor: pointer;
   `;
 
-  let allowedToUpdate =
-    result.birthday_updated_at? (new Date() - result.birthday_updated_at) /
-      86400000 >
-    30 : true;
-  console.log(result.birthday_updated_at)
+  let allowedToUpdate = result.birthday_updated_at
+    ? (new Date() - result.birthday_updated_at) / 86400000 > 30
+    : true;
   dateBtn.style.opacity = allowedToUpdate ? '100%' : '40%';
   dateBtn.disabled = !allowedToUpdate;
   userId ? textGrp3.appendChild(dateBtn) : null;
@@ -847,9 +855,19 @@ const myFunc = async () => {
 
   let text = document.createElement('div');
   text.addEventListener('click', async () => {
-    renderPage.style.display = 'none'; //
-    myDiv7.style.display = 'block';
-    currentPage = 'div-7';
+    $.ajax({
+      url: `${appUrl}/rewards/${userId}?shopDomain=${SA_rewards_shopDomain}`,
+      type: 'GET',
+      success: function (data) {
+        console.log('hi im in ajax codes');
+        console.log(data);
+        codes = data;
+        renderPage.style.display = 'none'; //
+        myDiv7.style.display = 'block';
+        currentPage = 'div-7';
+      },
+    });
+    
   });
   text.style.cssText += `display: flex;
   justify-content: space-between;
@@ -899,8 +917,9 @@ const myFunc = async () => {
   div3.appendChild(pd);
 
   span = document.createElement('span');
+  span.id = 'customer-points';
   span.textContent = `${result.points} points`;
-  span.style.cssText += `font-weight: 600;`
+  span.style.cssText += `font-weight: 600;`;
   console.log(result);
   pd.appendChild(span);
 
@@ -1068,11 +1087,28 @@ const myFunc = async () => {
 
   icon = document.createElement('i');
   icon.addEventListener('click', () => {
-    myDiv4.style.display = 'none';
-    myDiv2.style.display = 'block';
-    currentPage = 'div-2';
-    let p = document.getElementById('successMsg');
-    p.style.display = 'none';
+    $.ajax({
+      url: `${appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`,
+      type: 'GET',
+      success: function (data) {
+        console.log('hi this is ajax 2');
+
+        let editDateBtn = document.getElementById('edit-date-btn');
+        let allowedToUpdate = data.customer.birthday_updated_at
+          ? (new Date() - data.customer.birthday_updated_at) / 86400000 > 30
+          : true;
+
+        editDateBtn.style.opacity = allowedToUpdate ? '100%' : '40%';
+        editDateBtn.disabled = !allowedToUpdate;
+
+        myDiv4.style.display = 'none';
+        myDiv2.style.display = 'block';
+        currentPage = 'div-2';
+        let p = document.getElementById('successMsg');
+        p.style.display = 'none';
+      },
+    });
+    
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -1335,6 +1371,7 @@ const myFunc = async () => {
 
   dateBtn = document.createElement('button');
   dateBtn.textContent = 'Redeem';
+  dateBtn.id = 'coupon-btn';
   dateBtn.addEventListener('click', async () => {
     //add function call
     await getDiscountCode();
@@ -1409,6 +1446,7 @@ const myFunc = async () => {
   newDiv.appendChild(span);
 
   dateBtn = document.createElement('button');
+  dateBtn.id = 'shipping-btn';
   dateBtn.textContent = 'Redeem';
   dateBtn.addEventListener('click', async () => {
     //add function call
@@ -1484,6 +1522,7 @@ const myFunc = async () => {
   newDiv.appendChild(span);
 
   dateBtn = document.createElement('button');
+  dateBtn.id = 'percentage-btn';
   dateBtn.textContent = 'Redeem';
   dateBtn.addEventListener('click', async () => {
     //add function call
@@ -1554,9 +1593,40 @@ const myFunc = async () => {
 
   icon = document.createElement('i');
   icon.addEventListener('click', () => {
-    myDiv6.style.display = 'none';
-    myDiv5.style.display = 'block';
-    currentPage = 'div-5';
+    $.ajax({
+      url: `${appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`,
+      type: 'GET',
+      success: function (data) {
+        console.log('hi this is ajax');
+        console.log(data);
+
+        let couponBtn = document.getElementById('coupon-btn');
+        couponBtn.style.opacity =
+          data.customer.points < data.merchant.redeemPoints ? '40%' : '100%';
+        couponBtn.disabled = data.customer.points < data.merchant.redeemPoints;
+
+        let shippingBtn = document.getElementById('shipping-btn');
+        shippingBtn.style.opacity =
+          data.customer.points < data.merchant.shippingPoints ? '40%' : '100%';
+        shippingBtn.disabled =
+          data.customer.points < data.merchant.shippingPoints;
+
+        let percentageBtn = document.getElementById('percentage-btn');
+        percentageBtn.style.opacity =
+          data.customer.points < data.merchant.percentagePoints
+            ? '40%'
+            : '100%';
+        percentageBtn.disabled =
+          data.customer.points < data.merchant.percentagePoints;
+
+        let customerPoints = document.getElementById('customer-points');
+        customerPoints.textContent = data.customer.points + ` points`;
+
+        myDiv6.style.display = 'none';
+        myDiv5.style.display = 'block';
+        currentPage = 'div-5';
+      },
+    });
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
