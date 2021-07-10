@@ -1,23 +1,34 @@
-function css(element, styleObj) {
-  for (let property in styleObj) element.style[property] = styleObj[property];
-}
+let appUrl = 'https://rewards-backend.superassistant.io';
 
-let appUrl = 'https://rewards-backend.superassistant.io' //'https://b22082376dcd.ngrok.io';
+/* globally set variables */
 let userId = meta.page.customerId;
-let referrer = Shopify.queryParams? Shopify.queryParams.ref : new URLSearchParams(location.search).get('ref');
+let referrer = Shopify.queryParams
+  ? Shopify.queryParams.ref
+  : new URLSearchParams(location.search).get('ref');
 let SA_rewards_shopDomain = Shopify.shop;
+
+/* above variables set for local testing*/
 // let userId = 5339222605995;
 // let referrer; //= 'SUPER20Neil';
 // let SA_rewards_shopDomain = 'super-rewards-test.myshopify.com'; //'web-neil.myshopify.com';
 
-referrer && localStorage.setItem('ref', referrer);
+referrer && localStorage.setItem('SA_rewards_ref', referrer);
 
-let result = 0;
-let merchant = '';
-let codes = '';
-let discountCode;
-let showMessage = false;
+/* variables initialized. These will be updated/re-assigned values from our API calls. */
 
+let result = {}; /*our current logged in customer */
+let merchant = {}; /*The merchant/store owner  */
+let codes = []; /* An array of discount codes of the customer*/
+let discountCode; /*generated discount code */
+let showMessage = false; /*toggle the saved message */
+
+/*Helper function to add css styles */
+const css = (element, styleObj) => {
+  for (let property in styleObj) element.style[property] = styleObj[property];
+};
+
+/* helper function to get the current customer and merchant details.
+This API will update the above result and merchant variables. */
 const getPointsData = async () => {
   if (userId) {
     const res = await fetch(
@@ -37,6 +48,8 @@ const getPointsData = async () => {
   }
 };
 
+/*helper function to get all the available discount codes of the customer.
+This API will update the above codes array variable. */
 const getDiscountCodes = async () => {
   if (userId) {
     const res = await fetch(
@@ -48,9 +61,9 @@ const getDiscountCodes = async () => {
   }
 };
 
+/*helper function to set the customer's birthday in the database. */
 const updateUserBirthday = async (day, month) => {
   if (userId) {
-    //console.log(month);
     const options = {
       method: 'PUT',
       headers: {
@@ -59,15 +72,16 @@ const updateUserBirthday = async (day, month) => {
       },
       body: JSON.stringify({ day, month, shopDomain: SA_rewards_shopDomain }),
     };
-    console.log(options.body);
     const res = await fetch(`${appUrl}/birthday/${userId}`, options);
     showMessage = true;
     console.log(res);
   }
 };
 
+/*helper function to save the referrer code if a new customer has used
+a referral link. */
 const sendReferrerCode = async () => {
-  const referrerCode = localStorage.getItem('ref');
+  const referrerCode = localStorage.getItem('SA_rewards_ref');
   if (referrerCode) {
     const res = await fetch(
       `${appUrl}/set-referrer?ref=${referrer}&shopDomain=${SA_rewards_shopDomain}`
@@ -77,6 +91,8 @@ const sendReferrerCode = async () => {
   }
 };
 
+/*helper function to generate the fixed amount coupon code when customer
+clicks on redeem. */
 const getDiscountCode = async () => {
   const res = await fetch(
     `${appUrl}/discount/${userId}?shopDomain=${SA_rewards_shopDomain}`
@@ -87,6 +103,8 @@ const getDiscountCode = async () => {
   localStorage.setItem('discount', data);
 };
 
+/*helper function to generate the free shipping coupon code when customer
+clicks on redeem. */
 const getFreeShippingCode = async () => {
   const res = await fetch(
     `${appUrl}/shipping/${userId}?shopDomain=${SA_rewards_shopDomain}`
@@ -97,6 +115,8 @@ const getFreeShippingCode = async () => {
   localStorage.setItem('discount', data);
 };
 
+/*helper function to generate the percentage off coupon code when customer
+clicks on redeem. */
 const getPercentageCode = async () => {
   const res = await fetch(
     `${appUrl}/percentage-discount/${userId}?shopDomain=${SA_rewards_shopDomain}`
@@ -107,8 +127,8 @@ const getPercentageCode = async () => {
   localStorage.setItem('discount', data);
 };
 
+/*helper function to hide the current page. */
 const toggleCurrentPage = (pageId) => {
-  console.log(pageId);
   if (pageId !== '') {
     let currentPage = document.getElementById(pageId);
     currentPage.style.display = 'none';
@@ -126,7 +146,7 @@ script.src = 'https://kit.fontawesome.com/ccca1edeec.js';
 script.crossOrigin = 'anonymous';
 document.body.appendChild(script);
 
-//jquery script
+//jquery scripts
 script = document.createElement('script');
 script.src = 'jquery-3.5.1.min.js';
 document.body.appendChild(script);
@@ -136,39 +156,34 @@ script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js';
 script.crossOrigin = 'anonymous';
 document.body.appendChild(script);
 
-//tailwind cdn
-// let tailwind = document.createElement('link');
-// tailwind.href = 'https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css';
-// tailwind.rel = 'stylesheet';
-// document.head.appendChild(tailwind);
-
-const myFunc = async () => {
+/* Main function that will append all the elements and make API calls. */
+const appendWidget = async () => {
   await getPointsData();
   await getDiscountCodes();
   await sendReferrerCode();
 
-  let myDiv = document.createElement('div');
-  let myDiv2 = document.createElement('div');
-  let myDiv3 = document.createElement('div');
-  let myDiv4 = document.createElement('div');
-  let myDiv5 = document.createElement('div');
-  let myDiv6 = document.createElement('div');
-  let myDiv7 = document.createElement('div');
+  let widgetPage_1 = document.createElement('div');
+  let widgetPage_2 = document.createElement('div');
+  let widgetPage_3 = document.createElement('div');
+  let widgetPage_4 = document.createElement('div');
+  let widgetPage_5 = document.createElement('div');
+  let widgetPage_6 = document.createElement('div');
+  let widgetPage_7 = document.createElement('div');
 
-  myDiv.id = 'div';
-  myDiv2.id = 'div-2';
-  myDiv3.id = 'div-3';
-  myDiv4.id = 'div-4';
-  myDiv5.id = 'div-5';
-  myDiv6.id = 'div-6';
-  myDiv7.id = 'div-7';
+  widgetPage_1.id = 'div';
+  widgetPage_2.id = 'div-2';
+  widgetPage_3.id = 'div-3';
+  widgetPage_4.id = 'div-4';
+  widgetPage_5.id = 'div-5';
+  widgetPage_6.id = 'div-6';
+  widgetPage_7.id = 'div-7';
 
-  let renderPage = userId ? myDiv3 : myDiv;
+  let homePage = userId ? widgetPage_3 : widgetPage_1; /* main page to display when user is logged in or not */ 
   let currentPage = '';
-  console.log(renderPage);
 
-  //page 1
-  let bottomPosition = window.innerWidth > 768 ? 70 : 0;
+  /* page 1: This is the main page before logging in.*/
+
+  let bottomPosition = window.innerWidth > 768 ? 70 : 0; /* controls the relative position of the widget based on merchant settings.*/
   const divClass = {
     backgroundColor: '#fff',
     position: 'fixed',
@@ -184,7 +199,7 @@ const myFunc = async () => {
     zIndex: '999',
     //fontFamily: 'roboto',
   };
-  css(myDiv, divClass);
+  css(widgetPage_1, divClass);
 
   //cardtop
   let div1 = document.createElement('div');
@@ -219,7 +234,7 @@ const myFunc = async () => {
   font-size:12px;
   cursor: pointer;`;
   cross.onclick = () => {
-    renderPage.style.display = 'none';
+    homePage.style.display = 'none';
     currentPage = '';
   };
   closeBox.appendChild(cross);
@@ -236,7 +251,7 @@ const myFunc = async () => {
   div1.appendChild(p);
 
   css(div1, div1Class1);
-  myDiv.appendChild(div1);
+  widgetPage_1.appendChild(div1);
 
   //card
   let div2 = document.createElement('div');
@@ -309,7 +324,7 @@ const myFunc = async () => {
   a.appendChild(button);
 
   css(div2, div2Class);
-  myDiv.appendChild(div2);
+  widgetPage_1.appendChild(div2);
 
   //cardpoints
   let div3 = document.createElement('div');
@@ -363,10 +378,9 @@ const myFunc = async () => {
 
   let div4 = document.createElement('div');
   div4.addEventListener('click', () => {
-    renderPage.style.display = 'none';
-    myDiv2.style.display = 'block';
+    homePage.style.display = 'none';
+    widgetPage_2.style.display = 'block';
     currentPage = 'div-2';
-    console.log(currentPage);
   });
   const class1 = {
     margin: '10px 0px',
@@ -420,8 +434,8 @@ const myFunc = async () => {
 
   div4 = document.createElement('div');
   div4.addEventListener('click', () => {
-    renderPage.style.display = 'none';
-    myDiv5.style.display = 'block';
+    homePage.style.display = 'none';
+    widgetPage_5.style.display = 'block';
     currentPage = 'div-5';
   });
 
@@ -458,7 +472,7 @@ const myFunc = async () => {
   css(icon, class4);
   div5.appendChild(icon);
 
-  merchant.isPointsActive && myDiv.appendChild(div3);
+  merchant.isPointsActive && widgetPage_1.appendChild(div3);
 
   //referral box
   let refBox = document.createElement('div');
@@ -493,7 +507,7 @@ const myFunc = async () => {
   `;
   refBox.appendChild(refDescp);
 
-  merchant.isReferralsActive && myDiv.appendChild(refBox);
+  merchant.isReferralsActive && widgetPage_1.appendChild(refBox);
 
   let btn = document.createElement('button');
   css(btn, {
@@ -515,21 +529,22 @@ const myFunc = async () => {
   btn.appendChild(icon);
 
   btn.addEventListener('click', () => {
-    if (renderPage.style.display === 'none') {
-      renderPage.style.display = 'block';
+    if (homePage.style.display === 'none') {
+      homePage.style.display = 'block';
     } else {
-      renderPage.style.display = 'none';
+      homePage.style.display = 'none';
     }
     toggleCurrentPage(currentPage);
     currentPage = '';
-    console.log('myDiv clicked');
   });
 
-  document.body.appendChild(myDiv);
+  document.body.appendChild(widgetPage_1);
   (merchant.isPointsActive || merchant.isReferralsActive) &&
     document.body.appendChild(btn);
 
-  // page 2
+  /* Page 1 ends */
+
+  /* Page 2: This page shows all the ways to earn points */
 
   const divClass2 = {
     backgroundColor: '#fff',
@@ -545,8 +560,8 @@ const myFunc = async () => {
     display: 'none',
     zIndex: '999',
   };
-  css(myDiv2, divClass2);
-  document.body.appendChild(myDiv2);
+  css(widgetPage_2, divClass2);
+  document.body.appendChild(widgetPage_2);
 
   //top
   div1 = document.createElement('div');
@@ -564,8 +579,8 @@ const myFunc = async () => {
 
   icon = document.createElement('i');
   icon.addEventListener('click', () => {
-    myDiv2.style.display = 'none';
-    renderPage.style.display = 'block';
+    widgetPage_2.style.display = 'none';
+    homePage.style.display = 'block';
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -587,13 +602,13 @@ const myFunc = async () => {
   cursor: pointer;
   margin-left: auto`;
   cross.onclick = () => {
-    myDiv2.style.display = 'none';
+    widgetPage_2.style.display = 'none';
     currentPage = '';
   };
   div1.appendChild(cross);
 
   css(div1, div1Class);
-  myDiv2.appendChild(div1);
+  widgetPage_2.appendChild(div1);
 
   //center
   let center = document.createElement('div');
@@ -694,8 +709,8 @@ const myFunc = async () => {
   dateBtn.id = 'edit-date-btn';
   dateBtn.textContent = 'Edit date';
   dateBtn.addEventListener('click', () => {
-    myDiv2.style.display = 'none';
-    myDiv4.style.display = 'block';
+    widgetPage_2.style.display = 'none';
+    widgetPage_4.style.display = 'block';
     currentPage = 'div-4';
   });
   dateBtn.style.cssText += `border: none;
@@ -759,12 +774,12 @@ const myFunc = async () => {
   // border: none;`;
   // newDiv.appendChild(hr);
 
-  myDiv2.appendChild(center);
+  widgetPage_2.appendChild(center);
 
   //btncontainer
   let btnC = document.createElement('div');
   btnC.style.cssText += 'text-align: center;';
-  myDiv2.appendChild(btnC);
+  widgetPage_2.appendChild(btnC);
 
   a = document.createElement('a');
   a.href =
@@ -792,9 +807,11 @@ const myFunc = async () => {
   css(button, btnClass2);
   a.appendChild(button);
 
-  // page 3
+  /* Page 2 ends */
 
-  css(myDiv3, divClass);
+  /* Page 3: This is the main page after logging in */
+
+  css(widgetPage_3, divClass);
 
   //cardtop
   div1 = document.createElement('div');
@@ -819,7 +836,7 @@ const myFunc = async () => {
   font-size:12px;
   cursor: pointer;`;
   cross.onclick = () => {
-    renderPage.style.display = 'none';
+    homePage.style.display = 'none';
   };
   closeBox.appendChild(cross);
 
@@ -834,7 +851,7 @@ const myFunc = async () => {
   div1.appendChild(p);
 
   css(div1, div1Class1);
-  myDiv3.appendChild(div1);
+  widgetPage_3.appendChild(div1);
 
   //card
   div2 = document.createElement('div');
@@ -860,14 +877,12 @@ const myFunc = async () => {
       type: 'GET',
       success: function (data) {
         console.log('hi im in ajax codes');
-        console.log(data);
         codes = data;
-        renderPage.style.display = 'none'; //
-        myDiv7.style.display = 'block';
+        homePage.style.display = 'none'; //
+        widgetPage_7.style.display = 'block';
         currentPage = 'div-7';
       },
     });
-    
   });
   text.style.cssText += `display: flex;
   justify-content: space-between;
@@ -888,7 +903,7 @@ const myFunc = async () => {
   text.appendChild(icon);
 
   css(div2, div2Class2);
-  myDiv3.appendChild(div2);
+  widgetPage_3.appendChild(div2);
 
   //cardpoints
   div3 = document.createElement('div');
@@ -920,7 +935,6 @@ const myFunc = async () => {
   span.id = 'customer-points';
   span.textContent = `${result.points} points`;
   span.style.cssText += `font-weight: 600;`;
-  console.log(result);
   pd.appendChild(span);
 
   icon = document.createElement('i');
@@ -931,8 +945,8 @@ const myFunc = async () => {
 
   div4 = document.createElement('div');
   div4.addEventListener('click', () => {
-    renderPage.style.display = 'none';
-    myDiv2.style.display = 'block';
+    homePage.style.display = 'none';
+    widgetPage_2.style.display = 'block';
     currentPage = 'div-2';
   });
 
@@ -966,8 +980,8 @@ const myFunc = async () => {
 
   div4 = document.createElement('div');
   div4.addEventListener('click', () => {
-    renderPage.style.display = 'none';
-    myDiv5.style.display = 'block';
+    homePage.style.display = 'none';
+    widgetPage_5.style.display = 'block';
     currentPage = 'div-5';
   });
 
@@ -999,7 +1013,7 @@ const myFunc = async () => {
   css(icon, class4);
   div5.appendChild(icon);
 
-  merchant.isPointsActive && myDiv3.appendChild(div3);
+  merchant.isPointsActive && widgetPage_3.appendChild(div3);
 
   let refContainer = document.createElement('div');
   refContainer.style.cssText += `padding: 18px;
@@ -1007,7 +1021,7 @@ const myFunc = async () => {
   background-color: #fff;
   -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);`;
-  merchant.isReferralsActive && myDiv3.appendChild(refContainer);
+  merchant.isReferralsActive && widgetPage_3.appendChild(refContainer);
 
   span = document.createElement('span');
   span.textContent = 'Refer your friends';
@@ -1059,17 +1073,18 @@ const myFunc = async () => {
         'text/plain',
         `https://${SA_rewards_shopDomain}/?ref=${result.referralCode}`
       );
-      console.log(event.clipboardData.getData('text'));
     }
   });
   refLink.appendChild(copy);
 
-  document.body.appendChild(myDiv3);
+  document.body.appendChild(widgetPage_3);
 
-  // page 4
+  /* Page 3 ends */
 
-  css(myDiv4, divClass);
-  document.body.appendChild(myDiv4);
+  /*Page 4: On this page the customer can add their birthday. */
+
+  css(widgetPage_4, divClass);
+  document.body.appendChild(widgetPage_4);
 
   //top
   div1 = document.createElement('div');
@@ -1101,14 +1116,13 @@ const myFunc = async () => {
         editDateBtn.style.opacity = allowedToUpdate ? '100%' : '40%';
         editDateBtn.disabled = !allowedToUpdate;
 
-        myDiv4.style.display = 'none';
-        myDiv2.style.display = 'block';
+        widgetPage_4.style.display = 'none';
+        widgetPage_2.style.display = 'block';
         currentPage = 'div-2';
         let p = document.getElementById('successMsg');
         p.style.display = 'none';
       },
     });
-    
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -1129,13 +1143,13 @@ const myFunc = async () => {
   cursor: pointer;
   margin-left: auto`;
   cross.onclick = () => {
-    myDiv4.style.display = 'none';
+    widgetPage_4.style.display = 'none';
     currentPage = '';
   };
   div1.appendChild(cross);
 
   css(div1, div1Class);
-  myDiv4.appendChild(div1);
+  widgetPage_4.appendChild(div1);
 
   //center
   center = document.createElement('div');
@@ -1198,7 +1212,7 @@ const myFunc = async () => {
   text-align: center`;
   center.appendChild(centerDesc);
 
-  myDiv4.appendChild(center);
+  widgetPage_4.appendChild(center);
 
   //btncontainer
   let dateContainer = document.createElement('div');
@@ -1208,7 +1222,7 @@ const myFunc = async () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;`;
-  myDiv4.appendChild(dateContainer);
+  widgetPage_4.appendChild(dateContainer);
 
   span = document.createElement('span');
   span.style.cssText += `font-weight: 400;`;
@@ -1261,10 +1275,12 @@ const myFunc = async () => {
   `;
   dateContainer.appendChild(successMsg);
 
-  // page 5
+  /* Page 4 ends */
 
-  css(myDiv5, divClass2);
-  document.body.appendChild(myDiv5);
+  /* Page 5: This page shows all the wayd to redeem points. */
+
+  css(widgetPage_5, divClass2);
+  document.body.appendChild(widgetPage_5);
 
   //top
   div1 = document.createElement('div');
@@ -1282,8 +1298,8 @@ const myFunc = async () => {
 
   icon = document.createElement('i');
   icon.addEventListener('click', () => {
-    myDiv5.style.display = 'none';
-    renderPage.style.display = 'block';
+    widgetPage_5.style.display = 'none';
+    homePage.style.display = 'block';
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -1304,13 +1320,13 @@ const myFunc = async () => {
   cursor: pointer;
   margin-left: auto`;
   cross.onclick = () => {
-    myDiv5.style.display = 'none';
+    widgetPage_5.style.display = 'none';
     currentPage = '';
   };
   div1.appendChild(cross);
 
   css(div1, div1Class);
-  myDiv5.appendChild(div1);
+  widgetPage_5.appendChild(div1);
 
   //center
   center = document.createElement('div');
@@ -1381,8 +1397,8 @@ const myFunc = async () => {
     couponDesc.textContent = `${value3} off coupon`;
     let couponPoints = document.getElementById('discount-points-spent');
     couponPoints.textContent = `Spent ${merchant.redeemPoints} points`;
-    myDiv5.style.display = 'none';
-    myDiv6.style.display = 'block';
+    widgetPage_5.style.display = 'none';
+    widgetPage_6.style.display = 'block';
     currentPage = 'div-6';
   });
   dateBtn.style.cssText += `border: none;
@@ -1457,8 +1473,8 @@ const myFunc = async () => {
     couponDesc.textContent = `Free shipping coupon`;
     let couponPoints = document.getElementById('discount-points-spent');
     couponPoints.textContent = `Spent ${merchant.shippingPoints} points`;
-    myDiv5.style.display = 'none';
-    myDiv6.style.display = 'block';
+    widgetPage_5.style.display = 'none';
+    widgetPage_6.style.display = 'block';
     currentPage = 'div-6';
   });
   dateBtn.style.cssText += `border: none;
@@ -1533,8 +1549,8 @@ const myFunc = async () => {
     couponDesc.textContent = `${merchant.percentageAmt}% off coupon`;
     let couponPoints = document.getElementById('discount-points-spent');
     couponPoints.textContent = `Spent ${merchant.percentagePoints} points`;
-    myDiv5.style.display = 'none';
-    myDiv6.style.display = 'block';
+    widgetPage_5.style.display = 'none';
+    widgetPage_6.style.display = 'block';
     currentPage = 'div-6';
   });
   dateBtn.style.cssText += `border: none;
@@ -1553,12 +1569,12 @@ const myFunc = async () => {
 
   //--
 
-  myDiv5.appendChild(center);
+  widgetPage_5.appendChild(center);
 
   //btncontainer
   btnC = document.createElement('div');
   btnC.style.cssText += 'text-align: center;';
-  myDiv5.appendChild(btnC);
+  widgetPage_5.appendChild(btnC);
 
   a = document.createElement('a');
   a.href =
@@ -1572,10 +1588,12 @@ const myFunc = async () => {
   a.appendChild(button);
   css(button, btnClass2);
 
-  // page 6
+  /* Page 5 ends */
 
-  css(myDiv6, divClass2);
-  document.body.appendChild(myDiv6);
+  /* Page 6: This page will display the generated discount coupon when you click on the redeem button.*/
+
+  css(widgetPage_6, divClass2);
+  document.body.appendChild(widgetPage_6);
 
   //top
   div1 = document.createElement('div');
@@ -1598,7 +1616,6 @@ const myFunc = async () => {
       type: 'GET',
       success: function (data) {
         console.log('hi this is ajax');
-        console.log(data);
 
         let couponBtn = document.getElementById('coupon-btn');
         couponBtn.style.opacity =
@@ -1622,8 +1639,8 @@ const myFunc = async () => {
         let customerPoints = document.getElementById('customer-points');
         customerPoints.textContent = data.customer.points + ` points`;
 
-        myDiv6.style.display = 'none';
-        myDiv5.style.display = 'block';
+        widgetPage_6.style.display = 'none';
+        widgetPage_5.style.display = 'block';
         currentPage = 'div-5';
       },
     });
@@ -1647,13 +1664,13 @@ const myFunc = async () => {
   cursor: pointer;
   margin-left: auto`;
   cross.onclick = () => {
-    myDiv6.style.display = 'none';
+    widgetPage_6.style.display = 'none';
     currentPage = '';
   };
   div1.appendChild(cross);
 
   css(div1, div1Class);
-  myDiv6.appendChild(div1);
+  widgetPage_6.appendChild(div1);
 
   //center
   center = document.createElement('div');
@@ -1665,7 +1682,7 @@ const myFunc = async () => {
 
   //--
 
-  myDiv6.appendChild(center);
+  widgetPage_6.appendChild(center);
   //--ref container
 
   refContainer = document.createElement('div');
@@ -1674,7 +1691,7 @@ const myFunc = async () => {
   background-color: #fff;
   -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);`;
-  myDiv6.appendChild(refContainer);
+  widgetPage_6.appendChild(refContainer);
 
   //--
   div = document.createElement('div');
@@ -1761,15 +1778,16 @@ const myFunc = async () => {
     let span = document.getElementById('discount');
     if (event.clipboardData) {
       event.clipboardData.setData('text/plain', span.textContent);
-      console.log(event.clipboardData.getData('text'));
     }
   });
   refLink.appendChild(copy);
 
-  // page 7
+  /* Page 6 ends */
 
-  css(myDiv7, divClass);
-  document.body.appendChild(myDiv7);
+  /* Page 7: This page shows the list of all available coupon codes.*/
+
+  css(widgetPage_7, divClass);
+  document.body.appendChild(widgetPage_7);
 
   //top
   div1 = document.createElement('div');
@@ -1787,8 +1805,8 @@ const myFunc = async () => {
 
   icon = document.createElement('i');
   icon.addEventListener('click', () => {
-    myDiv7.style.display = 'none';
-    renderPage.style.display = 'block'; //
+    widgetPage_7.style.display = 'none';
+    homePage.style.display = 'block'; //
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -1809,13 +1827,13 @@ const myFunc = async () => {
   cursor: pointer;
   margin-left: auto`;
   cross.onclick = () => {
-    myDiv7.style.display = 'none';
+    widgetPage_7.style.display = 'none';
     currentPage = '';
   };
   div1.appendChild(cross);
 
   css(div1, div1Class);
-  myDiv7.appendChild(div1);
+  widgetPage_7.appendChild(div1);
 
   //center
   center = document.createElement('div');
@@ -1824,43 +1842,6 @@ const myFunc = async () => {
   span = document.createElement('span');
   span.textContent = 'Your Coupons';
   codes.length !== 0 && center.appendChild(span);
-
-  //---
-  // div = document.createElement('div');
-  // div.style.cssText +=
-  //   'margin: 10px 0px; display: flex;  align-items: center;  width: 100%;  cursor: pointer;margin-top: 20px;';
-  // center.appendChild(div);
-
-  // icon = document.createElement('i');
-  // icon.style.fontSize = '20px';
-  // icon.style.color = merchant.theme.color;
-  // icon.classList.add('fas', 'fa-user-tag');
-  // div.appendChild(icon);
-
-  // textGrp3 = document.createElement('div');
-  // textGrp3.style.cssText += `display: flex;
-  // margin-left: 15px;
-  // align-items: center;
-  // width: 100%;
-  // padding-bottom: 10px;
-  // border-bottom: 1px solid #e5e5e5;`;
-  // div.appendChild(textGrp3);
-
-  // newDiv = document.createElement('div');
-  // newDiv.style.cssText += `display: flex;
-  // flex-direction: column;
-  // margin-left: 0px;
-  // justify-content: center;
-  // width: 100%;`;
-  // textGrp3.appendChild(newDiv);
-
-  // span = document.createElement('span');
-  // span.style.cssText += `font-size: 14px;
-  // font-weight: 300;
-  // `;
-  // span.textContent = codes[0]; //coupon code
-  // textGrp3.appendChild(span);
-  //newDiv.appendChild(span);
 
   for (const codeObj of codes) {
     div = document.createElement('div');
@@ -1921,7 +1902,6 @@ const myFunc = async () => {
       event.preventDefault();
       if (event.clipboardData) {
         event.clipboardData.setData('text/plain', codeObj.code);
-        console.log(event.clipboardData.getData('text'));
       }
     });
     textGrp3.appendChild(copy);
@@ -1953,7 +1933,9 @@ const myFunc = async () => {
   `;
   imgContainer.appendChild(noRewardsText);
 
-  myDiv7.appendChild(center);
+  widgetPage_7.appendChild(center);
+
+  /*Page 7 ends*/
 };
 
-myFunc();
+appendWidget();
