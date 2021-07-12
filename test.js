@@ -1,4 +1,4 @@
-let appUrl = 'https://rewards-backend.superassistant.io';
+let appUrl = 'https://8b3431597847.ngrok.io';
 
 /* globally set variables */
 let userId = meta.page.customerId;
