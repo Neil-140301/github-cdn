@@ -1,4 +1,4 @@
-let appUrl = 'https://6fdf954eba3b.ngrok.io';
+let appUrl = 'https://rewards-backend.superassistant.io';
 
 /* globally set variables */
 let userId = meta.page.customerId;
@@ -169,6 +169,7 @@ const appendWidget = async () => {
   let widgetPage_5 = document.createElement('div');
   let widgetPage_6 = document.createElement('div');
   let widgetPage_7 = document.createElement('div');
+  let widgetPage_8 = document.createElement('div');
 
   widgetPage_1.id = 'div';
   widgetPage_2.id = 'div-2';
@@ -177,13 +178,19 @@ const appendWidget = async () => {
   widgetPage_5.id = 'div-5';
   widgetPage_6.id = 'div-6';
   widgetPage_7.id = 'div-7';
+  widgetPage_8.id = 'div-8';
 
-  let homePage = userId ? widgetPage_3 : widgetPage_1; /* main page to display when user is logged in or not */ 
+  let homePage = userId
+    ? widgetPage_3
+    : widgetPage_1; /* main page to display when user is logged in or not */
   let currentPage = '';
 
   /* page 1: This is the main page before logging in.*/
 
-  let bottomPosition = window.innerWidth > 768 ? 70 : 0; /* controls the relative position of the widget based on merchant settings.*/
+  let bottomPosition =
+    window.innerWidth > 768
+      ? 70
+      : 0; /* controls the relative position of the widget based on merchant settings.*/
   const divClass = {
     backgroundColor: '#fff',
     position: 'fixed',
@@ -1028,7 +1035,23 @@ const appendWidget = async () => {
   span.style.cssText += `
   font-size: 14px;
   font-weight: 300;
-}`;
+  display:flex;
+  justify-content:space-between;
+  width:95%;
+  cursor:pointer;
+`;
+
+  span.addEventListener('click', () => {
+    homePage.style.display = 'none';
+    widgetPage_8.style.display = 'block';
+    currentPage = 'div-8';
+  });
+
+  icon = document.createElement('i');
+  icon.style.fontSize = '14px';
+  icon.style.color = '#777474';
+  icon.classList.add('fas', 'fa-angle-right');
+  span.appendChild(icon);
   refContainer.appendChild(span);
 
   let refDesc = document.createElement('p');
@@ -1936,6 +1959,361 @@ const appendWidget = async () => {
   widgetPage_7.appendChild(center);
 
   /*Page 7 ends*/
+
+  /* Page 8: This page is to display social sharing options */
+
+  css(widgetPage_8, divClass2);
+  document.body.appendChild(widgetPage_8);
+
+  //top
+  div1 = document.createElement('div');
+  div1Class = {
+    backgroundColor: merchant.theme.color,
+    height: '55px',
+    margin: '-10px',
+    borderTopLeftRadius: '5px',
+    borderTopRightRadius: '5px',
+    padding: ' 20px 20px 0px 20px',
+    color: merchant.theme.font,
+    display: 'flex',
+    //fontFamily: 'Roboto',
+  };
+
+  icon = document.createElement('i');
+  icon.addEventListener('click', () => {
+    widgetPage_8.style.display = 'none';
+    homePage.style.display = 'block';
+  });
+  icon.style.fontSize = '16px';
+  icon.style.cursor = 'pointer';
+  icon, (style = merchant.theme.font);
+  icon.classList.add('fas', 'fa-angle-left');
+  div1.appendChild(icon);
+
+  span = document.createElement('span');
+  //font-roboto
+  span.style.cssText += 'font-size: 14px; margin-left: 10px;';
+  span.textContent = 'Super Rewards';
+  div1.appendChild(span);
+
+  cross = document.createElement('i');
+  cross.classList.add('fas', 'fa-times');
+  cross.style.cssText += `
+  color: ${merchant.theme.font};
+  font-size:12px;
+  cursor: pointer;
+  margin-left: auto`;
+  cross.onclick = () => {
+    widgetPage_8.style.display = 'none';
+    currentPage = '';
+  };
+  div1.appendChild(cross);
+
+  css(div1, div1Class);
+  widgetPage_8.appendChild(div1);
+
+  //-- social sharing card
+
+  refContainer = document.createElement('div');
+  refContainer.style.cssText += `padding: 18px;
+  border-radius: 8px;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  margin-top:25px;
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;`;
+  widgetPage_8.appendChild(refContainer);
+
+  let reward_img = document.createElement('img');
+  reward_img.src = `https://res.cloudinary.com/dl3nzdely/image/upload/v1626161385/gift-img_v4kmed.jpg`;
+  reward_img.alt = `reward_img`;
+  reward_img.style.cssText += `
+  width:60px;`;
+  refContainer.appendChild(reward_img);
+
+  let social_p1 = document.createElement('p');
+  social_p1.textContent = 'Refer friends and get rewarded';
+  social_p1.style.cssText += `
+  font-size: 14px;
+  color:#000;
+  font-weight: 500;
+  margin:8px 0px;
+  text-align: center`;
+  refContainer.appendChild(social_p1);
+
+  const couponValue_advocate = merchant.currency.symbol.replace(
+    /{{amount}}/g,
+    merchant.advocateAmt
+  );
+
+  let social_p2 = document.createElement('span');
+  social_p2.textContent = `Share this link to give your friends ${couponValue} off coupon. We'll send you ${couponValue_advocate} off coupon
+  when they make a purchase.`;
+  social_p2.style.cssText += `
+  font-size: 11px;
+  text-align: center;
+  margin:8px 0px;
+  font-weight:300;`;
+  refContainer.appendChild(social_p2);
+
+  refLink = document.createElement('div');
+  refLink.style.cssText += `padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+  font-size: 11px;
+  cursor: pointer;
+  color: #637381;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;`;
+  userId ? refContainer.appendChild(refLink) : null;
+
+  span = document.createElement('span');
+  span.textContent = `https://${SA_rewards_shopDomain}/?ref=${result.referralCode}`;
+  span.style.textAlign = 'left';
+  refLink.appendChild(span);
+
+  copy = document.createElement('icon');
+  copy.style.cssText += `font-size: 13px;margin-left: 10px;`;
+  copy.classList.add('far', 'fa-clipboard');
+  copy.addEventListener('click', (event) => {
+    document.execCommand('copy');
+    event.target.style.cssText += `color: black;
+    font-size: 15px;`;
+  });
+  copy.addEventListener('copy', function (event) {
+    event.preventDefault();
+    if (event.clipboardData) {
+      event.clipboardData.setData(
+        'text/plain',
+        `https://${SA_rewards_shopDomain}/?ref=${result.referralCode}`
+      );
+    }
+  });
+  refLink.appendChild(copy);
+
+  let socialIconsContainer = document.createElement('div');
+  socialIconsContainer.style.cssText += `
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  width:100%;
+  margin-top:12px;`;
+  refContainer.appendChild(socialIconsContainer);
+
+  let iconLink_f = document.createElement('a');
+  iconLink_f.href = `https://facebook.com/sharer/sharer.php?u=https://${SA_rewards_shopDomain}/?ref=${result.referralCode}`;
+  iconLink_f.target = '_blank';
+  iconLink_f.style.cssText += `
+  text-decoration:none;
+  margin: 0px 15px;`;
+  socialIconsContainer.appendChild(iconLink_f);
+
+  let icon_f = document.createElement('i');
+  icon_f.classList.add('fab', 'fa-facebook-square');
+  icon_f.style.cssText += `
+  color:#000;
+  font-size:18px;`;
+  iconLink_f.appendChild(icon_f);
+
+  let iconLink_t = document.createElement('a');
+  iconLink_t.href = `https://twitter.com/share?text=Visit ${merchant.name} using my link and get a special coupon.
+  &url=https://${SA_rewards_shopDomain}/?ref=${result.referralCode}`;
+  iconLink_t.target = '_blank';
+  iconLink_t.style.cssText += `
+  text-decoration:none;
+  margin: 0px 15px;`;
+  socialIconsContainer.appendChild(iconLink_t);
+
+  let icon_t = document.createElement('i');
+  icon_t.classList.add('fab', 'fa-twitter');
+  icon_t.style.cssText += `
+  color:#000;
+  font-size:18px;`;
+  iconLink_t.appendChild(icon_t);
+
+  let iconLink_w = document.createElement('a');
+  iconLink_w.href = `https://wa.me?text=Visit ${merchant.name} using my link and get a special coupon. https://${SA_rewards_shopDomain}/?ref=${result.referralCode}`;
+  iconLink_w.target = '_blank';
+  iconLink_w.style.cssText += `
+  text-decoration:none;
+  margin: 0px 15px;`;
+  socialIconsContainer.appendChild(iconLink_w);
+
+  let icon_w = document.createElement('i');
+  icon_w.classList.add('fab', 'fa-whatsapp-square');
+  icon_w.style.cssText += `
+  color:#000;
+  font-size:18px;`;
+  iconLink_w.appendChild(icon_w);
+
+  // social sharing --//
+
+  /* Page 8 ends */
+
+  /* set timeout nudge */
+  //-- social sharing card
+
+  refContainer = document.createElement('div');
+  refContainer.id = 'social-sharing';
+  refContainer.style.cssText += `padding: 18px;
+  border-radius: 8px;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  margin-top:25px;
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  position:fixed;
+  bottom:50px;
+  right: 50px;
+  z-index:1000;
+  width: 300px;
+  display:none;`;
+  document.body.appendChild(refContainer);
+
+  cross = document.createElement('i');
+  cross.classList.add('fas', 'fa-times');
+  cross.style.cssText += `
+  color: #777474;
+  font-size:12px;
+  cursor: pointer;
+  align-self:flex-end;`;
+  cross.onclick = () => {
+    let box = document.getElementById('social-sharing');
+    box.style.display = 'none';
+  };
+  refContainer.appendChild(cross);
+
+  reward_img = document.createElement('img');
+  reward_img.src = `https://res.cloudinary.com/dl3nzdely/image/upload/v1626161385/gift-img_v4kmed.jpg`;
+  reward_img.alt = `reward_img`;
+  reward_img.style.cssText += `
+  width:60px;`;
+  refContainer.appendChild(reward_img);
+
+  social_p1 = document.createElement('p');
+  social_p1.textContent = 'Refer friends and get rewarded';
+  social_p1.style.cssText += `
+  font-size: 14px;
+  color:#000;
+  font-weight: 500;
+  margin:8px 0px;
+  text-align: center`;
+  refContainer.appendChild(social_p1);
+
+  social_p2 = document.createElement('span');
+  social_p2.textContent = `Share this link to give your friends ${couponValue} off coupon. We'll send you ${couponValue_advocate} off coupon
+  when they make a purchase.`;
+  social_p2.style.cssText += `
+  font-size: 11px;
+  text-align: center;
+  margin:8px 0px;
+  font-weight:300;`;
+  refContainer.appendChild(social_p2);
+
+  refLink = document.createElement('div');
+  refLink.style.cssText += `padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+  font-size: 11px;
+  cursor: pointer;
+  color: #637381;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;`;
+  userId ? refContainer.appendChild(refLink) : null;
+
+  span = document.createElement('span');
+  span.textContent = `https://${SA_rewards_shopDomain}/?ref=${result.referralCode}`;
+  span.style.textAlign = 'left';
+  refLink.appendChild(span);
+
+  copy = document.createElement('icon');
+  copy.style.cssText += `font-size: 13px;margin-left: 10px;`;
+  copy.classList.add('far', 'fa-clipboard');
+  copy.addEventListener('click', (event) => {
+    document.execCommand('copy');
+    event.target.style.cssText += `color: black;
+    font-size: 15px;`;
+  });
+  copy.addEventListener('copy', function (event) {
+    event.preventDefault();
+    if (event.clipboardData) {
+      event.clipboardData.setData(
+        'text/plain',
+        `https://${SA_rewards_shopDomain}/?ref=${result.referralCode}`
+      );
+    }
+  });
+  refLink.appendChild(copy);
+
+  socialIconsContainer = document.createElement('div');
+  socialIconsContainer.style.cssText += `
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  width:100%;
+  margin-top:12px;`;
+  refContainer.appendChild(socialIconsContainer);
+
+  iconLink_f = document.createElement('a');
+  iconLink_f.href = `https://facebook.com/sharer/sharer.php?u=https://${SA_rewards_shopDomain}/?ref=${result.referralCode}`;
+  iconLink_f.target = '_blank';
+  iconLink_f.style.cssText += `
+  text-decoration:none;
+  margin: 0px 15px;`;
+  socialIconsContainer.appendChild(iconLink_f);
+
+  icon_f = document.createElement('i');
+  icon_f.classList.add('fab', 'fa-facebook-square');
+  icon_f.style.cssText += `
+  color:#000;
+  font-size:18px;`;
+  iconLink_f.appendChild(icon_f);
+
+  iconLink_t = document.createElement('a');
+  iconLink_t.href = `https://twitter.com/share?text=Visit ${merchant.name} using my link and get a special coupon.
+  &url=https://${SA_rewards_shopDomain}/?ref=${result.referralCode}`;
+  iconLink_t.target = '_blank';
+  iconLink_t.style.cssText += `
+  text-decoration:none;
+  margin: 0px 15px;`;
+  socialIconsContainer.appendChild(iconLink_t);
+
+  icon_t = document.createElement('i');
+  icon_t.classList.add('fab', 'fa-twitter');
+  icon_t.style.cssText += `
+  color:#000;
+  font-size:18px;`;
+  iconLink_t.appendChild(icon_t);
+
+  iconLink_w = document.createElement('a');
+  iconLink_w.href = `https://wa.me?text=Visit ${merchant.name} using my link and get a special coupon. https://${SA_rewards_shopDomain}/?ref=${result.referralCode}`;
+  iconLink_w.target = '_blank';
+  iconLink_w.style.cssText += `
+  text-decoration:none;
+  margin: 0px 15px;`;
+  socialIconsContainer.appendChild(iconLink_w);
+
+  icon_w = document.createElement('i');
+  icon_w.classList.add('fab', 'fa-whatsapp-square');
+  icon_w.style.cssText += `
+  color:#000;
+  font-size:18px;`;
+  iconLink_w.appendChild(icon_w);
+
+  setTimeout(() => {
+    let box = document.getElementById('social-sharing');
+    box.style.display = 'flex';
+  }, 5000);
 };
 
 appendWidget();
