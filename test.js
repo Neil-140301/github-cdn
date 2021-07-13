@@ -8,7 +8,7 @@ let referrer = Shopify.queryParams
 let SA_rewards_shopDomain = Shopify.shop;
 
 /* above variables set for local testing*/
-// let userId //= 5339222605995;
+// let userId= 5339222605995;
 // let referrer; //= 'SUPER20Neil';
 // let SA_rewards_shopDomain = 'super-rewards-test.myshopify.com'; //'web-neil.myshopify.com';
 
@@ -2310,11 +2310,15 @@ const appendWidget = async () => {
   font-size:18px;`;
   iconLink_w.appendChild(icon_w);
 
+  let nudgeTimeout = parseInt(merchant.referralNudgeTime)
+    ? parseInt(merchant.referralNudgeTime) * 60000
+    : 1;
+
   userId &&
     setTimeout(() => {
       let box = document.getElementById('social-sharing');
       box.style.display = 'flex';
-    }, 5000);
+    }, nudgeTimeout);
 };
 
 appendWidget();
