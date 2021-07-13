@@ -1,4 +1,4 @@
-let appUrl = 'https://8b3431597847.ngrok.io';
+let appUrl = 'https://6fdf954eba3b.ngrok.io';
 
 /* globally set variables */
 let userId = meta.page.customerId;
