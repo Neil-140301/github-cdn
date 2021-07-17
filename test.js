@@ -247,7 +247,7 @@ const appendWidget = async () => {
   closeBox.appendChild(cross);
 
   let p = document.createElement('p');
-  p.textContent = 'Super Rewards';
+  p.textContent = merchant?.theme?.title; //'Super Rewards';
   let pClass = {
     fontSize: '24px',
     fontWeight: '600',
@@ -598,7 +598,7 @@ const appendWidget = async () => {
   span = document.createElement('span');
   //font-roboto
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
-  span.textContent = 'Super Rewards';
+  span.textContent = merchant?.theme?.title; //'Super Rewards';
   div1.appendChild(span);
 
   cross = document.createElement('i');
@@ -853,7 +853,7 @@ const appendWidget = async () => {
   margin: 10px 0px;
   color: ${merchant.theme.font}
   `;
-  p.textContent = 'Super Rewards';
+  p.textContent = merchant?.theme?.title; //'Super Rewards';
 
   div1.appendChild(p);
 
@@ -1155,7 +1155,7 @@ const appendWidget = async () => {
 
   span = document.createElement('span');
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
-  span.textContent = 'Super Rewards';
+  span.textContent =merchant?.theme?.title// 'Super Rewards';
   div1.appendChild(span);
 
   cross = document.createElement('i');
@@ -1332,7 +1332,7 @@ const appendWidget = async () => {
 
   span = document.createElement('span');
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
-  span.textContent = 'Super Rewards';
+  span.textContent = merchant?.theme?.title// 'Super Rewards';
   div1.appendChild(span);
 
   cross = document.createElement('i');
@@ -1676,7 +1676,7 @@ const appendWidget = async () => {
 
   span = document.createElement('span');
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
-  span.textContent = 'Super Rewards';
+  span.textContent = merchant?.theme?.title // 'Super Rewards';
   div1.appendChild(span);
 
   cross = document.createElement('i');
@@ -1839,7 +1839,7 @@ const appendWidget = async () => {
 
   span = document.createElement('span');
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
-  span.textContent = 'Super Rewards';
+  span.textContent = merchant?.theme?.title // 'Super Rewards';
   div1.appendChild(span);
 
   cross = document.createElement('i');
@@ -1993,7 +1993,7 @@ const appendWidget = async () => {
   span = document.createElement('span');
   //font-roboto
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
-  span.textContent = 'Super Rewards';
+  span.textContent = merchant?.theme?.title // 'Super Rewards';
   div1.appendChild(span);
 
   cross = document.createElement('i');
