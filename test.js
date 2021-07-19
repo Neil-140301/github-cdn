@@ -1,4 +1,4 @@
-let SAR_appUrl = 'https://28dfe3ad71de.ngrok.io'; //'https://rewards-backend.superassistant.io';
+let SAR_appUrl = 'https://rewards-backend.superassistant.io';
 
 /* globally set variables */
 let userId = meta.page.customerId;
@@ -2189,6 +2189,7 @@ const appendWidget = async () => {
   cross.onclick = () => {
     let box = document.getElementById('social-sharing');
     box.style.display = 'none';
+    localStorage.setItem('sa_nudge_shown', 'true');
   };
   refContainer.appendChild(cross);
 
@@ -2315,7 +2316,10 @@ const appendWidget = async () => {
     ? parseInt(merchant.referralNudgeTime) * 60000
     : 1 * 60000;
 
+  let showNudge = !localStorage.getItem('sa_nudge_shown') || !JSON.parse(localStorage.getItem('sa_nudge_shown'));
+
   userId &&
+    showNudge &&
     setTimeout(() => {
       let box = document.getElementById('social-sharing');
       box.style.display = 'flex';
