@@ -1,4 +1,4 @@
-let appUrl = 'https://rewards-backend.superassistant.io';
+let SAR_appUrl = 'https://28dfe3ad71de.ngrok.io'; //'https://rewards-backend.superassistant.io';
 
 /* globally set variables */
 let userId = meta.page.customerId;
@@ -8,7 +8,7 @@ let referrer = Shopify.queryParams
 let SA_rewards_shopDomain = Shopify.shop;
 
 /* above variables set for local testing*/
-// let userId= 5339222605995;
+// let userId = 5339222605995;
 // let referrer; //= 'SUPER20Neil';
 // let SA_rewards_shopDomain = 'super-rewards-test.myshopify.com'; //'web-neil.myshopify.com';
 
@@ -32,7 +32,7 @@ This API will update the above result and merchant variables. */
 const getPointsData = async () => {
   if (userId) {
     const res = await fetch(
-      `${appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`
+      `${SAR_appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`
     );
     const data = await res.json();
     console.log(data);
@@ -40,7 +40,7 @@ const getPointsData = async () => {
     merchant = data.merchant;
   } else {
     const res = await fetch(
-      `${appUrl}/merchant-info/?shopDomain=${SA_rewards_shopDomain}`
+      `${SAR_appUrl}/merchant-info/?shopDomain=${SA_rewards_shopDomain}`
     );
     const data = await res.json();
     console.log(data);
@@ -53,7 +53,7 @@ This API will update the above codes array variable. */
 const getDiscountCodes = async () => {
   if (userId) {
     const res = await fetch(
-      `${appUrl}/rewards/${userId}?shopDomain=${SA_rewards_shopDomain}`
+      `${SAR_appUrl}/rewards/${userId}?shopDomain=${SA_rewards_shopDomain}`
     );
     const data = await res.json();
     console.log(data);
@@ -72,7 +72,7 @@ const updateUserBirthday = async (day, month) => {
       },
       body: JSON.stringify({ day, month, shopDomain: SA_rewards_shopDomain }),
     };
-    const res = await fetch(`${appUrl}/birthday/${userId}`, options);
+    const res = await fetch(`${SAR_appUrl}/birthday/${userId}`, options);
     showMessage = true;
     console.log(res);
   }
@@ -84,7 +84,7 @@ const sendReferrerCode = async () => {
   const referrerCode = localStorage.getItem('SA_rewards_ref');
   if (referrerCode) {
     const res = await fetch(
-      `${appUrl}/set-referrer?ref=${referrer}&shopDomain=${SA_rewards_shopDomain}`
+      `${SAR_appUrl}/set-referrer?ref=${referrer}&shopDomain=${SA_rewards_shopDomain}`
     );
     const data = await res.json();
     console.log(data);
@@ -95,7 +95,7 @@ const sendReferrerCode = async () => {
 clicks on redeem. */
 const getDiscountCode = async () => {
   const res = await fetch(
-    `${appUrl}/discount/${userId}?shopDomain=${SA_rewards_shopDomain}`
+    `${SAR_appUrl}/discount/${userId}?shopDomain=${SA_rewards_shopDomain}`
   );
   const data = await res.json();
   discountCode = data;
@@ -107,7 +107,7 @@ const getDiscountCode = async () => {
 clicks on redeem. */
 const getFreeShippingCode = async () => {
   const res = await fetch(
-    `${appUrl}/shipping/${userId}?shopDomain=${SA_rewards_shopDomain}`
+    `${SAR_appUrl}/shipping/${userId}?shopDomain=${SA_rewards_shopDomain}`
   );
   const data = await res.json();
   discountCode = data;
@@ -119,7 +119,7 @@ const getFreeShippingCode = async () => {
 clicks on redeem. */
 const getPercentageCode = async () => {
   const res = await fetch(
-    `${appUrl}/percentage-discount/${userId}?shopDomain=${SA_rewards_shopDomain}`
+    `${SAR_appUrl}/percentage-discount/${userId}?shopDomain=${SA_rewards_shopDomain}`
   );
   const data = await res.json();
   discountCode = data;
@@ -851,8 +851,9 @@ const appendWidget = async () => {
   p.style.cssText += `font-size: 24px;
   font-weight: 600;
   margin: 10px 0px;
-  color: ${merchant.theme.font}
+  color: ${merchant.theme.font};
   `;
+  console.log(p);
   p.textContent = merchant?.theme?.title; //'Super Rewards';
 
   div1.appendChild(p);
@@ -880,7 +881,7 @@ const appendWidget = async () => {
   let text = document.createElement('div');
   text.addEventListener('click', async () => {
     $.ajax({
-      url: `${appUrl}/rewards/${userId}?shopDomain=${SA_rewards_shopDomain}`,
+      url: `${SAR_appUrl}/rewards/${userId}?shopDomain=${SA_rewards_shopDomain}`,
       type: 'GET',
       success: function (data) {
         console.log('hi im in ajax codes');
@@ -1126,7 +1127,7 @@ const appendWidget = async () => {
   icon = document.createElement('i');
   icon.addEventListener('click', () => {
     $.ajax({
-      url: `${appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`,
+      url: `${SAR_appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`,
       type: 'GET',
       success: function (data) {
         console.log('hi this is ajax 2');
@@ -1155,7 +1156,7 @@ const appendWidget = async () => {
 
   span = document.createElement('span');
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
-  span.textContent =merchant?.theme?.title// 'Super Rewards';
+  span.textContent = merchant?.theme?.title; // 'Super Rewards';
   div1.appendChild(span);
 
   cross = document.createElement('i');
@@ -1332,7 +1333,7 @@ const appendWidget = async () => {
 
   span = document.createElement('span');
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
-  span.textContent = merchant?.theme?.title// 'Super Rewards';
+  span.textContent = merchant?.theme?.title; // 'Super Rewards';
   div1.appendChild(span);
 
   cross = document.createElement('i');
@@ -1635,7 +1636,7 @@ const appendWidget = async () => {
   icon = document.createElement('i');
   icon.addEventListener('click', () => {
     $.ajax({
-      url: `${appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`,
+      url: `${SAR_appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`,
       type: 'GET',
       success: function (data) {
         console.log('hi this is ajax');
@@ -1676,7 +1677,7 @@ const appendWidget = async () => {
 
   span = document.createElement('span');
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
-  span.textContent = merchant?.theme?.title // 'Super Rewards';
+  span.textContent = merchant?.theme?.title; // 'Super Rewards';
   div1.appendChild(span);
 
   cross = document.createElement('i');
@@ -1839,7 +1840,7 @@ const appendWidget = async () => {
 
   span = document.createElement('span');
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
-  span.textContent = merchant?.theme?.title // 'Super Rewards';
+  span.textContent = merchant?.theme?.title; // 'Super Rewards';
   div1.appendChild(span);
 
   cross = document.createElement('i');
@@ -1993,7 +1994,7 @@ const appendWidget = async () => {
   span = document.createElement('span');
   //font-roboto
   span.style.cssText += 'font-size: 14px; margin-left: 10px;';
-  span.textContent = merchant?.theme?.title // 'Super Rewards';
+  span.textContent = merchant?.theme?.title; // 'Super Rewards';
   div1.appendChild(span);
 
   cross = document.createElement('i');
