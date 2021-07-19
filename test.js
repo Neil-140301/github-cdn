@@ -23,13 +23,13 @@ let discountCode; /*generated discount code */
 let showMessage = false; /*toggle the saved message */
 
 /*Helper function to add css styles */
-const css = (element, styleObj) => {
+const css = function (element, styleObj) {
   for (let property in styleObj) element.style[property] = styleObj[property];
 };
 
 /* helper function to get the current customer and merchant details.
 This API will update the above result and merchant variables. */
-const getPointsData = async () => {
+const getPointsData = async function () {
   if (userId) {
     const res = await fetch(
       `${SAR_appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`
@@ -50,7 +50,7 @@ const getPointsData = async () => {
 
 /*helper function to get all the available discount codes of the customer.
 This API will update the above codes array variable. */
-const getDiscountCodes = async () => {
+const getDiscountCodes = async function () {
   if (userId) {
     const res = await fetch(
       `${SAR_appUrl}/rewards/${userId}?shopDomain=${SA_rewards_shopDomain}`
@@ -62,7 +62,7 @@ const getDiscountCodes = async () => {
 };
 
 /*helper function to set the customer's birthday in the database. */
-const updateUserBirthday = async (day, month) => {
+const updateUserBirthday = async function (day, month) {
   if (userId) {
     const options = {
       method: 'PUT',
@@ -80,7 +80,7 @@ const updateUserBirthday = async (day, month) => {
 
 /*helper function to save the referrer code if a new customer has used
 a referral link. */
-const sendReferrerCode = async () => {
+const sendReferrerCode = async function () {
   const referrerCode = localStorage.getItem('SA_rewards_ref');
   if (referrerCode) {
     const res = await fetch(
@@ -93,7 +93,7 @@ const sendReferrerCode = async () => {
 
 /*helper function to generate the fixed amount coupon code when customer
 clicks on redeem. */
-const getDiscountCode = async () => {
+const getDiscountCode = async function () {
   const res = await fetch(
     `${SAR_appUrl}/discount/${userId}?shopDomain=${SA_rewards_shopDomain}`
   );
@@ -105,7 +105,7 @@ const getDiscountCode = async () => {
 
 /*helper function to generate the free shipping coupon code when customer
 clicks on redeem. */
-const getFreeShippingCode = async () => {
+const getFreeShippingCode = async function () {
   const res = await fetch(
     `${SAR_appUrl}/shipping/${userId}?shopDomain=${SA_rewards_shopDomain}`
   );
@@ -117,7 +117,7 @@ const getFreeShippingCode = async () => {
 
 /*helper function to generate the percentage off coupon code when customer
 clicks on redeem. */
-const getPercentageCode = async () => {
+const getPercentageCode = async function () {
   const res = await fetch(
     `${SAR_appUrl}/percentage-discount/${userId}?shopDomain=${SA_rewards_shopDomain}`
   );
@@ -128,7 +128,7 @@ const getPercentageCode = async () => {
 };
 
 /*helper function to hide the current page. */
-const toggleCurrentPage = (pageId) => {
+const toggleCurrentPage = function (pageId) {
   if (pageId !== '') {
     let currentPage = document.getElementById(pageId);
     currentPage.style.display = 'none';
@@ -157,7 +157,7 @@ script.crossOrigin = 'anonymous';
 document.body.appendChild(script);
 
 /* Main function that will append all the elements and make API calls. */
-const appendWidget = async () => {
+const appendWidget = async function () {
   await getPointsData();
   await getDiscountCodes();
   await sendReferrerCode();
@@ -249,7 +249,7 @@ const appendWidget = async () => {
   color: ${merchant.theme.font};
   font-size:12px;
   cursor: pointer;`;
-  cross.onclick = () => {
+  cross.onclick = function () {
     homePage.style.display = 'none';
     currentPage = '';
   };
@@ -393,7 +393,7 @@ const appendWidget = async () => {
   css(div3, div3Class);
 
   let div4 = document.createElement('div');
-  div4.addEventListener('click', () => {
+  div4.addEventListener('click', function () {
     homePage.style.display = 'none';
     widgetPage_2.style.display = 'block';
     currentPage = 'div-2';
@@ -449,7 +449,7 @@ const appendWidget = async () => {
   div5.appendChild(icon);
 
   div4 = document.createElement('div');
-  div4.addEventListener('click', () => {
+  div4.addEventListener('click', function () {
     homePage.style.display = 'none';
     widgetPage_5.style.display = 'block';
     currentPage = 'div-5';
@@ -549,7 +549,7 @@ const appendWidget = async () => {
   icon.classList.add('fas', 'fa-gift');
   btn.appendChild(icon);
 
-  btn.addEventListener('click', () => {
+  btn.addEventListener('click', function () {
     if (homePage.style.display === 'none') {
       homePage.style.display = 'block';
     } else {
@@ -606,7 +606,7 @@ const appendWidget = async () => {
   };
 
   icon = document.createElement('i');
-  icon.addEventListener('click', () => {
+  icon.addEventListener('click', function () {
     widgetPage_2.style.display = 'none';
     homePage.style.display = 'block';
   });
@@ -629,7 +629,7 @@ const appendWidget = async () => {
   font-size:12px;
   cursor: pointer;
   margin-left: auto`;
-  cross.onclick = () => {
+  cross.onclick = function () {
     widgetPage_2.style.display = 'none';
     currentPage = '';
   };
@@ -736,7 +736,7 @@ const appendWidget = async () => {
   let dateBtn = document.createElement('button');
   dateBtn.id = 'edit-date-btn';
   dateBtn.textContent = 'Edit date';
-  dateBtn.addEventListener('click', () => {
+  dateBtn.addEventListener('click', function () {
     widgetPage_2.style.display = 'none';
     widgetPage_4.style.display = 'block';
     currentPage = 'div-4';
@@ -863,7 +863,7 @@ const appendWidget = async () => {
   color: ${merchant.theme.font};
   font-size:12px;
   cursor: pointer;`;
-  cross.onclick = () => {
+  cross.onclick = function () {
     homePage.style.display = 'none';
   };
   closeBox.appendChild(cross);
@@ -900,7 +900,7 @@ const appendWidget = async () => {
   };
 
   let text = document.createElement('div');
-  text.addEventListener('click', async () => {
+  text.addEventListener('click', async function () {
     $.ajax({
       url: `${SAR_appUrl}/rewards/${userId}?shopDomain=${SA_rewards_shopDomain}`,
       type: 'GET',
@@ -973,7 +973,7 @@ const appendWidget = async () => {
   css(div3, div3Class2);
 
   div4 = document.createElement('div');
-  div4.addEventListener('click', () => {
+  div4.addEventListener('click', function () {
     homePage.style.display = 'none';
     widgetPage_2.style.display = 'block';
     currentPage = 'div-2';
@@ -1008,7 +1008,7 @@ const appendWidget = async () => {
   div5.appendChild(icon);
 
   div4 = document.createElement('div');
-  div4.addEventListener('click', () => {
+  div4.addEventListener('click', function () {
     homePage.style.display = 'none';
     widgetPage_5.style.display = 'block';
     currentPage = 'div-5';
@@ -1063,7 +1063,7 @@ const appendWidget = async () => {
   cursor:pointer;
 `;
 
-  span.addEventListener('click', () => {
+  span.addEventListener('click', function () {
     homePage.style.display = 'none';
     widgetPage_8.style.display = 'block';
     currentPage = 'div-8';
@@ -1106,7 +1106,7 @@ const appendWidget = async () => {
   let copy = document.createElement('icon');
   copy.style.cssText += `font-size: 13px;`;
   copy.classList.add('far', 'fa-clipboard');
-  copy.addEventListener('click', (event) => {
+  copy.addEventListener('click', function (event) {
     document.execCommand('copy');
     event.target.style.cssText += `color: black;
     font-size: 15px;`;
@@ -1147,7 +1147,7 @@ const appendWidget = async () => {
   };
 
   icon = document.createElement('i');
-  icon.addEventListener('click', () => {
+  icon.addEventListener('click', function () {
     $.ajax({
       url: `${SAR_appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`,
       type: 'GET',
@@ -1188,7 +1188,7 @@ const appendWidget = async () => {
   font-size:12px;
   cursor: pointer;
   margin-left: auto`;
-  cross.onclick = () => {
+  cross.onclick = function () {
     widgetPage_4.style.display = 'none';
     currentPage = '';
   };
@@ -1304,7 +1304,7 @@ const appendWidget = async () => {
   button.textContent = 'save date';
   dateContainer.appendChild(button);
 
-  button.addEventListener('click', () => {
+  button.addEventListener('click', function () {
     let birthday = new Date(document.getElementById('date').value);
     updateUserBirthday(birthday.getDate(), birthday.getMonth() + 1);
     let p = document.getElementById('successMsg');
@@ -1344,7 +1344,7 @@ const appendWidget = async () => {
   };
 
   icon = document.createElement('i');
-  icon.addEventListener('click', () => {
+  icon.addEventListener('click', function () {
     widgetPage_5.style.display = 'none';
     homePage.style.display = 'block';
   });
@@ -1366,7 +1366,7 @@ const appendWidget = async () => {
   font-size:12px;
   cursor: pointer;
   margin-left: auto`;
-  cross.onclick = () => {
+  cross.onclick = function () {
     widgetPage_5.style.display = 'none';
     currentPage = '';
   };
@@ -1435,7 +1435,7 @@ const appendWidget = async () => {
   dateBtn = document.createElement('button');
   dateBtn.textContent = 'Redeem';
   dateBtn.id = 'coupon-btn';
-  dateBtn.addEventListener('click', async () => {
+  dateBtn.addEventListener('click', async function () {
     //add function call
     await getDiscountCode();
     let span = document.getElementById('discount');
@@ -1511,7 +1511,7 @@ const appendWidget = async () => {
   dateBtn = document.createElement('button');
   dateBtn.id = 'shipping-btn';
   dateBtn.textContent = 'Redeem';
-  dateBtn.addEventListener('click', async () => {
+  dateBtn.addEventListener('click', async function () {
     //add function call
     await getFreeShippingCode();
     let span = document.getElementById('discount');
@@ -1587,7 +1587,7 @@ const appendWidget = async () => {
   dateBtn = document.createElement('button');
   dateBtn.id = 'percentage-btn';
   dateBtn.textContent = 'Redeem';
-  dateBtn.addEventListener('click', async () => {
+  dateBtn.addEventListener('click', async function () {
     //add function call
     await getPercentageCode();
     let span = document.getElementById('discount');
@@ -1658,7 +1658,7 @@ const appendWidget = async () => {
   };
 
   icon = document.createElement('i');
-  icon.addEventListener('click', () => {
+  icon.addEventListener('click', function () {
     $.ajax({
       url: `${SAR_appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`,
       type: 'GET',
@@ -1711,7 +1711,7 @@ const appendWidget = async () => {
   font-size:12px;
   cursor: pointer;
   margin-left: auto`;
-  cross.onclick = () => {
+  cross.onclick = function () {
     widgetPage_6.style.display = 'none';
     currentPage = '';
   };
@@ -1816,7 +1816,7 @@ const appendWidget = async () => {
   copy = document.createElement('icon');
   copy.style.cssText += `font-size: 13px;margin-left: 10px;`;
   copy.classList.add('far', 'fa-clipboard');
-  copy.addEventListener('click', (event) => {
+  copy.addEventListener('click', function (event) {
     document.execCommand('copy');
     event.target.style.cssText += `color: black;
     font-size: 15px;`;
@@ -1853,7 +1853,7 @@ const appendWidget = async () => {
   };
 
   icon = document.createElement('i');
-  icon.addEventListener('click', () => {
+  icon.addEventListener('click', function () {
     widgetPage_7.style.display = 'none';
     homePage.style.display = 'block'; //
   });
@@ -1875,7 +1875,7 @@ const appendWidget = async () => {
   font-size:12px;
   cursor: pointer;
   margin-left: auto`;
-  cross.onclick = () => {
+  cross.onclick = function () {
     widgetPage_7.style.display = 'none';
     currentPage = '';
   };
@@ -1942,7 +1942,7 @@ const appendWidget = async () => {
     copy = document.createElement('icon');
     copy.style.cssText += `font-size: 13px; margin-left: 10px;`;
     copy.classList.add('far', 'fa-clipboard');
-    copy.addEventListener('click', (event) => {
+    copy.addEventListener('click', function (event) {
       document.execCommand('copy');
       event.target.style.cssText += `color: black;
     font-size: 15px;`;
@@ -2007,7 +2007,7 @@ const appendWidget = async () => {
   };
 
   icon = document.createElement('i');
-  icon.addEventListener('click', () => {
+  icon.addEventListener('click', function () {
     widgetPage_8.style.display = 'none';
     homePage.style.display = 'block';
   });
@@ -2030,7 +2030,7 @@ const appendWidget = async () => {
   font-size:12px;
   cursor: pointer;
   margin-left: auto`;
-  cross.onclick = () => {
+  cross.onclick = function () {
     widgetPage_8.style.display = 'none';
     currentPage = '';
   };
@@ -2107,7 +2107,7 @@ const appendWidget = async () => {
   copy = document.createElement('icon');
   copy.style.cssText += `font-size: 13px;margin-left: 10px;`;
   copy.classList.add('far', 'fa-clipboard');
-  copy.addEventListener('click', (event) => {
+  copy.addEventListener('click', function (event) {
     document.execCommand('copy');
     event.target.style.cssText += `color: black;
     font-size: 15px;`;
@@ -2212,7 +2212,7 @@ const appendWidget = async () => {
   font-size:12px;
   cursor: pointer;
   align-self:flex-end;`;
-  cross.onclick = () => {
+  cross.onclick = function () {
     let box = document.getElementById('social-sharing');
     box.style.display = 'none';
     localStorage.setItem('sa_nudge_shown', 'true');
@@ -2267,7 +2267,7 @@ const appendWidget = async () => {
   copy = document.createElement('icon');
   copy.style.cssText += `font-size: 13px;margin-left: 10px;`;
   copy.classList.add('far', 'fa-clipboard');
-  copy.addEventListener('click', (event) => {
+  copy.addEventListener('click', function (event) {
     document.execCommand('copy');
     event.target.style.cssText += `color: black;
     font-size: 15px;`;
@@ -2348,7 +2348,7 @@ const appendWidget = async () => {
 
   userId &&
     showNudge &&
-    setTimeout(() => {
+    setTimeout(function () {
       let box = document.getElementById('social-sharing');
       box.style.display = 'flex';
     }, nudgeTimeout);
