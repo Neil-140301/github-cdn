@@ -2313,7 +2313,7 @@ const appendWidget = async () => {
 
   let nudgeTimeout = parseInt(merchant.referralNudgeTime)
     ? parseInt(merchant.referralNudgeTime) * 60000
-    : 1;
+    : 1 * 60000;
 
   userId &&
     setTimeout(() => {
