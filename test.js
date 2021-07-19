@@ -191,6 +191,9 @@ const appendWidget = async () => {
     window.innerWidth > 768
       ? 70
       : 0; /* controls the relative position of the widget based on merchant settings.*/
+
+  let isMobile = window.innerWidth <= 768;
+
   const divClass = {
     backgroundColor: '#fff',
     position: 'fixed',
@@ -206,6 +209,12 @@ const appendWidget = async () => {
     zIndex: '999',
     //fontFamily: 'roboto',
   };
+
+  if (isMobile) {
+    divClass.bottom = '20px';
+    divClass[[merchant.theme.placement]] = '20px';
+  }
+
   css(widgetPage_1, divClass);
 
   //cardtop
@@ -530,6 +539,11 @@ const appendWidget = async () => {
     zIndex: '998',
   });
 
+  if (isMobile) {
+    btn.style.bottom = '20px';
+    btn.style[[merchant.theme.placement]] = '20px';
+  }
+
   icon = document.createElement('i');
   icon.style.fontSize = '20px';
   icon.classList.add('fas', 'fa-gift');
@@ -567,6 +581,12 @@ const appendWidget = async () => {
     display: 'none',
     zIndex: '999',
   };
+
+  if (isMobile) {
+    divClass2.bottom = '20px';
+    divClass2[[merchant.theme.placement]] = '20px';
+  }
+
   css(widgetPage_2, divClass2);
   document.body.appendChild(widgetPage_2);
 
@@ -581,6 +601,7 @@ const appendWidget = async () => {
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
     display: 'flex',
+    alignItems: 'baseline',
     //fontFamily: 'Roboto',
   };
 
@@ -1121,6 +1142,7 @@ const appendWidget = async () => {
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
     display: 'flex',
+    alignItems: 'baseline',
     //fontFamily: 'Roboto',
   };
 
@@ -1317,6 +1339,7 @@ const appendWidget = async () => {
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
     display: 'flex',
+    alignItems: 'baseline',
     //fontFamily: 'Roboto',
   };
 
@@ -1630,6 +1653,7 @@ const appendWidget = async () => {
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
     display: 'flex',
+    alignItems: 'baseline',
     //fontFamily: 'Roboto',
   };
 
@@ -1824,6 +1848,7 @@ const appendWidget = async () => {
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
     display: 'flex',
+    alignItems: 'baseline',
     //fontFamily: 'Roboto',
   };
 
@@ -1977,6 +2002,7 @@ const appendWidget = async () => {
     padding: ' 20px 20px 0px 20px',
     color: merchant.theme.font,
     display: 'flex',
+    alignItems: 'baseline',
     //fontFamily: 'Roboto',
   };
 
@@ -2316,7 +2342,9 @@ const appendWidget = async () => {
     ? parseInt(merchant.referralNudgeTime) * 60000
     : 1 * 60000;
 
-  let showNudge = !localStorage.getItem('sa_nudge_shown') || !JSON.parse(localStorage.getItem('sa_nudge_shown'));
+  let showNudge =
+    !localStorage.getItem('sa_nudge_shown') ||
+    !JSON.parse(localStorage.getItem('sa_nudge_shown'));
 
   userId &&
     showNudge &&
