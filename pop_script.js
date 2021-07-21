@@ -4,8 +4,8 @@ const SA_APP_URL = 'https://81a35f753a15.ngrok.io';
 
 const SA_Shop_Domain = 'super-pops-test.myshopify.com';
 
-const LIVE_VISIT_DELAY = 0.00833333; //0.1; //in hours (6 min)
-const RECENT_VISIT_DELAY = 0.01666667; //24; //in hours
+const LIVE_VISIT_DELAY = 0.1; //in hours (6 min)
+const RECENT_VISIT_DELAY = 24; //in hours
 
 function callback(data) {
   localStorage.setItem('superAssistant-ipInfo', JSON.stringify(data));
