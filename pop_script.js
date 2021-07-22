@@ -105,7 +105,7 @@ const checkCart = async function () {
 
       let product = data.items[0];
 
-      if (product.id !== localStorage.getItem('SA_last_product_added')) {
+      if (product.id !== parseInt(localStorage.getItem('SA_last_product_added'))) {
         console.log('sending data...');
         let payload = {
           shopDomain: SA_Shop_Domain,
