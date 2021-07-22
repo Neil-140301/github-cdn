@@ -110,9 +110,9 @@ const checkCart = async function () {
         let payload = {
           shopDomain: SA_Shop_Domain,
           location: {
+            country: location.country_name,
             city: location.city,
             province: location.state,
-            country: location.country_name,
           },
           customer: customer,
           product: {
