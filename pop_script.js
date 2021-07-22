@@ -88,7 +88,7 @@ const checkCart = async function () {
   try {
     const response = await fetch(`https://${SA_Shop_Domain}/cart.js`);
     const data = await response.json();
-    const location = localStorage.getItem('superAssistant-ipInfo');
+    const location = JSON.parse(localStorage.getItem('superAssistant-ipInfo'));
     let customer = {};
 
     if (data.items.length > 0) {
