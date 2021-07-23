@@ -1,6 +1,6 @@
 console.log('Superassistant script loaded');
 
-const SA_APP_URL = 'https://3fdffa49b719.ngrok.io';
+const SA_APP_URL = 'https://6ccfbdee81d8.ngrok.io';
 
 const SA_Shop_Domain = Shopify.shop;
 // const SA_Shop_Domain = 'super-pops-test.myshopify.com';
