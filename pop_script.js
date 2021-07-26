@@ -40,7 +40,7 @@ document.head.appendChild(SA_link);
 
 
 /* Backend Url */
-const SA_APP_URL = 'https://89d94060ab12.ngrok.io';
+const SA_APP_URL = 'https://293b1e37a243.ngrok.io';
 
 const SA_Shop_Domain = Shopify.shop;
 // const SA_Shop_Domain = 'super-pops-test.myshopify.com';
