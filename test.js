@@ -1,5 +1,25 @@
 let SAR_appUrl = 'https://rewards-backend.superassistant.io';
 
+/* sentry set up */
+sentry2tag = document.createElement('script');
+sentry2tag.src = 'https://browser.sentry-cdn.com/6.10.0/bundle.min.js';
+sentry2tag.integrity =
+  'sha384-nsIkfmMh0uiqg+AwegHcT1SMiPNWnhZmjFDwTshLTxur6ZPNaGT8vwT+vHwI5Jag';
+sentry2tag.crossOrigin = 'anonymous';
+document.head.appendChild(sentry2tag);
+setTimeout(function () {
+  try {
+    Sentry.init({
+      dsn: 'https://8c07ef18176e421389fe0d2b972c7d43@o609888.ingest.sentry.io/5878036',
+      release: 'rewards-script',
+      tracesSampleRate: 1,
+    });
+    console.log('sentry loaded successfully');
+  } catch (b) {
+    console.log('Sentry error', b);
+  }
+}, 100);
+
 /* globally set variables */
 let userId = meta.page.customerId;
 let referrer = Shopify.queryParams
@@ -35,7 +55,7 @@ const getPointsData = async function () {
       `${SAR_appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`
     );
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     result = data.customer;
     merchant = data.merchant;
   } else {
@@ -43,7 +63,7 @@ const getPointsData = async function () {
       `${SAR_appUrl}/merchant-info/?shopDomain=${SA_rewards_shopDomain}`
     );
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     merchant = data;
   }
 };
@@ -56,7 +76,7 @@ const getDiscountCodes = async function () {
       `${SAR_appUrl}/rewards/${userId}?shopDomain=${SA_rewards_shopDomain}`
     );
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     codes = data;
   }
 };
@@ -74,7 +94,7 @@ const updateUserBirthday = async function (day, month) {
     };
     const res = await fetch(`${SAR_appUrl}/birthday/${userId}`, options);
     showMessage = true;
-    console.log(res);
+    // console.log(res);
   }
 };
 
@@ -87,7 +107,7 @@ const sendReferrerCode = async function () {
       `${SAR_appUrl}/set-referrer?ref=${referrer}&shopDomain=${SA_rewards_shopDomain}`
     );
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
   }
 };
 
@@ -99,7 +119,7 @@ const getDiscountCode = async function () {
   );
   const data = await res.json();
   discountCode = data;
-  console.log(data);
+  // console.log(data);
   localStorage.setItem('discount', data);
 };
 
@@ -111,7 +131,7 @@ const getFreeShippingCode = async function () {
   );
   const data = await res.json();
   discountCode = data;
-  console.log(data);
+  // console.log(data);
   localStorage.setItem('discount', data);
 };
 
@@ -123,7 +143,7 @@ const getPercentageCode = async function () {
   );
   const data = await res.json();
   discountCode = data;
-  console.log(data);
+  // console.log(data);
   localStorage.setItem('discount', data);
 };
 
@@ -131,7 +151,8 @@ const getPercentageCode = async function () {
 const toggleCurrentPage = function (pageId) {
   if (pageId !== '') {
     let currentPage = document.getElementById(pageId);
-    currentPage.style.display = 'none';
+    // currentPage.style.display = 'none';
+    $(`#${pageId}`).fadeOut('slow');
 
     const mainPage = userId
       ? document.getElementById('div-3')
@@ -147,10 +168,6 @@ script.crossOrigin = 'anonymous';
 document.body.appendChild(script);
 
 //jquery scripts
-script = document.createElement('script');
-script.src = 'jquery-3.5.1.min.js';
-document.body.appendChild(script);
-
 script = document.createElement('script');
 script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js';
 script.crossOrigin = 'anonymous';
@@ -208,6 +225,7 @@ const appendWidget = async function () {
     display: 'none',
     zIndex: '999',
     //fontFamily: 'roboto',
+    // transition: 'display 2s',
   };
 
   if (isMobile) {
@@ -250,7 +268,9 @@ const appendWidget = async function () {
   font-size:12px;
   cursor: pointer;`;
   cross.onclick = function () {
-    homePage.style.display = 'none';
+    // homePage.style.display = 'none';
+    let sa_homePage = userId ? '#div-3' : '#div';
+    $(sa_homePage).fadeOut('slow');
     currentPage = '';
   };
   closeBox.appendChild(cross);
@@ -395,7 +415,8 @@ const appendWidget = async function () {
   let div4 = document.createElement('div');
   div4.addEventListener('click', function () {
     homePage.style.display = 'none';
-    widgetPage_2.style.display = 'block';
+    // widgetPage_2.style.display = 'block';
+    $('#div-2').fadeIn('slow');
     currentPage = 'div-2';
   });
   const class1 = {
@@ -451,7 +472,8 @@ const appendWidget = async function () {
   div4 = document.createElement('div');
   div4.addEventListener('click', function () {
     homePage.style.display = 'none';
-    widgetPage_5.style.display = 'block';
+    // widgetPage_5.style.display = 'block';
+    $('#div-5').fadeIn('slow')
     currentPage = 'div-5';
   });
 
@@ -537,6 +559,8 @@ const appendWidget = async function () {
     color: merchant.theme.font,
     cursor: 'pointer',
     zIndex: '998',
+    // transform: 'rotate(-360deg)',
+    // transition: 'transform 4s',
   });
 
   if (isMobile) {
@@ -549,11 +573,18 @@ const appendWidget = async function () {
   icon.classList.add('fas', 'fa-gift');
   btn.appendChild(icon);
 
+  btn.id = 'toggle_page_btn';
   btn.addEventListener('click', function () {
+    let page_btn = document.getElementById('toggle_page_btn');
+    let sa_homePage = userId ? '#div-3' : '#div';
     if (homePage.style.display === 'none') {
-      homePage.style.display = 'block';
+      // homePage.style.display = 'block';
+      $(sa_homePage).fadeIn('slow');
+      // page_btn.style.transform = 'rotate(360deg)';
     } else {
-      homePage.style.display = 'none';
+      // homePage.style.display = 'none';
+      $(sa_homePage).fadeOut('slow');
+      // page_btn.style.transform = 'rotate(-360deg)';
     }
     toggleCurrentPage(currentPage);
     currentPage = '';
@@ -608,7 +639,9 @@ const appendWidget = async function () {
   icon = document.createElement('i');
   icon.addEventListener('click', function () {
     widgetPage_2.style.display = 'none';
-    homePage.style.display = 'block';
+    // homePage.style.display = 'block';
+    let sa_homePage = userId ? '#div-3' : '#div';
+    $(sa_homePage).fadeIn('slow')
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -630,7 +663,8 @@ const appendWidget = async function () {
   cursor: pointer;
   margin-left: auto`;
   cross.onclick = function () {
-    widgetPage_2.style.display = 'none';
+    // widgetPage_2.style.display = 'none';
+    $('#div-2').fadeOut('slow')
     currentPage = '';
   };
   div1.appendChild(cross);
@@ -738,7 +772,8 @@ const appendWidget = async function () {
   dateBtn.textContent = 'Edit date';
   dateBtn.addEventListener('click', function () {
     widgetPage_2.style.display = 'none';
-    widgetPage_4.style.display = 'block';
+    // widgetPage_4.style.display = 'block';
+    $('#div-4').fadeIn('slow')
     currentPage = 'div-4';
   });
   dateBtn.style.cssText += `border: none;
@@ -864,7 +899,9 @@ const appendWidget = async function () {
   font-size:12px;
   cursor: pointer;`;
   cross.onclick = function () {
-    homePage.style.display = 'none';
+    // homePage.style.display = 'none';
+    let sa_homePage = userId ? '#div-3' : '#div';
+    $(sa_homePage).fadeOut('slow')
   };
   closeBox.appendChild(cross);
 
@@ -874,7 +911,7 @@ const appendWidget = async function () {
   margin: 10px 0px;
   color: ${merchant.theme.font};
   `;
-  console.log(p);
+  // console.log(p);
   p.textContent = merchant?.theme?.title; //'Super Rewards';
 
   div1.appendChild(p);
@@ -899,16 +936,21 @@ const appendWidget = async function () {
     cursor: 'pointer',
   };
 
-  let text = document.createElement('div');
+  let text = document.createElement('button');
+  text.id = 'rewards-button';
   text.addEventListener('click', async function () {
+    text.disabled = true;
     $.ajax({
       url: `${SAR_appUrl}/rewards/${userId}?shopDomain=${SA_rewards_shopDomain}`,
       type: 'GET',
       success: function (data) {
         console.log('hi im in ajax codes');
+        console.log($('#rewards-button'));
+        document.getElementById('rewards-button').disabled = false;
         codes = data;
         homePage.style.display = 'none'; //
-        widgetPage_7.style.display = 'block';
+        // widgetPage_7.style.display = 'block';
+        $('#div-7').fadeIn('slow')
         currentPage = 'div-7';
       },
     });
@@ -917,7 +959,10 @@ const appendWidget = async function () {
   justify-content: space-between;
   align-items: center;
   margin-left: 15px;
-  width: 90%;`;
+  width: 90%;
+  border: none;
+  outline:none;
+  background-color: inherit;`;
   div2.appendChild(text);
 
   span = document.createElement('span');
@@ -975,7 +1020,8 @@ const appendWidget = async function () {
   div4 = document.createElement('div');
   div4.addEventListener('click', function () {
     homePage.style.display = 'none';
-    widgetPage_2.style.display = 'block';
+    // widgetPage_2.style.display = 'block';
+    $('#div-2').fadeIn('slow')
     currentPage = 'div-2';
   });
 
@@ -1010,7 +1056,8 @@ const appendWidget = async function () {
   div4 = document.createElement('div');
   div4.addEventListener('click', function () {
     homePage.style.display = 'none';
-    widgetPage_5.style.display = 'block';
+    // widgetPage_5.style.display = 'block';
+    $('#div-5').fadeIn('slow')
     currentPage = 'div-5';
   });
 
@@ -1065,7 +1112,8 @@ const appendWidget = async function () {
 
   span.addEventListener('click', function () {
     homePage.style.display = 'none';
-    widgetPage_8.style.display = 'block';
+    // widgetPage_8.style.display = 'block';
+    $('#div-8').fadeIn('slow')
     currentPage = 'div-8';
   });
 
@@ -1152,7 +1200,7 @@ const appendWidget = async function () {
       url: `${SAR_appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`,
       type: 'GET',
       success: function (data) {
-        console.log('hi this is ajax 2');
+        // console.log('hi this is ajax 2');
 
         let editDateBtn = document.getElementById('edit-date-btn');
         let allowedToUpdate = data.customer.birthday_updated_at
@@ -1163,7 +1211,8 @@ const appendWidget = async function () {
         editDateBtn.disabled = !allowedToUpdate;
 
         widgetPage_4.style.display = 'none';
-        widgetPage_2.style.display = 'block';
+        // widgetPage_2.style.display = 'block';
+        $('#div-2').fadeIn('slow')
         currentPage = 'div-2';
         let p = document.getElementById('successMsg');
         p.style.display = 'none';
@@ -1189,7 +1238,8 @@ const appendWidget = async function () {
   cursor: pointer;
   margin-left: auto`;
   cross.onclick = function () {
-    widgetPage_4.style.display = 'none';
+    // widgetPage_4.style.display = 'none';
+    $('#div-4').fadeOut('slow')
     currentPage = '';
   };
   div1.appendChild(cross);
@@ -1346,7 +1396,9 @@ const appendWidget = async function () {
   icon = document.createElement('i');
   icon.addEventListener('click', function () {
     widgetPage_5.style.display = 'none';
-    homePage.style.display = 'block';
+    // homePage.style.display = 'block';
+    let sa_homePage = userId ? '#div-3' : '#div';
+    $(sa_homePage).fadeIn('slow')
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -1367,7 +1419,8 @@ const appendWidget = async function () {
   cursor: pointer;
   margin-left: auto`;
   cross.onclick = function () {
-    widgetPage_5.style.display = 'none';
+    // widgetPage_5.style.display = 'none';
+    $('#div-5').fadeOut('slow')
     currentPage = '';
   };
   div1.appendChild(cross);
@@ -1445,7 +1498,8 @@ const appendWidget = async function () {
     let couponPoints = document.getElementById('discount-points-spent');
     couponPoints.textContent = `Spent ${merchant.redeemPoints} points`;
     widgetPage_5.style.display = 'none';
-    widgetPage_6.style.display = 'block';
+    // widgetPage_6.style.display = 'block';
+    $('#div-6').fadeIn('slow')
     currentPage = 'div-6';
   });
   dateBtn.style.cssText += `border: none;
@@ -1521,7 +1575,8 @@ const appendWidget = async function () {
     let couponPoints = document.getElementById('discount-points-spent');
     couponPoints.textContent = `Spent ${merchant.shippingPoints} points`;
     widgetPage_5.style.display = 'none';
-    widgetPage_6.style.display = 'block';
+    // widgetPage_6.style.display = 'block';
+    $('#div-6').fadeIn('slow')
     currentPage = 'div-6';
   });
   dateBtn.style.cssText += `border: none;
@@ -1598,6 +1653,7 @@ const appendWidget = async function () {
     couponPoints.textContent = `Spent ${merchant.percentagePoints} points`;
     widgetPage_5.style.display = 'none';
     widgetPage_6.style.display = 'block';
+    $('#div-6').fadeIn('slow');
     currentPage = 'div-6';
   });
   dateBtn.style.cssText += `border: none;
@@ -1663,7 +1719,7 @@ const appendWidget = async function () {
       url: `${SAR_appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`,
       type: 'GET',
       success: function (data) {
-        console.log('hi this is ajax');
+        // console.log('hi this is ajax');
 
         let couponBtn = document.getElementById('coupon-btn');
         couponBtn.style.opacity =
@@ -1688,7 +1744,8 @@ const appendWidget = async function () {
         customerPoints.textContent = data.customer.points + ` points`;
 
         widgetPage_6.style.display = 'none';
-        widgetPage_5.style.display = 'block';
+        // widgetPage_5.style.display = 'block';
+        $('#div-5').fadeIn('slow')
         currentPage = 'div-5';
       },
     });
@@ -1712,7 +1769,8 @@ const appendWidget = async function () {
   cursor: pointer;
   margin-left: auto`;
   cross.onclick = function () {
-    widgetPage_6.style.display = 'none';
+    // widgetPage_6.style.display = 'none';
+    $('#div-6').fadeOut('slow')
     currentPage = '';
   };
   div1.appendChild(cross);
@@ -1855,7 +1913,9 @@ const appendWidget = async function () {
   icon = document.createElement('i');
   icon.addEventListener('click', function () {
     widgetPage_7.style.display = 'none';
-    homePage.style.display = 'block'; //
+    // homePage.style.display = 'block'; 
+    let sa_homePage = userId ? '#div-3' : '#div';
+    $(sa_homePage).fadeIn('slow')
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -1876,7 +1936,8 @@ const appendWidget = async function () {
   cursor: pointer;
   margin-left: auto`;
   cross.onclick = function () {
-    widgetPage_7.style.display = 'none';
+    // widgetPage_7.style.display = 'none';
+    $('#div-7').fadeOut('slow')
     currentPage = '';
   };
   div1.appendChild(cross);
@@ -2009,7 +2070,9 @@ const appendWidget = async function () {
   icon = document.createElement('i');
   icon.addEventListener('click', function () {
     widgetPage_8.style.display = 'none';
-    homePage.style.display = 'block';
+    // homePage.style.display = 'block';
+    let sa_homePage = userId ? '#div-3' : '#div';
+    $(sa_homePage).fadeIn('slow')
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -2031,7 +2094,8 @@ const appendWidget = async function () {
   cursor: pointer;
   margin-left: auto`;
   cross.onclick = function () {
-    widgetPage_8.style.display = 'none';
+    // widgetPage_8.style.display = 'none';
+    $('#div-8').fadeOut('slow')
     currentPage = '';
   };
   div1.appendChild(cross);
@@ -2214,7 +2278,8 @@ const appendWidget = async function () {
   align-self:flex-end;`;
   cross.onclick = function () {
     let box = document.getElementById('social-sharing');
-    box.style.display = 'none';
+    // box.style.display = 'none';
+    $('#social-sharing').fadeOut('slow')
     localStorage.setItem('sa_nudge_shown', 'true');
   };
   refContainer.appendChild(cross);
