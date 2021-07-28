@@ -1,4 +1,4 @@
-let SAR_appUrl = 'https://eb92931c82e2.ngrok.io' //'https://rewards-backend.superassistant.io';
+let SAR_appUrl = 'https://rewards-backend.superassistant.io';
 
 /* sentry set up */
 sentry2tag = document.createElement('script');
@@ -29,7 +29,7 @@ let SA_rewards_shopDomain = Shopify.shop;
 
 /* above variables set for local testing*/
 // let userId = 5339222605995;
-// let referrer; //= 'SUPER20Neil';
+// let referrer//= 'SUPER20Neil';
 // let SA_rewards_shopDomain = 'super-rewards-test.myshopify.com'; //'web-neil.myshopify.com';
 
 referrer && localStorage.setItem('SA_rewards_ref', referrer);
