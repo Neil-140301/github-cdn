@@ -43,7 +43,7 @@ document.head.appendChild(SA_link);
 const SA_Shop_Domain = Shopify.shop;
 const SA_product_id = meta.product.id;
 // const SA_Shop_Domain = 'super-pops-test.myshopify.com';
-// let SA_product_id = 40190205591749;
+// let SA_product_id //= 40190205591749;
 
 const LIVE_VISIT_DELAY = 0.1; //in hours (6 min)
 const RECENT_VISIT_DELAY = 24; //in hours
@@ -140,12 +140,17 @@ const getAddToCartPops = async function () {
   }
 };
 
-const getLatestPopData = async function () {
+const getLatestPopData = async function (productId) {
   try {
-    const response = await fetch(`${SA_APP_URL}/api/popData/${SA_Shop_Domain}`);
+    let url = productId
+      ? `${SA_APP_URL}/api/popData/${SA_Shop_Domain}?productId=${productId}`
+      : `${SA_APP_URL}/api/popData/${SA_Shop_Domain}`;
+    const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
-    localStorage.setItem('SA_latest_popData', JSON.stringify(data));
+
+    productId
+      ? localStorage.setItem('SA_product_popData', JSON.stringify(data))
+      : localStorage.setItem('SA_latest_popData', JSON.stringify(data));
   } catch (error) {
     console.log(error);
   }
@@ -216,7 +221,7 @@ const getMerchantDetails = async function () {
       `${SA_APP_URL}/api/merchant/settings/${SA_Shop_Domain}`
     );
     const data = await response.json();
-    console.log(data);
+
     return data;
   } catch (error) {
     console.log(error);
@@ -607,7 +612,7 @@ const productTierPop = function (merchant, liveVisits, recentVisits) {
   const { lastHour, last6Hour, last24Hour, last48Hour, lastWeek } = JSON.parse(
     localStorage.getItem('SA_latest_popData')
   );
-  console.log('')
+  console.log('');
 
   let productOrder =
     lastHour.orders.find(searchProductFromOrder) ||
@@ -712,12 +717,38 @@ const productSecondTierPop = function (merchant, liveVisits, recentVisits) {
   }
 };
 
+const showLatestPop = function (popData, merchant) {
+  switch (popData.type) {
+    case 'order':
+      return createOrdersPop(
+        popData.firstName,
+        popData.location,
+        popData.order.products[0].title,
+        merchant.orders
+      );
+    case 'addToCarts':
+      return createAddToCartsPop(
+        popData.firstName,
+        popData.location,
+        popData.product.title,
+        merchant.addToCarts
+      );
+    case 'liveVisitors':
+      return createLiveVisitorPop(popData.liveVisits, merchant.liveVisitors);
+    case 'recentVisitors':
+      return createRecentVisitorPop(
+        popData.recentVisits,
+        merchant.recentVisitors
+      );
+    default:
+      break;
+  }
+};
+
 /* main function */
 const renderSAPops = async function () {
-  const liveVisits = await getLiveVisits();
-  const recentVisits = await getRecentVisits();
   const merchant = await getMerchantDetails();
-  await getLatestPopData();
+  SA_product_id && (await getLatestPopData(SA_product_id));
 
   /* Tracking the customer's visits */
   if (leave) {
@@ -754,7 +785,7 @@ const renderSAPops = async function () {
   SA_pop_container.id = 'SA_pop_container';
   document.body.appendChild(SA_pop_container);
 
-  let newPop;
+  let newPop = null;
   const pops_per_session = 5;
   const firstTier = 2;
   const secondTier = 2;
@@ -764,36 +795,48 @@ const renderSAPops = async function () {
     popCount++;
     console.log(popCount);
 
+    let popsData = JSON.parse(
+      localStorage.getItem('SA_latest_popData')
+    ).popsToShow;
+
     $('#SA_pop_container').empty();
 
     if (SA_product_id) {
-      if (popCount <= firstTier) {
-        newPop = productTierPop(merchant, liveVisits.count, recentVisits.count);
-      }
+      // if (popCount <= firstTier) {
+      //   newPop = productTierPop(merchant, liveVisits.count, recentVisits.count);
+      // }
+      // if (firstTier < popCount && popCount <= firstTier + secondTier) {
+      //   newPop = productSecondTierPop(
+      //     merchant,
+      //     liveVisits.count,
+      //     recentVisits.count
+      //   );
+      // }
+      // if (firstTier + secondTier < popCount && popCount <= pops_per_session) {
+      //   newPop = productTierPop(merchant, liveVisits.count, recentVisits.count);
+      // }
+      popsData = JSON.parse(
+        localStorage.getItem('SA_product_popData')
+      ).popsToShow;
+    }
+    //else {
+    //   if (popCount <= firstTier) {
+    //     newPop = firstTierPop(merchant, liveVisits.count, recentVisits.count);
+    //   }
+    //   if (firstTier < popCount && popCount <= firstTier + secondTier) {
+    //     newPop = secondTierPop(merchant, liveVisits.count, recentVisits.count);
+    //   }
+    //   if (firstTier + secondTier < popCount && popCount <= pops_per_session) {
+    //     newPop = firstTierPop(merchant, liveVisits.count, recentVisits.count);
+    //   }
+    // }
 
-      if (firstTier < popCount && popCount <= firstTier + secondTier) {
-        newPop = productSecondTierPop(
-          merchant,
-          liveVisits.count,
-          recentVisits.count
-        );
-      }
+    let newPopObj = popsData[popCount - 1];
 
-      if (firstTier + secondTier < popCount && popCount <= pops_per_session) {
-        newPop = productTierPop(merchant, liveVisits.count, recentVisits.count);
-      }
+    if (newPopObj.type) {
+      newPop = showLatestPop(newPopObj, merchant);
     } else {
-      if (popCount <= firstTier) {
-        newPop = firstTierPop(merchant, liveVisits.count, recentVisits.count);
-      }
-
-      if (firstTier < popCount && popCount <= firstTier + secondTier) {
-        newPop = secondTierPop(merchant, liveVisits.count, recentVisits.count);
-      }
-
-      if (firstTier + secondTier < popCount && popCount <= pops_per_session) {
-        newPop = firstTierPop(merchant, liveVisits.count, recentVisits.count);
-      }
+      newPop = document.createElement('span');
     }
 
     document.getElementById('SA_pop_container').appendChild(newPop);
