@@ -43,7 +43,7 @@ document.head.appendChild(SA_link);
 const SA_Shop_Domain = Shopify.shop;
 const SA_product_id = meta?.product?.id;
 // const SA_Shop_Domain = 'super-pops-test.myshopify.com';
-// let SA_product_id //= 40190205591749;
+// let SA_product_id; //= 40190205591749;
 
 const LIVE_VISIT_DELAY = 0.1; //in hours (6 min)
 const RECENT_VISIT_DELAY = 24; //in hours
@@ -749,6 +749,7 @@ const showLatestPop = function (popData, merchant) {
 const renderSAPops = async function () {
   const merchant = await getMerchantDetails();
   SA_product_id && (await getLatestPopData(SA_product_id));
+  // await getLatestPopData()
 
   /* Tracking the customer's visits */
   if (leave) {
@@ -775,13 +776,14 @@ const renderSAPops = async function () {
 
   /*Pop container */
   let SA_pop_container = document.createElement('div');
-  SA_pop_container.style.cssText += `border: #e5e5e5 solid 1px;
+  SA_pop_container.style.cssText += `
   height: 100px;
   position: absolute;
-  top: 20px;
+  bottom: 20px;
   right: 20px;
   font-family: 'Roboto';
-  display: none;`;
+  display: none;
+  z-index: 999`;
   SA_pop_container.id = 'SA_pop_container';
   document.body.appendChild(SA_pop_container);
 
