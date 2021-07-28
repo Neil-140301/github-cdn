@@ -41,7 +41,7 @@ SA_link.rel = 'stylesheet';
 document.head.appendChild(SA_link);
 
 const SA_Shop_Domain = Shopify.shop;
-const SA_product_id = meta.product.id;
+const SA_product_id = meta?.product?.id;
 // const SA_Shop_Domain = 'super-pops-test.myshopify.com';
 // let SA_product_id //= 40190205591749;
 
