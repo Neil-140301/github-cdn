@@ -1,6 +1,6 @@
 console.log('Superassistant script loaded');
 /* Backend Url */
-const SA_APP_URL = 'https://656202a9ab3d.ngrok.io';
+const SA_APP_URL = 'https://ae8ca190f85a.ngrok.io';
 
 /*fontawesome script*/
 let SA_script = document.createElement('script');
@@ -43,7 +43,7 @@ document.head.appendChild(SA_link);
 const SA_Shop_Domain = Shopify.shop;
 const SA_product_id = meta?.product?.variants[0].id;
 // const SA_Shop_Domain = 'super-pops-test.myshopify.com';
-// let SA_product_id; //= 40190205591749;
+// let SA_product_id//= 40190206181573;
 
 const LIVE_VISIT_DELAY = 0.1; //in hours (6 min)
 const RECENT_VISIT_DELAY = 24; //in hours
@@ -750,6 +750,7 @@ const renderSAPops = async function () {
   const merchant = await getMerchantDetails();
   SA_product_id && (await getLatestPopData(SA_product_id));
   // await getLatestPopData()
+  const isMobile = window.innerWidth < 768;
 
   /* Tracking the customer's visits */
   if (leave) {
@@ -779,81 +780,119 @@ const renderSAPops = async function () {
   SA_pop_container.style.cssText += `
   height: 100px;
   position: absolute;
-  bottom: 20px;
-  right: 20px;
   font-family: 'Roboto';
   display: none;
   z-index: 999`;
   SA_pop_container.id = 'SA_pop_container';
-  document.body.appendChild(SA_pop_container);
 
-  let newPop = null;
-  const pops_per_session = 5;
-  const firstTier = 2;
-  const secondTier = 2;
-  let popCount = 0;
+  if (isMobile) {
+    SA_pop_container.style.cssText += `
+    ${merchant.popRules.position.mobile} : 20px;
+    `;
+  } else {
+    let vPosition = 'bottom';
+    let hPosition = 'right';
 
-  let intervalId = setInterval(function () {
-    popCount++;
-    console.log(popCount);
+    switch (merchant.popRules.position.desktop) {
+      case 'top_left':
+        vPosition = 'top';
+        hPosition = 'left';
+        break;
+      case 'top_right':
+        vPosition = 'top';
+        hPosition = 'right';
+        break;
+      case 'bottom_left':
+        vPosition = 'bottom';
+        hPosition = 'left';
+        break;
+      case 'bottom_right':
+        vPosition = 'bottom';
+        hPosition = 'right';
+        break;
+      default:
+        break;
+    }
 
-    let popsData = JSON.parse(
-      localStorage.getItem('SA_latest_popData')
-    ).popsToShow;
+    SA_pop_container.style.cssText += `
+    ${vPosition}: 20px;
+    ${hPosition}: 20px;
+    `;
+  }
 
-    $('#SA_pop_container').empty();
+  if (
+    (isMobile && merchant.popRules.devices.mobile) ||
+    (!isMobile && merchant.popRules.devices.desktop)
+  ) {
+    document.body.appendChild(SA_pop_container);
 
-    if (SA_product_id) {
-      // if (popCount <= firstTier) {
-      //   newPop = productTierPop(merchant, liveVisits.count, recentVisits.count);
-      // }
-      // if (firstTier < popCount && popCount <= firstTier + secondTier) {
-      //   newPop = productSecondTierPop(
-      //     merchant,
-      //     liveVisits.count,
-      //     recentVisits.count
-      //   );
-      // }
-      // if (firstTier + secondTier < popCount && popCount <= pops_per_session) {
-      //   newPop = productTierPop(merchant, liveVisits.count, recentVisits.count);
-      // }
-      popsData = JSON.parse(
-        localStorage.getItem('SA_product_popData')
+    let newPop = null;
+    const pops_per_session = 5;
+    let popCount = 0;
+    let displayPopTime = parseInt(merchant.popRules.timing.popDisplay) * 1000;
+    let intervalBetweenPops =
+      parseInt(merchant.popRules.timing.popInterval) * 1000;
+
+    let intervalId = setInterval(function () {
+      popCount++;
+      console.log(popCount);
+
+      let popsData = JSON.parse(
+        localStorage.getItem('SA_latest_popData')
       ).popsToShow;
-    }
-    //else {
-    //   if (popCount <= firstTier) {
-    //     newPop = firstTierPop(merchant, liveVisits.count, recentVisits.count);
-    //   }
-    //   if (firstTier < popCount && popCount <= firstTier + secondTier) {
-    //     newPop = secondTierPop(merchant, liveVisits.count, recentVisits.count);
-    //   }
-    //   if (firstTier + secondTier < popCount && popCount <= pops_per_session) {
-    //     newPop = firstTierPop(merchant, liveVisits.count, recentVisits.count);
-    //   }
-    // }
 
-    let newPopObj = popsData[popCount - 1];
+      $('#SA_pop_container').empty();
 
-    if (newPopObj.type) {
-      newPop = showLatestPop(newPopObj, merchant);
-    } else {
-      newPop = document.createElement('span');
-    }
+      if (SA_product_id) {
+        // if (popCount <= firstTier) {
+        //   newPop = productTierPop(merchant, liveVisits.count, recentVisits.count);
+        // }
+        // if (firstTier < popCount && popCount <= firstTier + secondTier) {
+        //   newPop = productSecondTierPop(
+        //     merchant,
+        //     liveVisits.count,
+        //     recentVisits.count
+        //   );
+        // }
+        // if (firstTier + secondTier < popCount && popCount <= pops_per_session) {
+        //   newPop = productTierPop(merchant, liveVisits.count, recentVisits.count);
+        // }
+        popsData = JSON.parse(
+          localStorage.getItem('SA_product_popData')
+        ).popsToShow;
+      }
 
-    document.getElementById('SA_pop_container').appendChild(newPop);
-    $('#SA_pop_container').fadeIn('slow');
-    setTimeout(function () {
-      $('#SA_pop_container').fadeOut('slow');
-    }, 4000);
+      let newPopObj = popsData[popCount - 1];
 
-    if (popCount === pops_per_session) {
-      clearInterval(intervalId);
+      if (newPopObj.type) {
+        newPop = showLatestPop(newPopObj, merchant);
+      } else {
+        newPop = document.createElement('span');
+      }
+
+      document.getElementById('SA_pop_container').appendChild(newPop);
+      $('#SA_pop_container').fadeIn('slow');
       setTimeout(function () {
         $('#SA_pop_container').fadeOut('slow');
-      }, 8000);
-    }
-  }, 8000);
+      }, displayPopTime || 4000);
+
+      if (popCount === pops_per_session) {
+        if (merchant.popRules.timing.cycle) {
+          popCount = 0;
+        } else {
+          clearInterval(intervalId);
+          setTimeout(function () {
+            $('#SA_pop_container').fadeOut('slow');
+          }, intervalBetweenPops || 8000);
+        }
+      }
+    }, intervalBetweenPops || 8000);
+
+    /* clear interval on click */
+    $('#SA_pop_container').click(function () {
+      clearInterval(intervalId);
+    });
+  }
 };
 
 renderSAPops();
