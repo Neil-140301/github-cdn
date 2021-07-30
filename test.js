@@ -22,7 +22,7 @@ setTimeout(function () {
 
 /* globally set variables */
 let userId = meta.page.customerId;
-let referrer = Shopify.queryParams.ref || new URLSearchParams(location.search).get('ref');
+let referrer = new URLSearchParams(location.search).get('ref');
 let SA_rewards_shopDomain = Shopify.shop;
 
 /* above variables set for local testing*/
