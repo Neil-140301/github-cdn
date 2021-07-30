@@ -1,4 +1,4 @@
-let SAR_appUrl = 'https://rewards-backend.superassistant.io';
+let SAR_appUrl = 'https://b04de3b10d4e.ngrok.io'; //'https://rewards-backend.superassistant.io';
 
 /* sentry set up */
 sentry2tag = document.createElement('script');
@@ -22,14 +22,12 @@ setTimeout(function () {
 
 /* globally set variables */
 let userId = meta.page.customerId;
-let referrer = Shopify.queryParams
-  ? Shopify.queryParams.ref
-  : new URLSearchParams(location.search).get('ref');
+let referrer = Shopify.queryParams.ref || new URLSearchParams(location.search).get('ref');
 let SA_rewards_shopDomain = Shopify.shop;
 
 /* above variables set for local testing*/
 // let userId = 5339222605995;
-// let referrer//= 'SUPER20Neil';
+// let referrer = new URLSearchParams(location.search).get('ref'); //= 'SUPER20Neil';
 // let SA_rewards_shopDomain = 'super-rewards-test.myshopify.com'; //'web-neil.myshopify.com';
 
 referrer && localStorage.setItem('SA_rewards_ref', referrer);
@@ -55,7 +53,7 @@ const getPointsData = async function () {
       `${SAR_appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`
     );
     const data = await res.json();
-    // console.log(data);
+    console.log(data);
     result = data.customer;
     merchant = data.merchant;
   } else {
@@ -473,7 +471,7 @@ const appendWidget = async function () {
   div4.addEventListener('click', function () {
     homePage.style.display = 'none';
     // widgetPage_5.style.display = 'block';
-    $('#div-5').fadeIn('slow')
+    $('#div-5').fadeIn('slow');
     currentPage = 'div-5';
   });
 
@@ -641,7 +639,7 @@ const appendWidget = async function () {
     widgetPage_2.style.display = 'none';
     // homePage.style.display = 'block';
     let sa_homePage = userId ? '#div-3' : '#div';
-    $(sa_homePage).fadeIn('slow')
+    $(sa_homePage).fadeIn('slow');
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -664,7 +662,7 @@ const appendWidget = async function () {
   margin-left: auto`;
   cross.onclick = function () {
     // widgetPage_2.style.display = 'none';
-    $('#div-2').fadeOut('slow')
+    $('#div-2').fadeOut('slow');
     currentPage = '';
   };
   div1.appendChild(cross);
@@ -773,7 +771,7 @@ const appendWidget = async function () {
   dateBtn.addEventListener('click', function () {
     widgetPage_2.style.display = 'none';
     // widgetPage_4.style.display = 'block';
-    $('#div-4').fadeIn('slow')
+    $('#div-4').fadeIn('slow');
     currentPage = 'div-4';
   });
   dateBtn.style.cssText += `border: none;
@@ -901,7 +899,7 @@ const appendWidget = async function () {
   cross.onclick = function () {
     // homePage.style.display = 'none';
     let sa_homePage = userId ? '#div-3' : '#div';
-    $(sa_homePage).fadeOut('slow')
+    $(sa_homePage).fadeOut('slow');
   };
   closeBox.appendChild(cross);
 
@@ -950,7 +948,7 @@ const appendWidget = async function () {
         codes = data;
         homePage.style.display = 'none'; //
         // widgetPage_7.style.display = 'block';
-        $('#div-7').fadeIn('slow')
+        $('#div-7').fadeIn('slow');
         currentPage = 'div-7';
       },
     });
@@ -1021,7 +1019,7 @@ const appendWidget = async function () {
   div4.addEventListener('click', function () {
     homePage.style.display = 'none';
     // widgetPage_2.style.display = 'block';
-    $('#div-2').fadeIn('slow')
+    $('#div-2').fadeIn('slow');
     currentPage = 'div-2';
   });
 
@@ -1057,7 +1055,7 @@ const appendWidget = async function () {
   div4.addEventListener('click', function () {
     homePage.style.display = 'none';
     // widgetPage_5.style.display = 'block';
-    $('#div-5').fadeIn('slow')
+    $('#div-5').fadeIn('slow');
     currentPage = 'div-5';
   });
 
@@ -1113,7 +1111,7 @@ const appendWidget = async function () {
   span.addEventListener('click', function () {
     homePage.style.display = 'none';
     // widgetPage_8.style.display = 'block';
-    $('#div-8').fadeIn('slow')
+    $('#div-8').fadeIn('slow');
     currentPage = 'div-8';
   });
 
@@ -1129,7 +1127,13 @@ const appendWidget = async function () {
     /{{amount}}/g,
     merchant.friendAmt
   );
-  refDesc.textContent = `Share this URL to give your friends the reward ${couponValue} off coupon`;
+
+  let referralMessage = `${couponValue} off coupon`;
+  if (merchant.friendType === 'percentage') {
+    referralMessage = `${merchant.friendAmt} % off coupon`;
+  }
+
+  refDesc.textContent = `Share this URL to give your friends the reward ${referralMessage}`;
   refDesc.style.cssText += `color: #637381;
   font-size: 11px;
   font-weight: 400;
@@ -1212,7 +1216,7 @@ const appendWidget = async function () {
 
         widgetPage_4.style.display = 'none';
         // widgetPage_2.style.display = 'block';
-        $('#div-2').fadeIn('slow')
+        $('#div-2').fadeIn('slow');
         currentPage = 'div-2';
         let p = document.getElementById('successMsg');
         p.style.display = 'none';
@@ -1239,7 +1243,7 @@ const appendWidget = async function () {
   margin-left: auto`;
   cross.onclick = function () {
     // widgetPage_4.style.display = 'none';
-    $('#div-4').fadeOut('slow')
+    $('#div-4').fadeOut('slow');
     currentPage = '';
   };
   div1.appendChild(cross);
@@ -1398,7 +1402,7 @@ const appendWidget = async function () {
     widgetPage_5.style.display = 'none';
     // homePage.style.display = 'block';
     let sa_homePage = userId ? '#div-3' : '#div';
-    $(sa_homePage).fadeIn('slow')
+    $(sa_homePage).fadeIn('slow');
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -1420,7 +1424,7 @@ const appendWidget = async function () {
   margin-left: auto`;
   cross.onclick = function () {
     // widgetPage_5.style.display = 'none';
-    $('#div-5').fadeOut('slow')
+    $('#div-5').fadeOut('slow');
     currentPage = '';
   };
   div1.appendChild(cross);
@@ -1499,7 +1503,7 @@ const appendWidget = async function () {
     couponPoints.textContent = `Spent ${merchant.redeemPoints} points`;
     widgetPage_5.style.display = 'none';
     // widgetPage_6.style.display = 'block';
-    $('#div-6').fadeIn('slow')
+    $('#div-6').fadeIn('slow');
     currentPage = 'div-6';
   });
   dateBtn.style.cssText += `border: none;
@@ -1576,7 +1580,7 @@ const appendWidget = async function () {
     couponPoints.textContent = `Spent ${merchant.shippingPoints} points`;
     widgetPage_5.style.display = 'none';
     // widgetPage_6.style.display = 'block';
-    $('#div-6').fadeIn('slow')
+    $('#div-6').fadeIn('slow');
     currentPage = 'div-6';
   });
   dateBtn.style.cssText += `border: none;
@@ -1745,7 +1749,7 @@ const appendWidget = async function () {
 
         widgetPage_6.style.display = 'none';
         // widgetPage_5.style.display = 'block';
-        $('#div-5').fadeIn('slow')
+        $('#div-5').fadeIn('slow');
         currentPage = 'div-5';
       },
     });
@@ -1770,7 +1774,7 @@ const appendWidget = async function () {
   margin-left: auto`;
   cross.onclick = function () {
     // widgetPage_6.style.display = 'none';
-    $('#div-6').fadeOut('slow')
+    $('#div-6').fadeOut('slow');
     currentPage = '';
   };
   div1.appendChild(cross);
@@ -1913,9 +1917,9 @@ const appendWidget = async function () {
   icon = document.createElement('i');
   icon.addEventListener('click', function () {
     widgetPage_7.style.display = 'none';
-    // homePage.style.display = 'block'; 
+    // homePage.style.display = 'block';
     let sa_homePage = userId ? '#div-3' : '#div';
-    $(sa_homePage).fadeIn('slow')
+    $(sa_homePage).fadeIn('slow');
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -1937,7 +1941,7 @@ const appendWidget = async function () {
   margin-left: auto`;
   cross.onclick = function () {
     // widgetPage_7.style.display = 'none';
-    $('#div-7').fadeOut('slow')
+    $('#div-7').fadeOut('slow');
     currentPage = '';
   };
   div1.appendChild(cross);
@@ -2072,7 +2076,7 @@ const appendWidget = async function () {
     widgetPage_8.style.display = 'none';
     // homePage.style.display = 'block';
     let sa_homePage = userId ? '#div-3' : '#div';
-    $(sa_homePage).fadeIn('slow')
+    $(sa_homePage).fadeIn('slow');
   });
   icon.style.fontSize = '16px';
   icon.style.cursor = 'pointer';
@@ -2095,7 +2099,7 @@ const appendWidget = async function () {
   margin-left: auto`;
   cross.onclick = function () {
     // widgetPage_8.style.display = 'none';
-    $('#div-8').fadeOut('slow')
+    $('#div-8').fadeOut('slow');
     currentPage = '';
   };
   div1.appendChild(cross);
@@ -2126,7 +2130,8 @@ const appendWidget = async function () {
   refContainer.appendChild(reward_img);
 
   let social_p1 = document.createElement('p');
-  social_p1.textContent = 'Refer friends and get rewarded';
+  social_p1.textContent =
+    merchant.referralNudge.title || 'Refer friends and get rewarded';
   social_p1.style.cssText += `
   font-size: 14px;
   color:#000;
@@ -2140,8 +2145,15 @@ const appendWidget = async function () {
     merchant.advocateAmt
   );
 
+  let referralMessage_advocate = `${couponValue_advocate} off coupon`;
+  if (merchant.advocateType === 'percentage') {
+    referralMessage_advocate = `${merchant.advocateAmt} % off coupon`;
+  }
+
   let social_p2 = document.createElement('span');
-  social_p2.textContent = `Share this link to give your friends ${couponValue} off coupon. We'll send you ${couponValue_advocate} off coupon
+  social_p2.textContent =
+    merchant.referralNudge.desc ||
+    `Share this link to give your friends ${referralMessage}. We'll send you ${referralMessage_advocate}
   when they make a purchase.`;
   social_p2.style.cssText += `
   font-size: 11px;
@@ -2279,7 +2291,7 @@ const appendWidget = async function () {
   cross.onclick = function () {
     let box = document.getElementById('social-sharing');
     // box.style.display = 'none';
-    $('#social-sharing').fadeOut('slow')
+    $('#social-sharing').fadeOut('slow');
     localStorage.setItem('sa_nudge_shown', 'true');
   };
   refContainer.appendChild(cross);
@@ -2292,7 +2304,8 @@ const appendWidget = async function () {
   refContainer.appendChild(reward_img);
 
   social_p1 = document.createElement('p');
-  social_p1.textContent = 'Refer friends and get rewarded';
+  social_p1.textContent =
+    merchant.referralNudge.title || 'Refer friends and get rewarded';
   social_p1.style.cssText += `
   font-size: 14px;
   color:#000;
@@ -2302,7 +2315,9 @@ const appendWidget = async function () {
   refContainer.appendChild(social_p1);
 
   social_p2 = document.createElement('span');
-  social_p2.textContent = `Share this link to give your friends ${couponValue} off coupon. We'll send you ${couponValue_advocate} off coupon
+  social_p2.textContent =
+    merchant.referralNudge.desc ||
+    `Share this link to give your friends ${referralMessage}. We'll send you ${referralMessage_advocate}
   when they make a purchase.`;
   social_p2.style.cssText += `
   font-size: 11px;
@@ -2403,16 +2418,30 @@ const appendWidget = async function () {
   font-size:18px;`;
   iconLink_w.appendChild(icon_w);
 
-  let nudgeTimeout = parseInt(merchant.referralNudgeTime)
-    ? parseInt(merchant.referralNudgeTime) * 60000
-    : 1 * 60000;
+  let nudgeTimeout;
+  if (merchant.referralNudgeTime === 'instant') {
+    nudgeTimeout = 1000;
+  } else {
+    nudgeTimeout = parseInt(merchant.referralNudgeTime)
+      ? parseInt(merchant.referralNudgeTime) * 1000
+      : 1000;
+  }
 
-  let showNudge =
-    !localStorage.getItem('sa_nudge_shown') ||
-    !JSON.parse(localStorage.getItem('sa_nudge_shown'));
+  let showNudgeOnPage;
+  if (merchant.referralNudge.pages === 'all') {
+    showNudgeOnPage = true;
+  } else {
+    showNudgeOnPage = window.location.pathname.includes('/thank_you');
+  }
+
+  let showNudge = localStorage.getItem('sa_nudge_shown')
+    ? !JSON.parse(localStorage.getItem('sa_nudge_shown'))
+    : true;
 
   userId &&
+    merchant.isReferralsActive &&
     showNudge &&
+    showNudgeOnPage &&
     setTimeout(function () {
       let box = document.getElementById('social-sharing');
       box.style.display = 'flex';
