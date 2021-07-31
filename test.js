@@ -1,4 +1,4 @@
-let SAR_appUrl = 'https://b04de3b10d4e.ngrok.io'; //'https://rewards-backend.superassistant.io';
+let SAR_appUrl = 'https://8374e2173854.ngrok.io'; //'https://rewards-backend.superassistant.io';
 
 /* sentry set up */
 sentry2tag = document.createElement('script');
