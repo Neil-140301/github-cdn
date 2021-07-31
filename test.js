@@ -1,4 +1,4 @@
-let SAR_appUrl = 'https://8374e2173854.ngrok.io'; //'https://rewards-backend.superassistant.io';
+let SAR_appUrl = 'https://rewards-backend.superassistant.io';
 
 /* sentry set up */
 sentry2tag = document.createElement('script');
@@ -1149,7 +1149,7 @@ const appendWidget = async function () {
     referralMessage_advocate = `${merchant.advocateAmt} % off coupon`;
   }
 
-  refDesc.textContent = `Share this URL to give your friends the reward ${referralMessage} and you will get ${referralMessage_advocate}.`;
+  refDesc.textContent = `Share this URL to give your friends the reward ${referralMessage} and you will get ${referralMessage_advocate} on their first order.`;
   refDesc.style.cssText += `color: #637381;
   font-size: 11px;
   font-weight: 400;
