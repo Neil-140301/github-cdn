@@ -590,7 +590,7 @@ const appendWidget = async function () {
 
   let showAppOnPage = true;
   if (merchant.theme.pages === 'thank_you') {
-    showAppOnPage = window.location.includes('/thank_you');
+    showAppOnPage = window.location.pathname.includes('/thank_you');
   }
 
   document.body.appendChild(widgetPage_1);
