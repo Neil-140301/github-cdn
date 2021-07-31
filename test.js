@@ -2435,7 +2435,7 @@ const appendWidget = async function () {
 
   let showNudgeOnPage;
   if (merchant.referralNudge.pages === 'all') {
-    showNudgeOnPage = true;
+    showNudgeOnPage = userId && true;
   } else {
     showNudgeOnPage = window.location.pathname.includes('/thank_you');
   }
@@ -2444,8 +2444,7 @@ const appendWidget = async function () {
     ? !JSON.parse(localStorage.getItem('sa_nudge_shown'))
     : true;
 
-  userId &&
-    merchant.isReferralsActive &&
+  merchant.isReferralsActive &&
     showNudge &&
     showNudgeOnPage &&
     setTimeout(function () {
