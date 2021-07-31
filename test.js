@@ -27,7 +27,9 @@ if (meta.page) {
 }
 
 if (Shopify.Checkout) {
-  userId = Shopify.Checkout.customer.customer_id;
+  if (Shopify.Checkout.customer) {
+    userId = Shopify.Checkout.customer.customer_id;
+  }
 }
 
 let referrer = new URLSearchParams(location.search).get('ref');
