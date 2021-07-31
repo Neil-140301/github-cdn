@@ -21,7 +21,15 @@ setTimeout(function () {
 }, 100);
 
 /* globally set variables */
-let userId = meta.page.customerId || Shopify.Checkout.customer.customer_id;
+let userId;
+if (meta.page) {
+  userId = meta.page.customerId;
+}
+
+if (Shopify.Checkout) {
+  userId = Shopify.Checkout.customer.customer_id;
+}
+
 let referrer = new URLSearchParams(location.search).get('ref');
 let SA_rewards_shopDomain = Shopify.shop;
 
