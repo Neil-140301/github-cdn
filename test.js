@@ -1134,12 +1134,22 @@ const appendWidget = async function () {
     merchant.friendAmt
   );
 
+  const couponValue_advocate = merchant.currency.symbol.replace(
+    /{{amount}}/g,
+    merchant.advocateAmt
+  );
+
   let referralMessage = `${couponValue} off coupon`;
   if (merchant.friendType === 'percentage') {
     referralMessage = `${merchant.friendAmt} % off coupon`;
   }
 
-  refDesc.textContent = `Share this URL to give your friends the reward ${referralMessage}`;
+  let referralMessage_advocate = `${couponValue_advocate} off coupon`;
+  if (merchant.advocateType === 'percentage') {
+    referralMessage_advocate = `${merchant.advocateAmt} % off coupon`;
+  }
+
+  refDesc.textContent = `Share this URL to give your friends the reward ${referralMessage} and you will get ${referralMessage_advocate}.`;
   refDesc.style.cssText += `color: #637381;
   font-size: 11px;
   font-weight: 400;
@@ -2145,16 +2155,6 @@ const appendWidget = async function () {
   margin:8px 0px;
   text-align: center`;
   refContainer.appendChild(social_p1);
-
-  const couponValue_advocate = merchant.currency.symbol.replace(
-    /{{amount}}/g,
-    merchant.advocateAmt
-  );
-
-  let referralMessage_advocate = `${couponValue_advocate} off coupon`;
-  if (merchant.advocateType === 'percentage') {
-    referralMessage_advocate = `${merchant.advocateAmt} % off coupon`;
-  }
 
   let social_p2 = document.createElement('span');
   social_p2.textContent =
