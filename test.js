@@ -1,4 +1,4 @@
-let SAR_appUrl = 'https://rewards-backend.superassistant.io';
+let SAR_appUrl = 'https://8374e2173854.ngrok.io'; //'https://rewards-backend.superassistant.io';
 
 /* sentry set up */
 sentry2tag = document.createElement('script');
@@ -21,7 +21,7 @@ setTimeout(function () {
 }, 100);
 
 /* globally set variables */
-let userId = meta.page.customerId;
+let userId = meta.page.customerId || Shopify.Checkout.customer.customer_id;
 let referrer = new URLSearchParams(location.search).get('ref');
 let SA_rewards_shopDomain = Shopify.shop;
 
@@ -590,7 +590,7 @@ const appendWidget = async function () {
 
   let showAppOnPage = true;
   if (merchant.theme.pages === 'thank_you') {
-    showAppOnPage = window.location.pathname.includes('/thank_you');
+    showAppOnPage = Shopify.Checkout !== undefined;
   }
 
   document.body.appendChild(widgetPage_1);
@@ -2437,7 +2437,7 @@ const appendWidget = async function () {
   if (merchant.referralNudge.pages === 'all') {
     showNudgeOnPage = userId && true;
   } else {
-    showNudgeOnPage = window.location.pathname.includes('/thank_you');
+    showNudgeOnPage = Shopify.Checkout !== undefined;
   }
 
   let showNudge = localStorage.getItem('sa_nudge_shown')
