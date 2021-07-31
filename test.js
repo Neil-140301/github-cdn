@@ -53,7 +53,7 @@ const getPointsData = async function () {
       `${SAR_appUrl}/points/${userId}?shopDomain=${SA_rewards_shopDomain}`
     );
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     result = data.customer;
     merchant = data.merchant;
   } else {
@@ -588,8 +588,14 @@ const appendWidget = async function () {
     currentPage = '';
   });
 
+  let showAppOnPage = true;
+  if (merchant.theme.pages === 'thank_you') {
+    showAppOnPage = window.location.includes('/thank_you');
+  }
+
   document.body.appendChild(widgetPage_1);
   (merchant.isPointsActive || merchant.isReferralsActive) &&
+    showAppOnPage &&
     document.body.appendChild(btn);
 
   /* Page 1 ends */
