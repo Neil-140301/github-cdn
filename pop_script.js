@@ -1,6 +1,6 @@
 console.log('Superassistant script loaded');
 /* Backend Url */
-const SA_APP_URL = 'https://ae8ca190f85a.ngrok.io';
+const SA_APP_URL = 'https://8ce7781bd3e4.ngrok.io';
 
 /*fontawesome script*/
 let SA_script = document.createElement('script');
