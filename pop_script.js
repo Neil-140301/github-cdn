@@ -1,6 +1,6 @@
 console.log('Superassistant script loaded');
 /* Backend Url */
-const SA_APP_URL = 'https://7f68b9ab1da9.ngrok.io';
+const SA_APP_URL = 'https://25e10a30e08f.ngrok.io';
 
 /*fontawesome script*/
 let SA_script = document.createElement('script');
@@ -43,7 +43,7 @@ document.head.appendChild(SA_link);
 const SA_Shop_Domain = Shopify.shop;
 const SA_product_id = meta?.product?.variants[0].id;
 // const SA_Shop_Domain = 'super-pops-test.myshopify.com';
-// let SA_product_id//= 40190206181573;
+// let SA_product_id; //= 40190206181573;
 
 const LIVE_VISIT_DELAY = 0.1; //in hours (6 min)
 const RECENT_VISIT_DELAY = 24; //in hours
@@ -190,7 +190,7 @@ const checkCart = async function () {
           },
           customer: customer,
           product: {
-            id: product.id,
+            id: product.product_id,
             title: product.title,
             added_at: new Date(),
           },
@@ -237,10 +237,6 @@ console.log(
   ' seconds'
 );
 
-window.onbeforeunload = () => {
-  localStorage.setItem('SuperAssistant-leaveTimestamp', new Date());
-};
-
 setInterval(checkCart, 2000);
 
 if (localStorage.getItem('SA_customer_temp_id') && meta.page.customerId) {
@@ -265,6 +261,7 @@ if (localStorage.getItem('SA_customer_temp_id') && meta.page.customerId) {
 }
 
 /* create pop ui */
+
 const createLiveVisitorPop = function (count, settings) {
   let topMessage = settings.popContent.top;
   topMessage = topMessage.replace(/{{live_visitors}}/g, count);
@@ -362,7 +359,8 @@ const createAddToCartsPop = function (
   firstName,
   location,
   productTitle,
-  settings
+  settings,
+  handle
 ) {
   let { anonymizer } = settings;
 
@@ -380,6 +378,15 @@ const createAddToCartsPop = function (
   bottomMessage = bottomMessage.replace(/{{product_title}}/g, productTitle);
 
   let pop = document.createElement('div');
+  pop.onclick = function () {
+    let addToCartsClicks = localStorage.getItem('SA_addToCartsClicks')
+      ? parseInt(localStorage.getItem('SA_addToCartsClicks'))
+      : 0;
+    addToCartsClicks++;
+
+    localStorage.setItem('SA_addToCartsClicks', addToCartsClicks);
+    window.open(`https://${SA_Shop_Domain}/products/${handle}`);
+  };
   pop.style.cssText += `padding: 12px;
   border-radius: ${settings.borderRadius}px;
   display: flex;
@@ -421,7 +428,13 @@ const createAddToCartsPop = function (
   return pop;
 };
 
-const createOrdersPop = function (firstName, location, productTitle, settings) {
+const createOrdersPop = function (
+  firstName,
+  location,
+  productTitle,
+  settings,
+  handle
+) {
   let { anonymizer } = settings;
 
   let personName = anonymizer.status ? anonymizer.name : firstName;
@@ -438,6 +451,15 @@ const createOrdersPop = function (firstName, location, productTitle, settings) {
   bottomMessage = bottomMessage.replace(/{{product_title}}/g, productTitle);
 
   let pop = document.createElement('div');
+  pop.onclick = function () {
+    let orderClicks = localStorage.getItem('SA_orderClicks')
+      ? parseInt(localStorage.getItem('SA_orderClicks'))
+      : 0;
+    orderClicks++;
+
+    localStorage.setItem('SA_orderClicks', orderClicks);
+    window.open(`https://${SA_Shop_Domain}/products/${handle}`);
+  };
   pop.style.cssText += `padding: 12px;
   border-radius: ${settings.borderRadius}px;
   display: flex;
@@ -724,14 +746,16 @@ const showLatestPop = function (popData, merchant) {
         popData.firstName,
         popData.location,
         popData.order.products[0].title,
-        merchant.orders
+        merchant.orders,
+        popData.handle
       );
     case 'addToCarts':
       return createAddToCartsPop(
         popData.firstName,
         popData.location,
         popData.product.title,
-        merchant.addToCarts
+        merchant.addToCarts,
+        popData.handle
       );
     case 'liveVisitors':
       return createLiveVisitorPop(popData.liveVisits, merchant.liveVisitors);
@@ -746,8 +770,10 @@ const showLatestPop = function (popData, merchant) {
 };
 
 /* main function */
+let merchant;
+
 const renderSAPops = async function () {
-  const merchant = await getMerchantDetails();
+  merchant = await getMerchantDetails();
   SA_product_id && (await getLatestPopData(SA_product_id));
   // await getLatestPopData()
   const isMobile = window.innerWidth < 768;
@@ -759,6 +785,7 @@ const renderSAPops = async function () {
       LIVE_VISIT_DELAY
     ) {
       newLiveVisit(current);
+      localStorage.setItem('SA_visit_start', current);
       await getLatestPopData();
     }
 
@@ -767,11 +794,13 @@ const renderSAPops = async function () {
       RECENT_VISIT_DELAY
     ) {
       newRecentVisit(current);
+      localStorage.setItem('SA_visit_start', current);
       await getLatestPopData();
     }
   } else {
     newLiveVisit(current);
     newRecentVisit(current);
+    localStorage.setItem('SA_visit_start', current);
     await getLatestPopData();
   }
 
@@ -830,11 +859,14 @@ const renderSAPops = async function () {
     const pops_per_session = 5;
     let popCount = 0;
     let displayPopTime = parseInt(merchant.popRules.timing.popDisplay) * 1000;
+    let showFirstPop = parseInt(merchant.popRules.timing.showFirst) * 1000;
     let intervalBetweenPops =
       parseInt(merchant.popRules.timing.popInterval) * 1000;
 
-    let intervalId = setInterval(function () {
-      popCount++;
+    let intervalId;
+
+    setTimeout(function () {
+      popCount = 1;
       console.log(popCount);
 
       let popsData = JSON.parse(
@@ -844,19 +876,6 @@ const renderSAPops = async function () {
       $('#SA_pop_container').empty();
 
       if (SA_product_id) {
-        // if (popCount <= firstTier) {
-        //   newPop = productTierPop(merchant, liveVisits.count, recentVisits.count);
-        // }
-        // if (firstTier < popCount && popCount <= firstTier + secondTier) {
-        //   newPop = productSecondTierPop(
-        //     merchant,
-        //     liveVisits.count,
-        //     recentVisits.count
-        //   );
-        // }
-        // if (firstTier + secondTier < popCount && popCount <= pops_per_session) {
-        //   newPop = productTierPop(merchant, liveVisits.count, recentVisits.count);
-        // }
         popsData = JSON.parse(
           localStorage.getItem('SA_product_popData')
         ).popsToShow;
@@ -876,23 +895,138 @@ const renderSAPops = async function () {
         $('#SA_pop_container').fadeOut('slow');
       }, displayPopTime || 4000);
 
-      if (popCount === pops_per_session) {
-        if (merchant.popRules.timing.cycle) {
-          popCount = 0;
-        } else {
-          clearInterval(intervalId);
-          setTimeout(function () {
-            $('#SA_pop_container').fadeOut('slow');
-          }, intervalBetweenPops || 8000);
+      intervalId = setInterval(function () {
+        popCount++;
+        console.log(popCount);
+
+        let popsData = JSON.parse(
+          localStorage.getItem('SA_latest_popData')
+        ).popsToShow;
+
+        $('#SA_pop_container').empty();
+
+        if (SA_product_id) {
+          // if (popCount <= firstTier) {
+          //   newPop = productTierPop(merchant, liveVisits.count, recentVisits.count);
+          // }
+          // if (firstTier < popCount && popCount <= firstTier + secondTier) {
+          //   newPop = productSecondTierPop(
+          //     merchant,
+          //     liveVisits.count,
+          //     recentVisits.count
+          //   );
+          // }
+          // if (firstTier + secondTier < popCount && popCount <= pops_per_session) {
+          //   newPop = productTierPop(merchant, liveVisits.count, recentVisits.count);
+          // }
+          popsData = JSON.parse(
+            localStorage.getItem('SA_product_popData')
+          ).popsToShow;
         }
-      }
-    }, intervalBetweenPops || 8000);
+
+        let newPopObj = popsData[popCount - 1];
+
+        if (newPopObj.type) {
+          newPop = showLatestPop(newPopObj, merchant);
+        } else {
+          newPop = document.createElement('span');
+        }
+
+        document.getElementById('SA_pop_container').appendChild(newPop);
+        $('#SA_pop_container').fadeIn('slow');
+        setTimeout(function () {
+          $('#SA_pop_container').fadeOut('slow');
+        }, displayPopTime || 4000);
+
+        if (popCount === pops_per_session) {
+          if (merchant.popRules.timing.cycle) {
+            popCount = 0;
+          } else {
+            clearInterval(intervalId);
+            setTimeout(function () {
+              $('#SA_pop_container').fadeOut('slow');
+            }, intervalBetweenPops || 8000);
+          }
+        }
+      }, intervalBetweenPops || 8000);
+    }, showFirstPop || 4000);
 
     /* clear interval on click */
-    $('#SA_pop_container').click(function () {
-      clearInterval(intervalId);
-    });
+    // $('#SA_pop_container').click(function () {
+    //   clearInterval(intervalId);
+    //   console.log('container clicked');
+    // });
   }
 };
 
 renderSAPops();
+
+window.onbeforeunload = async () => {
+  localStorage.setItem('SuperAssistant-leaveTimestamp', new Date());
+
+  let startTime = new Date(localStorage.getItem('SA_visit_start'));
+  let leaveTime = new Date();
+  let userSession = (leaveTime.valueOf() - startTime.valueOf()) / 1000;
+  let pops_per_session = 5;
+  let addToCartsClicks = localStorage.getItem('SA_addToCartsClicks')
+    ? parseInt(localStorage.getItem('SA_addToCartsClicks'))
+    : 0;
+  let orderClicks = localStorage.getItem('SA_orderClicks')
+    ? parseInt(localStorage.getItem('SA_orderClicks'))
+    : 0;
+
+  let popsData = JSON.parse(
+    localStorage.getItem('SA_latest_popData')
+  ).popsToShow;
+
+  if (SA_product_id) {
+    popsData = JSON.parse(
+      localStorage.getItem('SA_product_popData')
+    ).popsToShow;
+  }
+
+  let { timing } = merchant.popRules;
+  let minTime =
+    parseInt(timing.showFirst) +
+    (pops_per_session - 1) * parseInt(timing.popInterval);
+  let popViews;
+
+  if (userSession >= minTime) {
+    popViews = pops_per_session;
+  } else {
+    let c = parseInt(timing.showFirst);
+    while (c <= userSession) {
+      popViews += 1;
+      c += parseInt(timing.popInterval);
+    }
+  }
+
+  if (popViews) {
+    try {
+      let options = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          shopDomain: SA_Shop_Domain,
+          popViews,
+          date: leaveTime,
+          popTypes: popsData.slice(0, popViews).map((i) => i.type),
+          addToCartsClicks,
+          orderClicks
+        }),
+      };
+      await fetch(`${SA_APP_URL}/api/popData/analytics`, options);
+      localStorage.removeItem('SA_addToCartsClicks');
+      localStorage.removeItem('SA_orderClicks');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // localStorage.setItem(
+  //   'test',
+  //   JSON.stringify({ popViews, userSession, minTime })
+  // );
+};
