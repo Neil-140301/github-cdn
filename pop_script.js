@@ -1,6 +1,6 @@
 console.log('Superassistant script loaded');
 /* Backend Url */
-const SA_APP_URL = 'https://25e10a30e08f.ngrok.io';
+const SA_APP_URL = 'https://7e78faa81902.ngrok.io';
 
 /*fontawesome script*/
 let SA_script = document.createElement('script');
@@ -40,8 +40,9 @@ SA_link.href =
 SA_link.rel = 'stylesheet';
 document.head.appendChild(SA_link);
 
+/* swap for store */
 const SA_Shop_Domain = Shopify.shop;
-const SA_product_id = meta?.product?.variants[0].id;
+let SA_product_id = meta?.product?.variants[0].id;
 // const SA_Shop_Domain = 'super-pops-test.myshopify.com';
 // let SA_product_id; //= 40190206181573;
 
@@ -237,6 +238,7 @@ console.log(
   ' seconds'
 );
 
+/* swap for store */
 setInterval(checkCart, 2000);
 
 if (localStorage.getItem('SA_customer_temp_id') && meta.page.customerId) {
