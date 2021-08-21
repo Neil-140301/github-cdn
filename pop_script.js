@@ -281,8 +281,8 @@ const createLiveVisitorPop = function (count, settings) {
 
   let popIcon = document.createElement('div');
   popIcon.style.cssText += `border-radius: 50%;
-  background-color: #555;
-  color: white;
+  background-color: ${settings.colors.iconBg || '#f2f6fa'};
+  color: ${settings.colors.iconColor || '#000'};
   padding: 16px;`;
   pop.appendChild(popIcon);
 
@@ -326,8 +326,8 @@ const createRecentVisitorPop = function (count, settings) {
 
   let popIcon = document.createElement('div');
   popIcon.style.cssText += `border-radius: 50%;
-  background-color: #555;
-  color: white;
+  background-color: ${settings.colors.iconBg || '#f2f6fa'};
+  color: ${settings.colors.iconColor || '#000'};
   padding: 16px;`;
   pop.appendChild(popIcon);
 
@@ -398,8 +398,8 @@ const createAddToCartsPop = function (
 
   let popIcon = document.createElement('div');
   popIcon.style.cssText += `border-radius: 50%;
-  background-color: #555;
-  color: white;
+  background-color: ${settings.colors.iconBg || '#f2f6fa'};
+  color: ${settings.colors.iconColor || '#000'};
   padding: 16px;`;
   pop.appendChild(popIcon);
 
@@ -470,8 +470,8 @@ const createOrdersPop = function (
 
   let popIcon = document.createElement('div');
   popIcon.style.cssText += `border-radius: 50%;
-  background-color: #555;
-  color: white;
+  background-color: ${settings.colors.iconBg || '#f2f6fa'};
+  color: ${settings.colors.iconColor || '#000'};
   padding: 16px;`;
   pop.appendChild(popIcon);
 
