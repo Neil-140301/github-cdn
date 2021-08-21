@@ -806,7 +806,7 @@ const renderSAPops = async function () {
   let SA_pop_container = document.createElement('div');
   SA_pop_container.style.cssText += `
   height: 100px;
-  position: absolute;
+  position: fixed;
   font-family: 'Roboto';
   display: none;
   z-index: 999;
