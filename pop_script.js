@@ -277,7 +277,6 @@ const createLiveVisitorPop = function (count, settings) {
   -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   background-color: ${settings.colors.backgroundColor};
-  border: #e5e5e5 solid 1px;
   min-width: 320px;`;
 
   let popIcon = document.createElement('div');
@@ -323,7 +322,6 @@ const createRecentVisitorPop = function (count, settings) {
   -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   background-color: ${settings.colors.backgroundColor};
-  border: #e5e5e5 solid 1px;
   min-width: 320px;`;
 
   let popIcon = document.createElement('div');
@@ -396,7 +394,6 @@ const createAddToCartsPop = function (
   -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   background-color: ${settings.colors.backgroundColor};
-  border: #e5e5e5 solid 1px;
   min-width: 320px;`;
 
   let popIcon = document.createElement('div');
@@ -469,7 +466,6 @@ const createOrdersPop = function (
   -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   background-color: ${settings.colors.backgroundColor};
-  border: #e5e5e5 solid 1px;
   min-width: 320px;`;
 
   let popIcon = document.createElement('div');
@@ -813,12 +809,16 @@ const renderSAPops = async function () {
   position: absolute;
   font-family: 'Roboto';
   display: none;
-  z-index: 999`;
+  z-index: 999;
+  cursor:pointer;`;
   SA_pop_container.id = 'SA_pop_container';
 
   if (isMobile) {
     SA_pop_container.style.cssText += `
     ${merchant.popRules.position.mobile} : 20px;
+    left: 0;
+    right: 0;
+    margin:auto;
     `;
   } else {
     let vPosition = 'bottom';
@@ -1016,7 +1016,7 @@ window.onbeforeunload = async () => {
           date: leaveTime,
           popTypes: popsData.slice(0, popViews).map((i) => i.type),
           addToCartsClicks,
-          orderClicks
+          orderClicks,
         }),
       };
       await fetch(`${SA_APP_URL}/api/popData/analytics`, options);
